@@ -1,0 +1,107 @@
+[
+  {
+    "name": "MongoDB Blue Shirt",
+    "category": "Clothing",
+    "price": 29.99,
+    "description": "Comfortable MongoDB-branded blue shirt.",
+    "brand": "MongoWear",
+    "sku": "MS001",
+    "created_at": "2022-01-04T14:15:00Z",
+    "updated_at": "2022-01-04T14:15:00Z",
+    "tags": ["clothing", "merchandise", "blue shirt"],
+    "attributes": {
+      "color": "Blue",
+      "size": "Medium"
+    }
+  },
+  {
+    "name": "MongoDB Blue Shirt",
+    "category": "Clothing",
+    "price": 29.99,
+    "description": "Comfortable MongoDB-branded blue shirt.",
+    "brand": "MongoWear",
+    "sku": "MS001",
+    "created_at": "2022-01-04T14:15:00Z",
+    "updated_at": "2022-01-04T14:15:00Z",
+    "tags": ["clothing", "merchandise", "blue shirt"],
+    "attributes": {
+      "color": "Blue",
+      "size": "Large"
+    }
+  },
+  {
+    "name": "MongoDB Hat",
+    "category": "Clothing",
+    "price": 19.99,
+    "description": "Stylish MongoDB-branded hat for any occasion.",
+    "brand": "MongoWear",
+    "sku": "MH002",
+    "created_at": "2022-01-05T11:30:00Z",
+    "updated_at": "2022-01-05T11:30:00Z",
+    "tags": ["clothing", "merchandise", "hat"],
+    "attributes": {
+      "color": "Black",
+      "size": "One Size"
+    }
+  },
+  {
+    "name": "MongoDB Hoodie Black",
+    "category": "Clothing",
+    "price": 49.99,
+    "description": "Warm MongoDB-branded hoodie for chilly days.",
+    "brand": "MongoWear",
+    "sku": "MH003",
+    "created_at": "2022-01-06T09:45:00Z",
+    "updated_at": "2022-01-06T09:45:00Z",
+    "tags": ["clothing", "merchandise", "hoodie"],
+    "attributes": {
+      "color": "Black",
+      "size": "Large"
+    }
+  },
+  {
+    "name": "MongoDB Hoodie Black",
+    "category": "Clothing",
+    "price": 49.99,
+    "description": "Warm MongoDB-branded hoodie for chilly days.",
+    "brand": "MongoWear",
+    "sku": "MH003",
+    "created_at": "2022-01-06T09:45:00Z",
+    "updated_at": "2022-01-06T09:45:00Z",
+    "tags": ["clothing", "merchandise", "hoodie", "Black"],
+    "attributes": {
+      "color": "Black",
+      "size": "Small"
+    }
+  },
+  {
+    "name": "MongoDB Hoodie Green",
+    "category": "Clothing",
+    "price": 49.99,
+    "description": "Warm MongoDB-branded hoodie for chilly days.",
+    "brand": "MongoWear",
+    "sku": "MH004",
+    "created_at": "2022-01-06T09:45:00Z",
+    "updated_at": "2022-01-06T09:45:00Z",
+    "tags": ["clothing", "merchandise", "hoodie", "Green"],
+    "attributes": {
+      "color": "Green",
+      "size": "Large"
+    }
+  },
+  {
+    "name": "MongoDB Black Shirt",
+    "category": "Clothing",
+    "price": 29.99,
+    "description": "Comfortable MongoDB-branded black shirt.",
+    "brand": "MongoWear",
+    "sku": "MS002",
+    "created_at": "2022-01-04T14:15:00Z",
+    "updated_at": "2022-01-04T14:15:00Z",
+    "tags": ["clothing", "merchandise", "black shirt"],
+    "attributes": {
+      "color": "Black",
+      "size": "Large"
+    }
+  }
+]

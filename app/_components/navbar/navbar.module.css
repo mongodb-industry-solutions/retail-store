@@ -1,0 +1,20 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    color: white;
+    border-bottom: 0.3vh solid #252525;
+  }
+  
+  .links a {
+    margin-right: 15px;
+    color: green;
+    text-decoration: none;
+  }
+
+  
+  .cart img {
+    cursor: pointer;
+  }
+  
