@@ -1,0 +1,28 @@
+.footer {
+    background-color: #17843f;
+    color: white;
+    padding: 20px 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+  }
+  
+  .footerContent {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .footerSection {
+    flex: 1;
+    margin-right: 20px;
+  }
+  
+  .footerSection h4 {
+    margin-bottom: 10px;
+  }
+  
+  .footerBottom {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
