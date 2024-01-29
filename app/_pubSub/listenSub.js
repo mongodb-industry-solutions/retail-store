@@ -28,7 +28,6 @@ async function listenToSub(
     } catch (error) {
       console.error("Error parsing or inserting JSON data:", error);
     }
-    //message.ack();
   });
 
   // Errors
@@ -46,13 +45,3 @@ const PubSubs = () => {
 };
 
 export default PubSubs;
-
-
-/*
-{
-  "id": 123,
-  "name": "Example Item",
-  "price": 19.99,
-  "quantity": 5
-}
- */
