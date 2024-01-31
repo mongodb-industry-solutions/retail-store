@@ -1,0 +1,39 @@
+html {
+    font-family: "Euclid Circular A", "Akzidenz", Helvetica, Arial, sans-serif;
+  }
+  
+  body {
+    margin: 0;
+  }
+  
+  *,
+  *:before,
+  *:after {
+    box-sizing: border-box;
+  }
+  
+  .App {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+  }
+  
+  .darkmode-bg {
+    background-color: #001e2b;
+  }
+  
+  .sandbox {
+    display: flex;
+    margin: 72px;
+  }
+  
+  .toggle-style {
+    position: fixed;
+    top: 0;
+    right: 0;
+    margin: 32px;
+  }
+  

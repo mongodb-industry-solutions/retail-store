@@ -1,28 +1,21 @@
 .footer {
-    background-color: #17843f;
+    background-color: #0A1620;
     color: white;
-    padding: 20px 0;
     position: fixed;
     width: 100%;
     bottom: 0;
-  }
-  
-  .footerContent {
     display: flex;
-    justify-content: space-around;
-  }
-  
-  .footerSection {
-    flex: 1;
-    margin-right: 20px;
-  }
-  
-  .footerSection h4 {
-    margin-bottom: 10px;
+
   }
   
   .footerBottom {
     margin-top: 20px;
-    text-align: center;
+    margin-left: 20px;
+    text-align: left;
+  }
+
+  .footerLogo{
+  margin-left: 1050px;
+ margin-top: 30px;
   }
   

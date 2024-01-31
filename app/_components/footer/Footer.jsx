@@ -1,29 +1,20 @@
 import styles from './footer.module.css'; 
+import Image from "next/image";
 
 const Footer = () => {
   return (
     <footer className={styles.footer}>
-      <div className={styles.footerContent}>
-        <div className={styles.footerSection}>
-          <h4>About Us</h4>
-          <p>Leafy Shop</p>
-        </div>
-
-        <div className={styles.footerSection}>
-          <h4>Contact Us</h4>
-          <p>Email: leafy@shop.com</p>
-          <p>Phone: +1 123 456 7890</p>
-        </div>
-
-        <div className={styles.footerSection}>
-          <h4>Follow Us</h4>
-        </div>
-      </div>
 
       <div className={styles.footerBottom}>
-        <p>&copy; 2024 Leafy Shop. All rights reserved.</p>
+        <p>&copy; 2024 .local Pop-Up. All rights reserved</p>
       </div>
+
+      <div className={styles.footerLogo}>
+        <Image src="/MongoDB_White.png" alt="MongoDB Logo" width={90} height={22}></Image>
+      </div>
+
     </footer>
+
   );
 };
 

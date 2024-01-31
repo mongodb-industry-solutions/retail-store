@@ -1,20 +1,33 @@
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    color: white;
-    border-bottom: 0.3vh solid #252525;
-  }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  color: white;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1); /* Adjust values as needed */
+}
   
   .links a {
     margin-right: 15px;
-    color: green;
+    color: #001E2B;
     text-decoration: none;
   }
 
+  .links a:hover{
+    color: #13aa52;
+  }
+
   
-  .cart img {
+  .iconButtons img {
     cursor: pointer;
+   
+  }
+
+  .iconButtons{
+    display: flex;
+  }
+
+  .iconButtons Profile{
+    margin-right: 10px;
   }
   

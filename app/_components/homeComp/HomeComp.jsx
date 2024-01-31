@@ -1,9 +1,17 @@
+
+import Banner from "../banner/Banner";
+import Featured from "../featured/Featured";
 import styles from "./homeComp.module.css";
 
 const HomeComp = () => {
   return (
-    <h1>Home Comp</h1>
+    <div>
+     
+      <Banner />
+      <Featured/>
+    </div>
   );
 };
+
 
 export default HomeComp;
