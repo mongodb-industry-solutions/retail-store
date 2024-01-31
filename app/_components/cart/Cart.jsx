@@ -3,6 +3,9 @@
 import { useState } from "react";
 import styles from "./cart.module.css";
 import Image from "next/image";
+import IconButton from "@leafygreen-ui/icon-button";
+import LeafyGreenProvider from "@leafygreen-ui/leafygreen-provider";
+import Icon from "@leafygreen-ui/icon";
 
 const Cart = () => {
   const [isCartOpen, setCartOpen] = useState(false);
@@ -24,9 +27,12 @@ const Cart = () => {
 
   return (
     <div className={styles.cartContainer}>
-      <div className={styles.cartIcon} onClick={toggleCart}>
-        <Image src="/cart.png" alt="Cart" width={40} height={40}></Image>
-      </div>
+
+      <LeafyGreenProvider onClick={toggleCart}>
+        <IconButton className={styles.cartIcon} onClick={toggleCart}>
+          <Image src="/cart.png" alt="Cart" width={16} height={16}></Image>
+        </IconButton>
+      </LeafyGreenProvider>
 
       {isCartOpen && (
         <div className={styles.cartPopup}>
@@ -38,7 +44,7 @@ const Cart = () => {
                   <li key={item.id}>
                     <div>
                       <span>{item.name} </span>
-                      <span>${ item.price.toFixed(2)}</span>
+                      <span>${item.price.toFixed(2)}</span>
                     </div>
                   </li>
                 ))}

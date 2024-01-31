@@ -1,0 +1,33 @@
+.bannerContainer{
+    width: 100%;
+    height: 600px;
+    background-color: #001E2B;
+    display: flex;
+    border-bottom-left-radius: 100px; 
+    border-bottom-right-radius: 100px; 
+}
+
+.bannerText{
+    margin-left: 20px;
+    max-width: 40%;
+    padding-top: 100px;
+    color: white;
+}
+
+.bannerTag{
+    display: flex;
+}
+
+.tag{
+    background-color: #B45AF2;
+    color: #001E2B;
+    width:fit-content;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 4px;
+
+}
+
+.imgContainer{
+    margin-left: 200px;
+}

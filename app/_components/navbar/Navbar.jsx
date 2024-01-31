@@ -2,6 +2,7 @@ import Link from "next/link";
 import styles from "./navbar.module.css";
 import Image from "next/image";
 import Cart from "../cart/Cart";
+import Profile from "../profile/Profile"
 
 const Navbar = () => {
   return (
@@ -9,10 +10,10 @@ const Navbar = () => {
       <div className={styles.logo}>
         <Link href="/">
           <Image
-            src="/MongoDB_Logo.png"
+            src="/leafyLogo.png"
             alt="MongoDB logo"
-            width={175}
-            height={50}
+            width={100}
+            height={20}
           ></Image>
         </Link>
       </div>
@@ -24,8 +25,10 @@ const Navbar = () => {
         <Link href="/contact">Contact</Link>
       </div>
 
-      <div className={styles.cart}>
+      <div className={styles.iconButtons}>
+        <Profile></Profile>
         <Cart></Cart>
+    
       </div>
     </nav>
   );
