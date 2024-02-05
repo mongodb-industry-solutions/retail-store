@@ -1,0 +1,22 @@
+
+.aboutContainer{
+    margin: 20px;
+}
+
+.disclaimer{
+    max-width: 40%;
+}
+
+.firstSection{
+    display: flex;
+}
+
+.aboutImg{
+    width: 450px;
+    margin-left: 250px;
+}
+
+.teamcards{
+    display: flex;
+}
+

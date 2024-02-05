@@ -1,8 +1,11 @@
 import styles from './searchBar.module.css';
-import Image from "next/image";
-import TextInput from "@leafygreen-ui/text-input";
+import { useState } from "react";
 import LeafyGreenProvider from "@leafygreen-ui/leafygreen-provider";
-
+import {
+    SearchInput,
+    SearchResult,
+    SearchResultGroup
+} from "@leafygreen-ui/search-input";
 
 
 const SearchBar = () => {
@@ -10,11 +13,18 @@ const SearchBar = () => {
 
         <div className={styles.searchContainer}>
             <LeafyGreenProvider>
-                <TextInput
-                    label="Label"
-                    description="Description"
-                    placeholder="Placeholder"
-                />
+                <div className="sandbox">
+                    <SearchInput aria-label="Label">
+                        <SearchResult
+                            onClick={() => {
+                                console.log("SB: Click Apple");
+                            }}
+                            description="This is a description"
+                        >
+                            Apple
+                        </SearchResult>
+                    </SearchInput>
+                </div>
             </LeafyGreenProvider>
         </div>
     );
