@@ -10,7 +10,7 @@ const Footer = () => {
       </div>
 
       <div className={styles.footerLogo}>
-        <Image src="/MongoDB_White.png" alt="MongoDB Logo" width={90} height={22}></Image>
+        <Image src="/MongoDB_footer.svg" alt="MongoDB Logo" width={100} height={22}></Image>
       </div>
 
     </footer>
