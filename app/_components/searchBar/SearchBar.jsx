@@ -1,3 +1,5 @@
+"use client";
+
 import styles from './searchBar.module.css';
 import { useState } from "react";
 import LeafyGreenProvider from "@leafygreen-ui/leafygreen-provider";

@@ -31,3 +31,19 @@
 .imgContainer{
     margin-left: 200px;
 }
+
+.title{
+    color: white;
+}
+
+.body{
+    color: white;
+    font-size: large;
+    margin-top: 20px;
+}
+
+.tagline{
+    color: white;
+    font-size: medium;
+    margin-left: 10px;
+}
