@@ -4,6 +4,9 @@ import styles from "./banner.module.css";
 import "../../fonts.css";
 import Image from "next/image";
 
+import { H1, H2, H3, Subtitle, Body, InlineCode, InlineKeyCode, Disclaimer, Overline } from '@leafygreen-ui/typography';
+
+
 
 const Banner = () => {
 
@@ -15,19 +18,19 @@ const Banner = () => {
                 <div className={styles.bannerTag}>
                     <p className={styles.tag}>SALE</p>
 
-                    <p>Up to 15% off, only this week!</p>
+                    <Body className={styles.tagline}>Up to 15% off, only this week!</Body>
                 </div>
 
-                <h1>Welcome to the Pop-Up Store!</h1>
+                <H1 className={styles.title}>Welcome to the Pop-Up Store!</H1>
 
-                <p>
+                <Body className={styles.body}>
                     Feel free to explore the website, add items to your cart, and navigate through the various pages
                     and enjoy exploring the capabilities of MongoDB!
-                </p>
+                </Body>
             </div>
 
             <div className={styles.imgContainer}>
-                <Image src="/placeholder.png" alt="Cart" width={600} height={600}></Image>
+                <Image src="/placeholder.png" alt="Cart" width={550} height={550}></Image>
             </div>
         </div>
     );
