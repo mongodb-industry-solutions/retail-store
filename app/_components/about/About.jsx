@@ -47,14 +47,14 @@ const About = () => {
       <div className={styles.teamcards}>
 
         <TeamCard
-          photo="/francesco.png"
+          photo="/prashant.png"
           name="Prashant Juttukonda"
           title="Retail Principal, Industry Solutions"
           subtitle="..."
         />
 
         <TeamCard
-          photo="/francesco.png"
+          photo="/gen.png"
           name="Genevieve Broadhead"
           title="Retail Principal, Industry Solutions"
           subtitle="..."

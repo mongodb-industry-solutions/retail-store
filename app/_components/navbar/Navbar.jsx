@@ -28,11 +28,12 @@ const Navbar = () => {
         <Link href="/contact">Contact</Link>
       </div>
 
-<SearchBar></SearchBar>
+      <SearchBar></SearchBar>
+      
       <div className={styles.iconButtons}>
         <Profile></Profile>
         <Cart></Cart>
-    
+
       </div>
     </nav>
   );
