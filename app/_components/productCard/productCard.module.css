@@ -1,0 +1,44 @@
+.elasticity{
+    color: #00A35C;
+    margin-top: 5px;
+}
+
+.productContainer{
+    width: 20%;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.productContainer {
+    display: flex;
+    justify-content: center; /* Center align horizontally */
+}
+
+.productInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center align items vertically */
+}
+
+.productInfo img{
+    margin-bottom: 10px;
+}
+
+.cardFooter {
+    display: flex;
+    justify-content: space-between; /* Subtitle will be on the left and CartAdd on the right */
+    align-items: center; /* Align items vertically */
+    padding-top: 10px;
+}
+
+.subtitle {
+    text-align: center; /* Center-align the Subtitle */
+}
+
+.cartAdd {
+    margin-left: auto; /* Push CartAdd component to the right corner */
+}
+
+.productName{
+    font-size: 16px;
+}

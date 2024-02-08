@@ -8,7 +8,7 @@
 }
 
 .bannerText{
-    margin-left: 20px;
+    margin-left: 50px;
     max-width: 40%;
     padding-top: 100px;
     color: white;
@@ -20,12 +20,12 @@
 
 .tag{
     background-color: #B45AF2;
-    color: #001E2B;
+    color: white;
     width:fit-content;
     padding-left: 10px;
     padding-right: 10px;
-    border-radius: 4px;
-
+    border-radius: 10px;
+    margin-top: 0px;
 }
 
 .imgContainer{
@@ -34,6 +34,7 @@
 
 .title{
     color: white;
+    margin-top: 20px;
 }
 
 .body{
@@ -46,4 +47,9 @@
     color: white;
     font-size: medium;
     margin-left: 10px;
+}
+
+.shopButton{
+    margin-top: 40px;
+    background-color: #00ED64;
 }
