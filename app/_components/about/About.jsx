@@ -6,11 +6,14 @@ import styles from "./about.module.css";
 import TeamCard from "../teamcard/TeamCard";
 import Disclaimer from "../disclaimer/Disclaimer";
 
-import { H1, H2, H3, Subtitle, Body, InlineCode, InlineKeyCode,Overline } from '@leafygreen-ui/typography';
+import Button from "@leafygreen-ui/button";
+import Icon from "@leafygreen-ui/icon";
+import LeafyGreenProvider from "@leafygreen-ui/leafygreen-provider";
+import { H1, H2, H3, Subtitle, Body, InlineCode, InlineKeyCode, Overline } from '@leafygreen-ui/typography';
 
 const About = () => {
 
-
+  const githubRepoUrl = "https://github.com/mongodb-industry-solutions/retail-store";
 
   return (
 
@@ -47,13 +50,6 @@ const About = () => {
       <div className={styles.teamcards}>
 
         <TeamCard
-          photo="/prashant.png"
-          name="Prashant Juttukonda"
-          title="Retail Principal, Industry Solutions"
-          subtitle="..."
-        />
-
-        <TeamCard
           photo="/gen.png"
           name="Genevieve Broadhead"
           title="Retail Principal, Industry Solutions"
@@ -71,7 +67,7 @@ const About = () => {
           photo="/francesco.png"
           name="Pedro Bereilh"
           title="Specialist, Industry Solutions"
-          subtitle="..."
+          subtitle="Backend Developer"
         />
 
 
@@ -89,12 +85,32 @@ const About = () => {
           subtitle="Designer and Frontend Developer"
         />
 
+        <TeamCard
+          photo="/prashant.png"
+          name="Prashant Juttukonda"
+          title="Retail Principal, Industry Solutions"
+          subtitle="..."
+        />
+
         {/* Add more TeamMemberCard components as needed */}
       </div>
 
-      <H3>Links</H3>
+      <H3>Related Resources</H3>
 
-      <p>Link to Github</p>
+      <LeafyGreenProvider>
+
+        <div className={styles.githubButton}>
+          <a href={githubRepoUrl} target="_blank" rel="noopener noreferrer">
+            <Button>
+              <img src="/github.png" alt="GitHub" width={24} height={24} />
+              Github Repo
+            </Button>
+          </a>
+        </div>
+
+      </LeafyGreenProvider>
+
+
 
     </div>
   );

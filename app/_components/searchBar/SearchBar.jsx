@@ -3,11 +3,14 @@
 import styles from './searchBar.module.css';
 import { useState } from "react";
 import LeafyGreenProvider from "@leafygreen-ui/leafygreen-provider";
+import Toggle from "@leafygreen-ui/toggle";
+
 import {
     SearchInput,
     SearchResult,
     SearchResultGroup
 } from "@leafygreen-ui/search-input";
+import { Label } from '@leafygreen-ui/typography';
 
 
 const SearchBar = () => {
@@ -15,7 +18,7 @@ const SearchBar = () => {
 
         <div className={styles.searchContainer}>
             <LeafyGreenProvider>
-                <div className="sandbox">
+                <div className={styles.searchToggle}>
                     <SearchInput aria-label="Label">
                         <SearchResult
                             onClick={() => {
@@ -26,6 +29,13 @@ const SearchBar = () => {
                             Apple
                         </SearchResult>
                     </SearchInput>
+
+                    <Toggle
+                        aria-label="Dark mode toggle"
+                        className={styles.toggle}
+                    />
+
+                    <Label  className={styles.toggleLabel}>Vector Search</Label>
                 </div>
             </LeafyGreenProvider>
         </div>

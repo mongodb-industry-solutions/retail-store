@@ -1,0 +1,7 @@
+.cartContainer {
+  position: relative;
+}
+
+.cartIcon {
+  cursor: pointer;
+}
