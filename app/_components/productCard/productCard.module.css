@@ -42,3 +42,17 @@
 .productName{
     font-size: 16px;
 }
+
+/*Product Detail Modal*/
+
+.detailModal {
+ display: flex;
+}
+
+.detailInfo{
+    margin-left: 20px;
+}
+
+.detailCart{
+    margin-top: 20px;
+}
