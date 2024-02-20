@@ -52,22 +52,22 @@ const About = () => {
         <TeamCard
           photo="/gen.png"
           name="Genevieve Broadhead"
-          title="Retail Principal, Industry Solutions"
-          subtitle="..."
+          title="Global Lead, Retail Solutions"
+          subtitle="Product Owner"
         />
 
         <TeamCard
           photo="/francesco.png"
           name="Francesco Baldissera"
           title="Retail Consultant, Industry Solutions"
-          subtitle="..."
+          subtitle="Project Manager"
         />
 
         <TeamCard
-          photo="/francesco.png"
+          photo="/pedro.png"
           name="Pedro Bereilh"
           title="Specialist, Industry Solutions"
-          subtitle="Backend Developer"
+          subtitle="Full Stack Developer"
         />
 
 
@@ -75,13 +75,13 @@ const About = () => {
           photo="/rami.png"
           name="Rami Pinto"
           title="Sr Specialist, Industry Solutions"
-          subtitle="..."
+          subtitle="Cloud Engineer"
         />
 
         <TeamCard
           photo="/ainhoa.png"
           name="Ainhoa Mugica"
-          title="Specialist, Industry Solutions"
+          title="Sr. Specialist, Industry Solutions"
           subtitle="Designer and Frontend Developer"
         />
 
@@ -89,7 +89,7 @@ const About = () => {
           photo="/prashant.png"
           name="Prashant Juttukonda"
           title="Retail Principal, Industry Solutions"
-          subtitle="..."
+          subtitle="Product Owner"
         />
 
         {/* Add more TeamMemberCard components as needed */}
