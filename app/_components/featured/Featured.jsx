@@ -15,11 +15,11 @@ const Featured = () => {
             
           
             <ProductCard
-          photo="/socks.png"
-          name="Leafy Socks"
+          photo="/lego.jpg"
+          name="University Lego"
           brand="MongoDB"
-          elasticity="-1200"
-          price="35"
+          elasticity="-1600"
+          price="49"
         />
     
         </div>

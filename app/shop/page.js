@@ -10,12 +10,29 @@ export default function Page() {
 
       <div className={styles.products}>
         <ProductCard
-          photo="/socks.png"
-          name="Leafy Socks"
+          photo="/duck.jpg"
+          name="Leafy Rubber Duck"
           brand="MongoDB"
           elasticity="-1200"
           price="35"
         />
+
+        <ProductCard
+          photo="/lego.jpg"
+          name="University Lego"
+          brand="MongoDB"
+          elasticity="-1600"
+          price="49"
+        />
+
+        <ProductCard
+          photo="/tshirt.jpg"
+          name="Black Tshirt"
+          brand="MongoDB"
+          elasticity="-1600"
+          price="25"
+        />
+
       </div>
 
       <Footer></Footer>
