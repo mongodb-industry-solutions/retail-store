@@ -2,7 +2,7 @@ const { GoogleAuth } = require("google-auth-library");
 const { NextResponse } = require("next/server");
 const axios = require("axios");
 
-/*const data = {
+/*const example = {
   instances: [[0.5, 0.5, 1, 0.1]],
 };*/
 
