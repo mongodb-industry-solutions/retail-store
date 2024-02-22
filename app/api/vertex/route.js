@@ -29,8 +29,9 @@ export async function POST(req, res) {
         "Content-Type": "application/json",
       },
     });
+    const roundedPrice = response.data.predictions[0][0].toFixed(2);
 
-    return NextResponse.json(response.data, { status: 200 });
+    return NextResponse.json(Number(roundedPrice), { status: 200 });
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
