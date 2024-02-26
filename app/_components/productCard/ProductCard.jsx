@@ -12,7 +12,7 @@ import CartAdd from "../cartAdd/CartAdd";
 import Modal from "@leafygreen-ui/modal";
 import Button from "@leafygreen-ui/button";
 
-const ProductCard = ({ photo, name, brand, elasticity, price }) => {
+const ProductCard = ({ photo, name, brand, price }) => {
     const [open, setOpen] = useState(false);
 
     return (
@@ -25,7 +25,7 @@ const ProductCard = ({ photo, name, brand, elasticity, price }) => {
                         <img src={photo} alt={name} width={200} height={200}></img>
                         <Label className={styles.productName}>{name}</Label>
                         <Description>{brand}</Description>
-                        <Label className={styles.elasticity}>Price Elasticity: {elasticity}</Label>
+                       
                     </div>
 
                     <div className={styles.cardFooter}>
@@ -45,7 +45,7 @@ const ProductCard = ({ photo, name, brand, elasticity, price }) => {
                                     <div className={styles.detailInfo}>
                                         <Label className={styles.productName}>{name}</Label>
                                         <Description>{brand}</Description>
-                                        <Label className={styles.elasticity}>Price Elasticity: {elasticity}</Label>
+                                     
                                         <Subtitle>${price}</Subtitle>
                                         <Button className={styles.detailCart}>
                                             <img src="/cart.png" alt="Add Cart" width={18} height={18} />
@@ -74,7 +74,6 @@ ProductCard.propTypes = {
     photo: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     brand: PropTypes.string.isRequired,
-    elasticity: PropTypes.string.isRequired,
     price: PropTypes.string.isRequired,
 };
 
