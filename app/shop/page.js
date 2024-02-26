@@ -13,7 +13,6 @@ export default function Page() {
           photo="/duck.jpg"
           name="Leafy Rubber Duck"
           brand="MongoDB"
-          elasticity="-1200"
           price="35"
         />
 
@@ -21,7 +20,6 @@ export default function Page() {
           photo="/lego.jpg"
           name="University Lego"
           brand="MongoDB"
-          elasticity="-1600"
           price="49"
         />
 
@@ -29,7 +27,6 @@ export default function Page() {
           photo="/tshirt.jpg"
           name="Black Tshirt"
           brand="MongoDB"
-          elasticity="-1600"
           price="25"
         />
 

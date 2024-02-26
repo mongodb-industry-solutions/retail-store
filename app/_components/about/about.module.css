@@ -1,33 +1,44 @@
-
-.aboutContainer{
+.aboutContainer {
     margin: 20px;
 }
 
-.disclaimer{
+.disclaimer {
     max-width: 40%;
 }
 
-.firstSection{
+.firstSection {
     display: flex;
 }
 
-.body{
+.body {
     font-size: medium;
     margin-top: 40px;
     margin-bottom: 40px;
 }
 
 
-.aboutImg{
-    width: 450px;
+.aboutImg {
+    width: 400px;
     margin-left: 250px;
+    margin-top: -50px;
 }
 
-.teamcards{
+.teamcards {
     display: flex;
 }
 
-.githubButton{
+.githubButton {
     margin-top: 20px;
+    margin-bottom: 20px;
 }
 
+.hr {
+    height: 1px; /* Set desired height */
+    background-color:#ede8e9; /* Set desired color */
+    margin: 20px 0;/* Set desired margin */
+}
+
+.resourcesBody{
+    font-size: 14px;
+    margin-top: 10px;
+}
