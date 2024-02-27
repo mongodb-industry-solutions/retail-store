@@ -10,12 +10,12 @@ export async function GET(req) {
     });
 
     const bucketName = process.env.GCP_STORAGE_BUCKET;
-    const fileName = "images/10000.jpg";
+    const fileName = "storeProducts/book.JPG";
     const file = storage.bucket(bucketName).file(fileName);
 
     const [signedUrl] = await file.getSignedUrl({
       action: "read",
-      expires: Date.now() + 24 * 60 * 60 * 1000,
+      expires: Date.now() + 24 * 60 * 60 * 1000, //24 hours
     });
 
     return NextResponse.json(
