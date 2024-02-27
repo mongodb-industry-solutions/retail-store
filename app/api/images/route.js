@@ -1,10 +1,12 @@
 import { Storage } from "@google-cloud/storage";
 import { NextResponse } from "next/server";
+import serviceAccountKey from "../../../ist-retail-demo-c2e70dfceaa3.json";
+
 
 export async function GET(req) {
   try {
     const storage = new Storage({
-      credentials: require("service-account-key-file.json"),
+      credentials: serviceAccountKey,
     });
 
     const bucketName = process.env.GCP_STORAGE_BUCKET;
@@ -13,7 +15,7 @@ export async function GET(req) {
 
     const [signedUrl] = await file.getSignedUrl({
       action: "read",
-      expires: Date.now() + 15 * 60 * 1000,
+      expires: Date.now() + 24 * 60 * 60 * 1000,
     });
 
     return NextResponse.json(
