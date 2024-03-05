@@ -44,7 +44,7 @@ export async function GET(req) {
       .filter((result) => result !== null)
       .map((result) => result.matchedCount);
 
-    return NextResponse.json({ updateResults: results }, { status: 200 });
+    return NextResponse.json({ GeneratedURLsAndUpdatedCollection: true  }, { status: 200 });
   } catch (error) {
     console.error("Error processing request:", error);
     return NextResponse.json(
