@@ -1,7 +1,7 @@
 import { Storage } from "@google-cloud/storage";
 import { NextResponse } from "next/server";
 import serviceAccountKey from "../../../ist-retail-demo-c2e70dfceaa3.json";
-
+import { connectToDatabase } from "../../_db/connect";
 
 export async function GET(req) {
   try {
@@ -10,24 +10,45 @@ export async function GET(req) {
     });
 
     const bucketName = process.env.GCP_STORAGE_BUCKET;
-    const fileName = "storeProducts/book.JPG";
-    const file = storage.bucket(bucketName).file(fileName);
+    const folderName = "storeProducts/";
 
-    const [signedUrl] = await file.getSignedUrl({
-      action: "read",
-      expires: Date.now() + 24 * 60 * 60 * 1000, //24 hours
-    });
+    const bucket = storage.bucket(bucketName);
+    const [files] = await bucket.getFiles({ prefix: folderName });
 
-    return NextResponse.json(
-      {
-        ImageURL: signedUrl,
-      },
-      { status: 200 }
+    const db = await connectToDatabase();
+    const collection = db.collection("products");
+
+    const updates = await Promise.all(
+      files.map(async (file) => {
+        if (file.name.endsWith("/")) {
+          return null;
+        }
+
+        const [signedUrl] = await file.getSignedUrl({
+          action: "read",
+          expires: Date.now() + 24 * 60 * 60 * 1000, // 24 hours
+        });
+
+        const id = parseInt(file.name.split("/").pop().split(".")[0], 10);
+
+        const updateResult = await collection.updateOne(
+          { id: id },
+          { $set: { "image.url": signedUrl } }
+        );
+
+        return updateResult;
+      })
     );
+
+    const results = updates
+      .filter((result) => result !== null)
+      .map((result) => result.matchedCount);
+
+    return NextResponse.json({ updateResults: results }, { status: 200 });
   } catch (error) {
-    console.error("Error fetching signed URL:", error);
+    console.error("Error processing request:", error);
     return NextResponse.json(
-      { error: "Failed to fetch signed URL" },
+      { error: "Failed to process request" },
       { status: 500 }
     );
   }
