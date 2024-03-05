@@ -11,30 +11,6 @@ export default function Page() {
 
       <ProductList></ProductList>
 
-      <div className={styles.products}>
-        <ProductCard
-          photo="/duck.jpg"
-          name="Leafy Rubber Duck"
-          brand="MongoDB"
-          price="35"
-        />
-
-        <ProductCard
-          photo="/lego.jpg"
-          name="University Lego"
-          brand="MongoDB"
-          price="49"
-        />
-
-        <ProductCard
-          photo="/tshirt.jpg"
-          name="Black Tshirt"
-          brand="MongoDB"
-          price="25"
-        />
-
-      </div>
-
       <Footer></Footer>
     </>
   );
