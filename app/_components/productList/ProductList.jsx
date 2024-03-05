@@ -1,66 +1,37 @@
-import React from 'react';
+"use client"
+
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import ProductCard from "../productCard/ProductCard";
 import styles from "./productList.module.css";
 
-// Assuming this is your array of product data
-const products = [
-  {
-    photo: 'product1.jpg',
-    name: 'Product 1',
-    brand: 'Brand 1',
-    price: '10.00'
-  },
-  {
-    photo: 'product2.jpg',
-    name: 'Product 2',
-    brand: 'Brand 2',
-    price: '20.00'
-  },
-  {
-    photo: 'product1.jpg',
-    name: 'Product 1',
-    brand: 'Brand 1',
-    price: '10.00'
-  },
-  {
-    photo: 'product2.jpg',
-    name: 'Product 2',
-    brand: 'Brand 2',
-    price: '20.00'
-  },
-  {
-    photo: 'product1.jpg',
-    name: 'Product 1',
-    brand: 'Brand 1',
-    price: '10.00'
-  },
-  {
-    photo: 'product2.jpg',
-    name: 'Product 2',
-    brand: 'Brand 2',
-    price: '20.00'
-  },
-  {
-    photo: 'product1.jpg',
-    name: 'Product 1',
-    brand: 'Brand 1',
-    price: '10.00'
-  },
-  {
-    photo: 'product2.jpg',
-    name: 'Product 2',
-    brand: 'Brand 2',
-    price: '20.00'
-  },
-  // Add more product objects as needed
-];
-
 const ProductList = () => {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get('/api/getProducts'); 
+        const transformedProducts = response.data.products.map(product => ({
+          photo: product.image.url, 
+          name: product.name,
+          brand: product.brand,
+          price: `${product.price.amount.toFixed(2)}`
+        }));
+        setProducts(transformedProducts);
+      } catch (error) {
+        console.error('There was a problem with your fetch operation:', error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
   return (
     <div className={styles.productContainer}>
       {products.map((product, index) => (
         <ProductCard
-          key={index} // Assuming index can be used as a unique key
+          key={index} 
           photo={product.photo}
           name={product.name}
           brand={product.brand}
