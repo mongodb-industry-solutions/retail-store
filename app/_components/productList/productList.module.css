@@ -1,0 +1,24 @@
+.productContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 10px; /* Adjust padding as needed */
+  }
+  
+  .productContainer .productCard {
+    flex: 0 0 calc(20% - 20px); /* Adjust the width of each card as needed */
+    margin-bottom: 20px; /* Adjust margin between cards */
+  }
+  
+  @media (max-width: 1024px) {
+    .productContainer .productCard {
+      flex: 0 0 calc(50% - 20px); /* Change to two cards per row on smaller screens */
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .productContainer .productCard {
+      flex: 0 0 calc(100% - 20px); /* Change to single card per row on even smaller screens */
+    }
+  }
+  
