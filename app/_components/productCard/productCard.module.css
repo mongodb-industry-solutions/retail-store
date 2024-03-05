@@ -4,15 +4,9 @@
 }
 
 .productContainer{
-    width: 20%;
-    margin-left: 20px;
     margin-top: 20px;
 }
 
-.productContainer {
-    display: flex;
-    justify-content: center; /* Center align horizontally */
-}
 
 .productInfo {
     display: flex;
