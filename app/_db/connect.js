@@ -1,10 +1,10 @@
 import { MongoClient } from "mongodb";
 
-const uri = process.env.DOTLOCAL_SHOP_MONGO_URI; 
+const uri = process.env.IST_SHARED_MONGODB; 
 
 const client = new MongoClient(uri);
 
-const dbName = "shop";
+const dbName = "dotLocalStore";
 
 export async function connectToDatabase() {
   try {
