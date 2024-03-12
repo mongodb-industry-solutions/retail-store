@@ -7,6 +7,11 @@
     margin-top: 20px;
 }
 
+.card{
+    max-width: 200px;
+    margin-right: 30px;
+}
+
 
 .productInfo {
     display: flex;
@@ -35,6 +40,7 @@
 
 .productName{
     font-size: 16px;
+    text-align: center;
 }
 
 /*Product Detail Modal*/
