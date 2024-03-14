@@ -20,9 +20,7 @@ export async function GET() {
         },
     ]).toArray();
 
-    console.log(facets)
-
-    return NextResponse.json({ products }, { status: 200 });
+    return NextResponse.json({ facets }, { status: 200 });
 
 
 }
