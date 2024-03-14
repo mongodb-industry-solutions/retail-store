@@ -13,7 +13,7 @@ const cartAdd = () => {
     <div className={styles.cartContainer}>
 
       <LeafyGreenProvider>
-        <IconButton className={styles.cartIcon}>
+        <IconButton className={styles.cartIcon} aria-label="Add to Cart">
           <Image src="/cart.png" alt="Cart" width={16} height={16}></Image>
         </IconButton>
       </LeafyGreenProvider>

@@ -5,9 +5,19 @@
 
 .filterTitle{
   margin-top: 10px;
+  margin-bottom: 10px;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 16px;
   padding-bottom: 5px;
+}
+
+.checkboxList {
+  display: flex;
+  flex-direction: column;
+}
+
+.checkbox {
+  margin-bottom: 8px; /* Adjust as needed */
 }
 
 

@@ -29,7 +29,7 @@ const Cart = () => {
     <div className={styles.cartContainer}>
 
       <LeafyGreenProvider onClick={toggleCart}>
-        <IconButton className={styles.cartIcon} onClick={toggleCart}>
+        <IconButton className={styles.cartIcon} onClick={toggleCart} aria-label="Toggle Cart">
           <Image src="/cart.png" alt="Cart" width={16} height={16}></Image>
         </IconButton>
       </LeafyGreenProvider>

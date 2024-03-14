@@ -15,17 +15,17 @@ function Sidebar2({ filters, onFilterChange }) {
 
     useEffect(() => {
         const fetchFacets = async () => {
-          try {
-            const response = await axios.get('/api/getFacets'); 
-            setFacets(response.data.facets);
+            try {
+                const response = await axios.get('/api/getFacets');
+                setFacets(response.data.facets);
 
-          } catch (error) {
-            console.error('There was a problem with your fetch operation:', error);
-          }
+            } catch (error) {
+                console.error('There was a problem with your fetch operation:', error);
+            }
         };
-    
+
         fetchFacets();
-      }, []);
+    }, []);
 
     const handleBrandChange = (event) => {
         const item = event;
@@ -38,7 +38,7 @@ function Sidebar2({ filters, onFilterChange }) {
         }
         console.log(updatedSelectedBrands);
         setSelectedBrands(updatedSelectedBrands);
-        onFilterChange({...filters, selectedBrands: updatedSelectedBrands});
+        onFilterChange({ ...filters, selectedBrands: updatedSelectedBrands });
 
         // Sort the selected sizes according to the desired order
         /*const sortedItems = updatedSelectedBrands.sort((a, b) => {
@@ -71,27 +71,37 @@ function Sidebar2({ filters, onFilterChange }) {
             <Subtitle>Filters</Subtitle>
 
             <>
-
                 <div className={styles.brand}>
                     <Body className={styles.filterTitle}>Brand</Body>
 
                     {/* Log the list of brands */}
                     {/*console.log(facets?.[0]?.facet?.brand?.buckets)*/}
 
-                    {facets?.[0]?.facet?.brand?.buckets?.map((bucket) => (
-                        <label key={bucket._id}>
-                            <input
-                                type="checkbox"
+                    <div className={styles.checkboxList}>
+                        {facets?.[0]?.facet?.brand?.buckets?.map((bucket) => (
+                            <Checkbox
+                                key={bucket._id}
+                                label={`${bucket._id} (${bucket.count})`}
                                 checked={selectedBrands.includes(bucket._id)}
                                 onChange={() => handleBrandChange(bucket._id)}
+                                className={styles.checkbox}
                             />
-                            <span>{bucket._id} ({bucket.count})</span>
-                        </label>
-                    ))}
+                        ))}
+                    </div>
                 </div>
 
+                <hr className={styles.hr}></hr>
+
+                <div className={styles.brand}>
+                    <Body className={styles.filterTitle}>Type of Product</Body>
+                </div>
 
                 <hr className={styles.hr}></hr>
+
+                <div className={styles.brand}>
+                    <Body className={styles.filterTitle}>Color</Body>
+                </div>
+
 
             </>
 
