@@ -10,7 +10,6 @@ import Checkbox from "@leafygreen-ui/checkbox";
 function Sidebar2({ filters, onFilterChange }) {
 
     const [selectedBrands, setSelectedBrands] = useState([]);
-    const [numColorsToShow, setNumColorsToShow] = useState(10);
     const [facets, setFacets] = useState([]);
 
     useEffect(() => {
@@ -36,34 +35,10 @@ function Sidebar2({ filters, onFilterChange }) {
         } else {
             updatedSelectedBrands = [...selectedBrands, item];
         }
-        console.log(updatedSelectedBrands);
         setSelectedBrands(updatedSelectedBrands);
         onFilterChange({ ...filters, selectedBrands: updatedSelectedBrands });
-
-        // Sort the selected sizes according to the desired order
-        /*const sortedItems = updatedSelectedBrands.sort((a, b) => {
-            const itemOrder = ['XS', 'S', 'M', 'L', 'XL'];
-            return itemOrder.indexOf(a) - itemOrder.indexOf(b);
-        });*/
-
-        /*if (page === 'products') {
-            filterProducts(sortedItems, selectedProducts);
-        } else if (page === 'orders') {
-            filterOrders(sortedItems, selectedProducts);
-        } else if (page === 'sales') {
-            filterSales(sortedItems, selectedProducts); {}
-        }*/
     };
 
-
-
-    const handleExpand = () => {
-        setNumColorsToShow(numColorsToShow + 10);
-    };
-
-    const handleCollapse = () => {
-        setNumColorsToShow(10);
-    };
 
     return (
         <div className={styles.filterContainer}>
