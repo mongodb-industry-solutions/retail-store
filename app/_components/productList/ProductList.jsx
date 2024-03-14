@@ -12,7 +12,7 @@ const ProductList = ({filters}) => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('/api/getProducts'); 
+        const response = await axios.post('/api/getProducts', filters); 
         const transformedProducts = response.data.products.map(product => ({
           photo: product.image.url, 
           name: product.name,
@@ -26,11 +26,6 @@ const ProductList = ({filters}) => {
     };
 
     fetchProducts();
-  }, []);
-
-  useEffect(() => {
-    console.log('PRODUCT');
-    console.log(filters);
   }, [filters]);
 
   return (
