@@ -5,8 +5,9 @@ import axios from 'axios';
 import ProductCard from "../productCard/ProductCard";
 import styles from "./productList.module.css";
 
-const ProductList = () => {
+const ProductList = ({filters}) => {
   const [products, setProducts] = useState([]);
+
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -26,6 +27,11 @@ const ProductList = () => {
 
     fetchProducts();
   }, []);
+
+  useEffect(() => {
+    console.log('PRODUCT');
+    console.log(filters);
+  }, [filters]);
 
   return (
     <div className={styles.productContainer}>
