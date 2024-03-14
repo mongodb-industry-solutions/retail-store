@@ -15,8 +15,8 @@ const Navbar = () => {
           <Image
             src="/leafyLogo.png"
             alt="MongoDB logo"
-            width={100}
-            height={20}
+            width={150}
+            height={40}
           ></Image>
         </Link>
       </div>
