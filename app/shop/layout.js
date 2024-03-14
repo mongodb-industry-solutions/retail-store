@@ -1,5 +1,5 @@
 export const metadata = {
-    title: 'Shop',
+    title: 'Leafy Pop-Up Store',
     description: '',
   }
 

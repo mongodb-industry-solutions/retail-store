@@ -1,3 +1,19 @@
-.products{
+.pageContainer {
     display: flex;
-}
+  }
+  
+  .sideBar {
+    width: 10%;
+    position: fixed;
+    top: 100px; /* Height of Navbar */
+    left: 0;
+    bottom: 0;
+    overflow-y: auto;
+    margin-left: 25px;
+  }
+  
+  .productList {
+    flex: 1;
+    margin-left: 12%; /* Adjust based on sidebar width */
+  }
+  
