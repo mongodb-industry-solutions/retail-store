@@ -4,7 +4,7 @@ COPY package.json /app/
 WORKDIR /app
 COPY . ./
 
-ENV NEXT_PUBLIC_APP_URL=https://www.mydomain.com
+ENV IST_SHARED_MONGODB=mongodb+srv://luca:abba@ist-shared.n0kts.mongodb.net/?retryWrites=true&w=majority
 
 RUN npm install
 RUN npm run build
