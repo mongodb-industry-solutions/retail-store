@@ -26,7 +26,7 @@ export async function GET(req) {
 
         const [signedUrl] = await file.getSignedUrl({
           action: "read",
-          expires: Date.now() + 24 * 60 * 60 * 1000, // 24 hours
+          expires: Date.now() + 14 * 60 * 60 * 1000, // 14 hours
         });
 
         const id = parseInt(file.name.split("/").pop().split(".")[0], 10);
