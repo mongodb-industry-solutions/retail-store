@@ -15,7 +15,7 @@ export async function POST(request) {
     }
 
     const products = await collection
-        .find(query, { projection: { name: 1, price: 1, brand: 1, image:1, id: 1, _id: 0 }})
+        .find(query, { projection: { name: 1, price: 1, brand: 1, image:1, id: 1, _id: 0, pred_price: 1 }})
         .toArray();
     return NextResponse.json({ products }, { status: 200 });
 }
