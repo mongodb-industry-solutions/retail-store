@@ -109,7 +109,8 @@ const About = () => {
           </a>
         </div>
 
-        <div className={styles.searchResources}>
+<div className={styles.cards} >
+        <div className={styles.resourcesCard}>
           <Subtitle>E-Commerce AI-Enhanced Search</Subtitle>
 
           <Body className={styles.resourcesBody}>Integrate MongoDB and Databricks to create AI-augmented search solutions that meet current and future market expectations, ultimately improving the retail customer's search experience.</Body>
@@ -121,8 +122,8 @@ const About = () => {
           <iframe width="560" height="315" src="https://www.youtube.com/embed/jntZz9RTC5g?si=7xu4aA2MxnXyL6lL" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
         </div>
 
-        <hr className={styles.hr}></hr>
-        <div className={styles.inventory}>
+       
+        <div className={styles.resourcesCard}>
           <Subtitle>Inventory Management</Subtitle>
 
           <Body className={styles.resourcesBody}>Leverage MongoDB's document data model to implement an efficient inventory management system in the retail sector, aligning with customer demands and optimizing operational processes.</Body>
@@ -135,8 +136,8 @@ const About = () => {
 
         </div>
 
-        <hr className={styles.hr}></hr>
-        <div className={styles.dynamic}>
+        
+        <div className={styles.resourcesCard}>
           <Subtitle>Fueling Real-Time Pricing Strategies</Subtitle>
           <Body className={styles.resourcesBody}>Integrate MongoDB Atlas and Databricks can be a powerful combination for implementing real-time AI-driven pricing strategies.</Body>
 
@@ -148,7 +149,7 @@ const About = () => {
 
           <iframe width="560" height="315" src="https://www.youtube.com/embed/Za8jMb3HXAc?si=H19NLxDk-ICw0RS5&amp;start=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
         </div>
-
+        </div>
       </LeafyGreenProvider>
 
 
