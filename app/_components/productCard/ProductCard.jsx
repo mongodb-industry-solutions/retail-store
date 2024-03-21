@@ -12,7 +12,7 @@ import CartAdd from "../cartAdd/CartAdd";
 import Modal from "@leafygreen-ui/modal";
 import Button from "@leafygreen-ui/button";
 
-const ProductCard = ({ photo, name, brand, price }) => {
+const ProductCard = ({ photo, name, brand, price, pred_price }) => {
     const [open, setOpen] = useState(false);
 
     return (
@@ -25,7 +25,8 @@ const ProductCard = ({ photo, name, brand, price }) => {
                         <img src={photo} alt={name} width={200} height={200}></img>
                         <Label className={styles.productName}>{name}</Label>
                         <Description>{brand}</Description>
-                       
+                        <Description className={styles.predPrice}>Predicted Price: ${pred_price}</Description>
+
                     </div>
 
                     <div className={styles.cardFooter}>
@@ -45,8 +46,9 @@ const ProductCard = ({ photo, name, brand, price }) => {
                                     <div className={styles.detailInfo}>
                                         <Label className={styles.productName}>{name}</Label>
                                         <Description>{brand}</Description>
-                                     
-                                        <Subtitle>${price}</Subtitle>
+                                        <Description className={styles.predPrice}>Predicted Price: ${pred_price}</Description>
+
+                                        <Subtitle className={styles.price}>${price}</Subtitle>
                                         <Button className={styles.detailCart}>
                                             <img src="/cart.png" alt="Add Cart" width={18} height={18} />
                                             Add to Cart
@@ -75,6 +77,7 @@ ProductCard.propTypes = {
     name: PropTypes.string.isRequired,
     brand: PropTypes.string.isRequired,
     price: PropTypes.string.isRequired,
+    pred_price: PropTypes.string.isRequired,
 };
 
 //<button onClick={addItemToCart}>Add Item to Cart</button>*/
