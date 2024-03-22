@@ -18,7 +18,8 @@ const ProductList = ({filters}) => {
           name: product.name,
           brand: product.brand,
           price: `${product.price.amount.toFixed(2)}`,
-          pred_price: `${product.pred_price.toFixed(2)}`
+          pred_price: `${product.pred_price.toFixed(2)}`,
+          items: product.items
         }));
         setProducts(transformedProducts);
       } catch (error) {
@@ -39,6 +40,7 @@ const ProductList = ({filters}) => {
           brand={product.brand}
           price={product.price}
           pred_price={product.pred_price}
+          items={product.items}
           
         />
       ))}

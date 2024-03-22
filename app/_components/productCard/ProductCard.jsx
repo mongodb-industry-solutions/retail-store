@@ -8,11 +8,15 @@ import PropTypes from 'prop-types';
 import LeafyGreenProvider from "@leafygreen-ui/leafygreen-provider";
 import Card from "@leafygreen-ui/card";
 import { H1, H2, H3, Subtitle, Body, InlineCode, InlineKeyCode, Overline, Label, Description } from '@leafygreen-ui/typography';
-import CartAdd from "../cartAdd/CartAdd";
 import Modal from "@leafygreen-ui/modal";
 import Button from "@leafygreen-ui/button";
+import IconButton from "@leafygreen-ui/icon-button";
+import { RadioGroup, Radio } from "@leafygreen-ui/radio-group";
 
-const ProductCard = ({ photo, name, brand, price, pred_price }) => {
+
+import Image from "next/image";
+
+const ProductCard = ({ photo, name, brand, price, pred_price, items }) => {
     const [open, setOpen] = useState(false);
 
     return (
@@ -49,6 +53,18 @@ const ProductCard = ({ photo, name, brand, price, pred_price }) => {
                                         <Description className={styles.predPrice}>Predicted Price: ${pred_price}</Description>
 
                                         <Subtitle className={styles.price}>${price}</Subtitle>
+
+
+                                        <RadioGroup name="name-of-input-group" size="xsmall">
+                                            {items && items.map((item, index) => (
+                                                <label key={index}>
+                                                    <Radio value={`option-${index + 1}`} />
+                                                    {item.name}
+                                                </label>
+                                            ))}
+                                        </RadioGroup>
+
+
                                         <Button className={styles.detailCart}>
                                             <img src="/cart.png" alt="Add Cart" width={18} height={18} />
                                             Add to Cart
@@ -58,9 +74,9 @@ const ProductCard = ({ photo, name, brand, price, pred_price }) => {
                             </Modal>
                         </div>
 
-                        <div className={styles.cartAdd}>
-                            <CartAdd></CartAdd>
-                        </div>
+                        <IconButton className={styles.cartAdd} aria-label="Add to Cart">
+                            <Image src="/cart.png" alt="Cart" width={16} height={16}></Image>
+                        </IconButton>
                     </div>
 
                 </Card>
@@ -78,6 +94,7 @@ ProductCard.propTypes = {
     brand: PropTypes.string.isRequired,
     price: PropTypes.string.isRequired,
     pred_price: PropTypes.string.isRequired,
+    items: PropTypes.string.isRequired,
 };
 
 //<button onClick={addItemToCart}>Add Item to Cart</button>*/

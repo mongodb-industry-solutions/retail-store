@@ -14,6 +14,11 @@ export async function GET() {
                             type: "string",
                             path: "brand",
                         },
+
+                        masterCategory: {
+                            type: "string",
+                            path: "masterCategory",
+                        },
                     },
                 },
             },
