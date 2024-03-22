@@ -18,6 +18,41 @@ import Image from "next/image";
 
 const ProductCard = ({ photo, name, brand, price, pred_price, items }) => {
     const [open, setOpen] = useState(false);
+    const [selectedOption, setSelectedOption] = useState(null);
+
+    /* Choose quatity of item */
+    const [quantity, setQuantity] = useState(1);
+    const [maxStockAmount, setMaxStockAmount] = useState(0);
+
+    const handleIncrease = () => {
+        if (quantity < maxStockAmount) {
+            setQuantity(quantity + 1);
+        }
+    };
+
+    const handleDecrease = () => {
+        if (quantity > 1) {
+            setQuantity(quantity - 1);
+        }
+    };
+
+    const handleCloseModal = () => {
+        setOpen(false);
+        setSelectedOption(null); // Reset selected option to null when modal is closed
+        setQuantity(1); // Reset quantity to 1 when modal is closed
+    };
+
+    const handleModalClick = (e) => {
+        e.stopPropagation(); // Prevent modal from closing when clicking inside the modal
+    };
+
+    const handleRadioChange = (value, item) => {
+        setSelectedOption(value);
+        setMaxStockAmount(item.stock[1].amount);
+        setQuantity(1); // Reset quantity when size is changed
+    };
+
+    const isAddToCartDisabled = !selectedOption; // Disable "Add to Cart" button if no radio button is selected
 
     return (
         <div className={styles.productContainer}>
@@ -40,9 +75,9 @@ const ProductCard = ({ photo, name, brand, price, pred_price, items }) => {
 
                         <div>
 
-                            <Modal className={styles.modal} open={open} setOpen={setOpen}>
+                            <Modal className={styles.modal} open={open} setOpen={setOpen} onClose={handleCloseModal} onClick={handleModalClick}>
 
-                                <div className={styles.detailModal}>
+                                <div className={styles.detailModal} onClick={handleModalClick}>
                                     <div className={styles.detailPhoto}>
                                         <img src={photo} alt={name} width={400} height={400}></img>
                                     </div>
@@ -55,17 +90,27 @@ const ProductCard = ({ photo, name, brand, price, pred_price, items }) => {
                                         <Subtitle className={styles.price}>${price}</Subtitle>
 
 
-                                        <RadioGroup name="name-of-input-group" size="xsmall">
+                                        <Description>Select a Size:</Description>
+                                        <RadioGroup name="name-of-input-group" size="xsmall" value={selectedOption} onChange={handleRadioChange}>
                                             {items && items.map((item, index) => (
-                                                <label key={index}>
-                                                    <Radio value={`option-${index + 1}`} />
-                                                    {item.name}
-                                                </label>
+                                                <Radio
+                                                    key={index}
+                                                    value={`option-${index + 1}`}
+                                                    onClick={() => handleRadioChange(`option-${index + 1}`, item)}
+                                                    //style={selectedOption === `option-${index + 1}` ? { color: 'blue' } : {}}
+                                                >
+                                                    {item.name} - Stock: {item.stock[1].amount}
+                                                </Radio>
                                             ))}
                                         </RadioGroup>
+                                        <div className={styles.quantitySection}>
+                                            <Description>Quantity:</Description>
+                                            <button className={styles.quantityPicker} onClick={handleDecrease}>-</button>
+                                            <span className={styles.quantity}>{quantity}</span>
+                                            <button className={styles.quantityPicker} onClick={handleIncrease}>+</button>
+                                        </div>
 
-
-                                        <Button className={styles.detailCart}>
+                                        <Button className={styles.detailCart} disabled={isAddToCartDisabled}>
                                             <img src="/cart.png" alt="Add Cart" width={18} height={18} />
                                             Add to Cart
                                         </Button>

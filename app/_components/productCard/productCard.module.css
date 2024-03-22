@@ -69,3 +69,23 @@
     font-size: 30px;
     padding-bottom: 20px;
 }
+
+.quantitySection{
+    margin-top: 20px;
+}
+
+.quantityPicker{
+    border: none;
+    background-color: #E8EDEB;
+    
+}
+
+.quantity{
+    padding:10px
+}
+
+.selected-radio {
+    color: blue; /* Change color to indicate selection */
+    background-color: #00A35C;
+  }
+  
