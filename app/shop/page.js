@@ -28,7 +28,6 @@ export default function Page() {
         <div className={styles.sideBar}>
           <Sidebar filters={filters} onFilterChange={handleFilterChange}></Sidebar>
         </div>
-  <div> Test </div>
         <div className={styles.productList}>
           <ProductList filters={filters}/>
          
