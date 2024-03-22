@@ -14,6 +14,7 @@ COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED 1
 ENV NODE_ENV production
+ENV IST_SHARED_MONGODB mongodb+srv://luca:abba@ist-shared.n0kts.mongodb.net/?retryWrites=true&w=majority
 
 RUN npm run build
 
