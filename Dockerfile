@@ -13,7 +13,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED 1
-ENV IST_SHARED_MONGODB=mongodb+srv://luca:abba@ist-shared.n0kts.mongodb.net/?retryWrites=true&w=majority
+ENV NODE_ENV production
 
 RUN npm run build
 
@@ -22,6 +22,7 @@ WORKDIR /app
 
 ENV NODE_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
+ENV NODE_ENV production
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
