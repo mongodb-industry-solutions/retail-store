@@ -9,7 +9,7 @@ import Icon from "@leafygreen-ui/icon";
 import Button from "@leafygreen-ui/button";
 import Modal from "@leafygreen-ui/modal";
 import Banner from "@leafygreen-ui/banner";
-import { H1, H2, H3, Subtitle, Body, InlineCode, InlineKeyCode, Overline, Link } from '@leafygreen-ui/typography';
+import { H1, H2, H3, Subtitle, Body, Label, Description, InlineCode, InlineKeyCode, Overline, Link } from '@leafygreen-ui/typography';
 import TextInput from "@leafygreen-ui/text-input";
 
 
@@ -69,21 +69,39 @@ const Cart = () => {
               <p>Your cart is empty</p>
 
               <Button onClick={() => setOpen((o) => !o)}>Checkout</Button>
-              <Modal open={open} setOpen={setOpen}>
+              <Modal open={open} setOpen={setOpen} className={styles.modalCenter}>
 
-                <H1>Checkout</H1>
-                <Banner>
-                  Disclaimer: This is a simulated ecommerce store, we will not be gathering your email.
-                </Banner>
+                <div className={styles.modalContent}>
+                  <H1>Checkout</H1>
 
-                <TextInput
-                  className={styles.emailInput}
-                  label="Email"
-                  placeholder="hello@mongodb.com"
-                />
-                <Button onClick={handlePlaceOrder} className={styles.orderButton}>
-                  Place Order
-                </Button>
+                  <div className={styles.itemsInCart}>
+
+                    <Image src="/tshirt.jpg" alt="Cart" width={100} height={100}></Image>
+
+                    <div className={styles.itemDetails}>
+
+                      <Label>Item Name Placeholder</Label>
+                      <Description>Item Brand</Description>
+                      <Description>Size and Quantity</Description>
+                      <Subtitle>Price $$$</Subtitle>
+
+                    </div>
+
+                    <IconButton className={styles.remove} aria-label="Add to Cart">
+                      <Image src="/trash.png" alt="Remove Item" width={16} height={16}></Image>
+                    </IconButton>
+
+                  </div>
+
+                  <hr className={styles.hr}></hr>
+                  
+                  <Banner>
+                    This is a simulated ecommerce store, we will not be gathering any personal information.
+                  </Banner>
+                  <Button onClick={handlePlaceOrder} className={styles.orderButton}>
+                    Place Order
+                  </Button>
+                </div>
 
               </Modal>
             </div>
