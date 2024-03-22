@@ -10,6 +10,7 @@ import Checkbox from "@leafygreen-ui/checkbox";
 function Sidebar({ filters, onFilterChange }) {
 
     const [selectedBrands, setSelectedBrands] = useState([]);
+    const [selectedCategories, setSelectedCategories] = useState([]);
     const [facets, setFacets] = useState([]);
 
     useEffect(() => {
@@ -37,6 +38,19 @@ function Sidebar({ filters, onFilterChange }) {
         }
         setSelectedBrands(updatedSelectedBrands);
         onFilterChange({ ...filters, selectedBrands: updatedSelectedBrands });
+    };
+
+    const handleCategoryChange = (event) => {
+        const item = event;
+        let updatedSelectedCategories = selectedCategories;
+
+        if (selectedCategories.includes(item)) {
+            updatedSelectedCategories = selectedCategories.filter((g) => g !== item);
+        } else {
+            updatedSelectedCategories = [...selectedCategories, item];
+        }
+        setSelectedCategories(updatedSelectedCategories);
+        onFilterChange({ ...filters, selectedCategories: updatedSelectedCategories });
     };
 
 
@@ -69,6 +83,18 @@ function Sidebar({ filters, onFilterChange }) {
 
                 <div className={styles.brand}>
                     <Body className={styles.filterTitle}>Type of Product</Body>
+
+                    <div className={styles.checkboxList}>
+                        {facets?.[0]?.facet?.masterCategory?.buckets?.map((bucket) => (
+                            <Checkbox
+                                key={bucket._id}
+                                label={`${bucket._id} (${bucket.count})`}
+                                checked={selectedCategories.includes(bucket._id)}
+                                onChange={() => handleCategoryChange(bucket._id)}
+                                className={styles.checkbox}
+                            />
+                        ))}
+                    </div>
                 </div>
 
 
