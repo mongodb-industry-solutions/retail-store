@@ -36,13 +36,13 @@ const ProductList = ({ filters }) => {
       {products.map((product, index) => (
         <div key={index}>
           <ProductCard
+            id={product.id}
             photo={product.photo}
             name={product.name}
             brand={product.brand}
             price={product.price}
             items={product.items}
           />
-          <PredPrice productId={product.id} initialPredPrice={product.pred_price} />
         </div>
       ))}
     </div>
