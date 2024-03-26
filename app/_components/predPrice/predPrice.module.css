@@ -1,6 +1,11 @@
 .predPrice{
     color: #B45AF2;
-    padding-top: 10px;
+   
     font-weight: 600;
     font-size: 15px;
+}
+
+.arrowImg{
+    width: 20px;
+    margin-bottom: -2px !important;
 }

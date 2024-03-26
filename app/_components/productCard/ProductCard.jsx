@@ -97,13 +97,13 @@ const ProductCard = ({ id, photo, name, brand, price, pred_price, items }) => {
                   <div className={styles.detailInfo}>
                     <Label className={styles.productName}>{name}</Label>
                     <Description>{brand}</Description>
-                    <Description className={styles.predPrice}>
-                      Predicted Price: ${pred_price}
-                    </Description>
+                    
 
                     <Subtitle className={styles.price}>${price}</Subtitle>
 
-                    <Description>Select a Size:</Description>
+                {/*
+                
+                <Description>Select a Size:</Description>
                     <RadioGroup
                       name="name-of-input-group"
                       size="xsmall"
@@ -124,6 +124,8 @@ const ProductCard = ({ id, photo, name, brand, price, pred_price, items }) => {
                           </Radio>
                         ))}
                     </RadioGroup>
+
+                    */}
                     <div className={styles.quantitySection}>
                       <Description>Quantity:</Description>
                       <button

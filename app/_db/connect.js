@@ -9,7 +9,7 @@ const dbName = "dotLocalStore";
 export async function connectToDatabase() {
   try {
     await client.connect();
-    console.log("Connected successfully to MongoDB Atlas");
+    //console.log("Connected successfully to MongoDB Atlas");
     return client.db(dbName);
   } catch (error) {
     console.error("Error connecting to MongoDB:", error);
