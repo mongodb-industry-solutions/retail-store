@@ -72,7 +72,7 @@ def push_event_to_pubsub(event):
 
 if __name__ == "__main__":
     products = fetch_products()
-    num_behaviors_per_cycle = 2
+    num_behaviors_per_cycle = 100
 
     try:
         while True:
