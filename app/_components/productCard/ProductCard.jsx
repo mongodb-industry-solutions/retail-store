@@ -3,7 +3,7 @@
 import { useState } from "react";
 import styles from "./productCard.module.css";
 import PropTypes from 'prop-types';
-
+import PredPrice from "../predPrice/PredPrice";
 
 import LeafyGreenProvider from "@leafygreen-ui/leafygreen-provider";
 import Card from "@leafygreen-ui/card";
@@ -64,8 +64,7 @@ const ProductCard = ({ photo, name, brand, price, pred_price, items }) => {
                         <img src={photo} alt={name} width={200} height={200}></img>
                         <Label className={styles.productName}>{name}</Label>
                         <Description>{brand}</Description>
-                        <Description className={styles.predPrice}>Predicted Price: ${pred_price}</Description>
-
+                        <PredPrice />
                     </div>
 
                     <div className={styles.cardFooter}>

@@ -6,7 +6,7 @@
   margin-top: 10px;
   margin-bottom: 10px;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 14px;
   padding-bottom: 5px;
 }
 
@@ -178,11 +178,26 @@
 
 .toggle {
   size: small;
-  margin-left: 20px;
-  margin-top: 2px;
+  margin-top: 20px;
 }
 
 .toggleLabel {
   margin-left: 10px;
   margin-top: 7px;
+}
+
+.subtitle{
+  margin-right: 10px;
+}
+
+.openStoreSection{
+  margin-bottom: 20px;
+}
+
+.openStore{
+  display: flex;
+}
+
+.infoSprinkle{
+  margin-top: 10px;
 }
