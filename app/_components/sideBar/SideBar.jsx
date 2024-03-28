@@ -74,16 +74,16 @@ function Sidebar({ filters, onFilterChange }) {
     setIsScriptRunning(!isScriptRunning);
     try {
       if (!isScriptRunning) {
-        const startResponse = await axios.get("http://localhost:8000/start");
+        const startResponse = await axios.get(`http://:8000/start`);
         console.log(startResponse.data.message);
       } else {
-        const stopResponse = await axios.get("http://localhost:8000/stop");
+        const stopResponse = await axios.get(`http://:8000/stop`);
         console.log(stopResponse.data.message);
       }
     } catch (error) {
       console.error("Error toggling the script:", error);
-    }
-  };
+  }
+}
 
   return (
     <div className={styles.filterContainer}>
@@ -146,10 +146,6 @@ function Sidebar({ filters, onFilterChange }) {
           </div>
         </div>
       </>
-
-
-
-
     </div>
   );
 }
