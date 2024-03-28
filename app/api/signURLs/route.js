@@ -1,6 +1,6 @@
 import { Storage } from "@google-cloud/storage";
 import { NextResponse } from "next/server";
-import serviceAccountKey from "../../../ist-retail-demo-c2e70dfceaa3.json";
+import serviceAccountKey from "../../_resources/ist-retail-demo-c2e70dfceaa3.json";
 import { connectToDatabase } from "../../_db/connect";
 
 export async function GET(req) {
