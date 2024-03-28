@@ -15,7 +15,7 @@ const Featured = () => {
             
           
             <ProductCard
-          photo="/lego.jpg"
+          photo="/lego.JPG"
           name="University Lego"
           brand="MongoDB"
           elasticity="-1600"
