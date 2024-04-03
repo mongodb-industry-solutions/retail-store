@@ -1,0 +1,9 @@
+functions-framework==3.*
+pymongo
+scikit-learn==1.2.2
+numpy
+google-cloud-aiplatform
+google-auth
+google-cloud-storage
+pandas
+joblib
