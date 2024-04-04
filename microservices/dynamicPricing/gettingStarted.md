@@ -33,15 +33,10 @@ The following table outlines the key fields, their data types, and a brief descr
 
 > [!NOTE]
 > `_id` and `id`: The collection uses both an ObjectID (_id) for MongoDB's internal use and a numeric id for external reference.
-
 > `image` Object: Contains the url field with a link to the product's image.
-
 > `price` Object: Nested structure with amount as an integer and currency as a string.
-
 > `items` Array: Each object within this array represents a different size or variant of the product, including stock levels at various locations and delivery times.
-
 > `total_stock_sum` Array: Provides a summary of stock levels across different types of locations (e.g., store, warehouse) to facilitate inventory management.
-
 > `pred_price`: This field uses a double data type to accommodate the precision required for pricing predictions.
 
 The collection JSON objects would look like: 
@@ -261,7 +256,6 @@ __Connect to Your Cluster__: Use the connection string provided by Atlas to conn
 + __Develop the Pricing Logic:__ Modify the dynamicPricing service to implement your pricing algorithm. This could involve analyzing historical data, considering competitor pricing, and integrating real-time supply-demand signals.
 
 >[!TIP]
-
 >If you want to try a really simple pricing algorithm check out [this jupyter notebook guide](dynamicPricing/modelTraining_notebook.ipynb). You'll need the same data model we are using in this small demo.
 
 
