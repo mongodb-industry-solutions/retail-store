@@ -32,7 +32,6 @@ The following table outlines the key fields, their data types, and a brief descr
 | `pred_price`            | Double           | Predicted price of the product based on machine learning models.                              |
 
 > [!NOTE]
-
 > `_id` and `id`: The collection uses both an ObjectID (_id) for MongoDB's internal use and a numeric id for external reference.
 
 > `image` Object: Contains the url field with a link to the product's image.
@@ -230,7 +229,6 @@ The architecture is designed to enhance pricing strategies through deep learning
 ## Step 1: Setting Up MongoDB Atlas
 
 >[!TIP]
-
 >Make sure to follow [this](https://www.mongodb.com/mongodb-on-google-cloud) "How to" guide.
 
 __Create a Cluster__: Sign in to your MongoDB Atlas account and create a new cluster. Choose a region that is closest to your user base for optimal performance.
@@ -242,7 +240,6 @@ __Connect to Your Cluster__: Use the connection string provided by Atlas to conn
 ## Step 2: Setting Up GCP
 
 >[!TIP]
-
 >To configure your GCP project visit [this](https://developers.google.com/workspace/guides/create-project) guide.
 
 + __Create a GCP Project:__ Log into your Google Cloud Console and create a new project for your microservice.
