@@ -47,24 +47,24 @@ The following table outlines the key fields, their data types, and a brief descr
 The collection JSON objects would look like: 
 ```JSON
 {
-  "_id": {"$oid": "65e1e313cffbb90f3409a3cd"},
-  "name": "Green MongoDB Puffer Vest ",
+  "_id": "65e1e313cffbb90f3409a3cd",
+  "name": "Green MongoDB Puffer Vest",
   "code": "GMPV-MDB0001",
   "autoreplenishment": false,
-  "id": {"$numberInt": "98796"},
+  "id": 98796,
   "gender": "Unisex",
   "masterCategory": "Apparel",
   "subCategory": "Topwear",
   "articleType": "Vest",
   "baseColour": "Green",
   "season": "Winter",
-  "year": {"$numberInt": "2024"},
+  "year": 2024,
   "usage": "Casual",
   "image": {
-    "url": "https://storage.googleapis.com/retail-product-images/storeProducts/98796.jpg?GoogleAccessId=bucket-images%40ist-retail-demo.iam.gserviceaccount.com&Expires=1712282400&Signature=MZyCwTcDoG4tHPeVkTU%2B91iQFzQAN2KYngh5luQKNE0ZueoyCoik11IeHk4YeDr%2FVCtBMawqhrtv92kxLxyUvW%2B6nEISvn6aZFkn04eW5SgbuXfu3fkqb7vVUtL6Bql%2FM%2F6FF17RATPzA3KOROUonaJF1EE2ybKYV%2BJFHigD%2BaD4enwZn78CGZesPIm2j535tmHqDmWqosbcBwqyCpA6wUTByf%2Bz7RoB6qrjynoETa8BZTbfMA4Lqru53QduFk5qZhFtRbnnpUTs5s8NE%2BKJ%2FG7MbgTmV0i5nLNXqxB8FiDARz%2B61PtWnrsl%2FhPlUpb96%2B7hDD2IOyjLd42ELazlVw%3D%3D"
+    "url": "https://r.mtdv.me/mongodb-images"
   },
   "price": {
-    "amount": {"$numberInt": "49"},
+    "amount": 49,
     "currency": "USD"
   },
   "description": "Make a statement with this vibrant green puffer vest showcasing the MongoDB logo, offering both warmth and a pop of color to your outfit, perfect for outdoor adventures or everyday wear.",
@@ -75,72 +75,72 @@ The collection JSON objects would look like:
       "name": "S",
       "unit": "units",
       "delivery_time": {
-        "amount": {"$numberInt": "3"},
+        "amount": 3,
         "unit": "seconds"
       },
       "stock": [
         {
           "location": {
             "type": "store",
-            "id": {"$oid": "65a545fb4a8f64e8f88fb897"}
+            "id": "65a545fb4a8f64e8f88fb897"
           },
-          "amount": {"$numberInt": "2"},
-          "threshold": {"$numberInt": "1"},
-          "target": {"$numberInt": "2"},
-          "ordered": {"$numberInt": "0"}
+          "amount": 2,
+          "threshold": 1,
+          "target": 2,
+          "ordered": 0
         },
         {
           "location": {
             "type": "store",
-            "id": {"$oid": "65a545fb4a8f64e8f88fb896"}
+            "id": "65a545fb4a8f64e8f88fb896"
           },
-          "amount": {"$numberInt": "2"},
-          "threshold": {"$numberInt": "1"},
-          "target": {"$numberInt": "2"},
-          "ordered": {"$numberInt": "0"}
+          "amount": 2,
+          "threshold": 1,
+          "target": 2,
+          "ordered": 0
         },
         {
           "location": {
             "type": "warehouse"
           },
-          "amount": {"$numberInt": "20"}
+          "amount": 20
         }
       ]
     },
     {
-      "sku": "GMPV-MDB0001-M ",
-      "name": "M ",
+      "sku": "GMPV-MDB0001-M",
+      "name": "M",
       "unit": "units",
       "delivery_time": {
-        "amount": {"$numberInt": "3"},
+        "amount": 3,
         "unit": "seconds"
       },
       "stock": [
         {
           "location": {
             "type": "store",
-            "id": {"$oid": "65a545fb4a8f64e8f88fb897"}
+            "id": "65a545fb4a8f64e8f88fb897"
           },
-          "amount": {"$numberInt": "5"},
-          "threshold": {"$numberInt": "2"},
-          "target": {"$numberInt": "5"},
-          "ordered": {"$numberInt": "0"}
+          "amount": 5,
+          "threshold": 2,
+          "target": 5,
+          "ordered": 0
         },
         {
           "location": {
             "type": "store",
-            "id": {"$oid": "65a545fb4a8f64e8f88fb896"}
+            "id": "65a545fb4a8f64e8f88fb896"
           },
-          "amount": {"$numberInt": "5"},
-          "threshold": {"$numberInt": "2"},
-          "target": {"$numberInt": "5"},
-          "ordered": {"$numberInt": "0"}
+          "amount": 5,
+          "threshold": 2,
+          "target": 5,
+          "ordered": 0
         },
         {
           "location": {
             "type": "warehouse"
           },
-          "amount": {"$numberInt": "50"}
+          "amount": 50
         }
       ]
     }
@@ -149,32 +149,33 @@ The collection JSON objects would look like:
     {
       "location": {
         "type": "store",
-        "id": {"$oid": "65a545fb4a8f64e8f88fb896"}
+        "id": "65a545fb4a8f64e8f88fb896"
       },
-      "amount": {"$numberInt": "12"},
-      "threshold": {"$numberInt": "5"},
-      "target": {"$numberInt": "12"},
-      "ordered": {"$numberInt": "0"}
+      "amount": 12,
+      "threshold": 5,
+      "target": 12,
+      "ordered": 0
     },
     {
       "location": {
         "type": "warehouse"
       },
-      "amount": {"$numberInt": "120"}
+      "amount": 120
     },
     {
       "location": {
         "type": "store",
-        "id": {"$oid": "65a545fb4a8f64e8f88fb897"}
+        "id": "65a545fb4a8f64e8f88fb897"
       },
-      "amount": {"$numberInt": "12"},
-      "threshold": {"$numberInt": "5"},
-      "target": {"$numberInt": "12"},
-      "ordered": {"$numberInt": "0"}
+      "amount": 12,
+      "threshold": 5,
+      "target": 12,
+      "ordered": 0
     }
   ],
-  "pred_price": {"$numberDouble": "8.6975069"}
+  "pred_price": 8.6975069
 }
+
 ```
 ### Events Collection (Feature Store)
 The purpose of this notebook is to demonstrate how to train a TensorFlow neural network model for predicting an optimal price based on e-commerce events stored in a MongoDB Atlas feature store.
