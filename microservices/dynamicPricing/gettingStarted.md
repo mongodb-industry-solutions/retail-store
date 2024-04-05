@@ -23,11 +23,11 @@ The following table outlines the key fields, their data types, and a brief descr
 
 | Field Name              | Data Type        | Description                                                                                   |
 |-------------------------|------------------|-----------------------------------------------------------------------------------------------|
-| `_id`                   | ObjectID         | Unique identifier for the document.                                                           |
+| `_id`                   | ObjectID         | Unique identifier for the document. Used by MongoDB for internal purposes.                                                           |
 | `name`                  | String           | Name of the product.                                                                          |
 | `code`                  | String           | Unique code identifying the product.                                                          |
 | `autoreplenishment`     | Boolean          | Indicates if the product is set up for auto-replenishment.                                    |
-| `id`                    | Integer          | Numeric identifier for the product.                                                           |
+| `id`                    | Integer          | Numeric identifier for the product. Numeric identifier for external reference.                                                           |
 | `gender`                | String           | Gender category the product is intended for.                                                  |
 | `masterCategory`        | String           | Broad category for the product.                                                               |
 | `subCategory`           | String           | More specific category under the master category.                                             |
@@ -36,21 +36,13 @@ The following table outlines the key fields, their data types, and a brief descr
 | `season`                | String           | Season the product is intended for.                                                           |
 | `year`                  | Integer          | Year of the product release.                                                                  |
 | `usage`                 | String           | Intended use of the product, e.g., Casual.                                                    |
-| `image`                 | Object           | Contains the URL of the product image.                                                        |
-| `price`                 | Object           | Contains the amount and currency of the product price.                                        |
+| `image`                 | Object           | Contains the URL of the product image.                                                     |
+| `price`                 | Object           | Contains the amount and currency of the product price. Nested structure.                                       |
 | `description`           | String           | Detailed description of the product.                                                          |
 | `brand`                 | String           | Brand of the product.                                                                         |
 | `items`                 | Array of Objects | Contains variants of the product, including size, stock information, and delivery time.       |
 | `total_stock_sum`       | Array of Objects | Aggregated stock information across different locations.                                      |
-| `pred_price`            | Double           | Predicted price of the product based on machine learning models.                              |
-
-> [!NOTE]
-> `_id` and `id`: The collection uses both an ObjectID (_id) for MongoDB's internal use and a numeric id for external reference.
-> `image` Object: Contains the url field with a link to the product's image.
-> `price` Object: Nested structure with amount as an integer and currency as a string.
-> `items` Array: Each object within this array represents a different size or variant of the product, including stock levels at various locations and delivery times.
-> `total_stock_sum` Array: Provides a summary of stock levels across different types of locations (e.g., store, warehouse) to facilitate inventory management.
-> `pred_price`: This field uses a double data type to accommodate the precision required for pricing predictions.
+| `pred_price`            | Double           | Predicted price of the product based on machine learning models. Uses a double data type for precision in pricing predictions.                              |
 
 The collection JSON objects would look like: 
 ```
