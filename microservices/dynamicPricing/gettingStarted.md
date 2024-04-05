@@ -1,4 +1,16 @@
 # Building a Reactive Dynamic Pricing Microservice
+![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)
+![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
+![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+![Google Cloud](https://img.shields.io/badge/GoogleCloud-%234285F4.svg?style=for-the-badge&logo=google-cloud&logoColor=white)
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
+![Keras](https://img.shields.io/badge/Keras-%23D00000.svg?style=for-the-badge&logo=Keras&logoColor=white)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-%23F7931E.svg?style=for-the-badge&logo=scikit-learn&logoColor=white)
+![TensorFlow](https://img.shields.io/badge/TensorFlow-%23FF6F00.svg?style=for-the-badge&logo=TensorFlow&logoColor=white)
 
 This guide outlines the steps to create a reactive dynamic pricing microservice using MongoDB Atlas for data storage and management, and Google Cloud Platform (GCP) for computing and hosting services.
 
@@ -273,7 +285,14 @@ __Connect to Your Cluster__: Use the connection string provided by Atlas to conn
 
 + __Create a GCP Project:__ Log into your Google Cloud Console and create a new project for your microservice.
 
-+ __Enable APIs:__ Ensure that the necessary APIs (e.g., Compute Engine, VertexAI, ) are enabled for your project.
++ __Enable APIs:__ Ensure that the necessary APIs are enabled for your project. In this demo we are using: 
+
+|Service API | Explanation|
+|:------------:|:------------:|
+|Cloud Storage | Saving data scalers as ```.joblib``` files |
+|Cloud Function | Orchestrating the data flow |
+|Pub/Sub | Ingesting live streaming of ecommerce events to loosely couple subscription based microservices |
+|VertexAI | Training notebook and model endpoint |
 
 + __Configure GCP CLI:__ Install and initialize the Google Cloud CLI. Authenticate with your GCP account and set your project as the default.
 
@@ -297,3 +316,9 @@ __Connect to Your Cluster__: Use the connection string provided by Atlas to conn
 + __server.py__ FastAPI server. Make sure you run ```pip install requirements.txt```in the VM or Container that will host the microservice.
 
 + __cloudFunction__ Google CloudFunction that will orchestrate converting events data into tensors and its input into the feature store collection as well as invoking the VertexAI Endpoint model. Make sure you add the ```requirements.txt``` file in the Cloud Function folder structure over GCP.
+
+______________________
+
+[Back to top](#top)
+
+[:arrow_up:](#top)
