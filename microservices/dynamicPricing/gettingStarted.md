@@ -45,7 +45,7 @@ The following table outlines the key fields, their data types, and a brief descr
 | `pred_price`            | Double           | Predicted price of the product based on machine learning models. Uses a double data type for precision in pricing predictions.                              |
 
 The collection JSON objects would look like: 
-```
+```JSON
 {
   "_id": {"$oid": "65e1e313cffbb90f3409a3cd"},
   "name": "Green MongoDB Puffer Vest ",
@@ -190,7 +190,7 @@ Our ecommerce store has the following data model for capturing user behavior eve
 | encoded_name  | Integer   | An encoded version of the product name for machine learning models | 23363195            |
 
 An events object, with it's associated tensors would look like: 
-````
+````JSON
 {
   "_id": "660161b999d84b36a26c164f",
   "product_name": "MongoDB Notebook",
