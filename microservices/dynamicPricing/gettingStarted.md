@@ -312,6 +312,4 @@ __Connect to Your Cluster__: Use the connection string provided by Atlas to conn
 
 ______________________
 
-[Back to top](#top)
-
-[:arrow_up:](#top)
+[:arrow_up:](#top)[Back to top](#top)[:arrow_up:](#top)
