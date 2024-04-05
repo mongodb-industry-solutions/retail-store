@@ -5,7 +5,8 @@ This guide outlines the steps to create a reactive dynamic pricing microservice 
 ## Data Model
 We'll work with two main collections stored over MongoDB Atlas.
 
-### Products
+### Products Collection
+
 The following table outlines the key fields, their data types, and a brief description for each.
 
 | Field Name              | Data Type        | Description                                                                                   |
@@ -171,7 +172,40 @@ The collection JSON objects would look like:
   "pred_price": {"$numberDouble": "8.6975069"}
 }
 ```
+### Events Collection (Feature Store)
+The purpose of this notebook is to demonstrate how to train a TensorFlow neural network model for predicting an optimal price based on e-commerce events stored in a MongoDB Atlas feature store.
+Our ecommerce store has the following data model for capturing user behavior events:
 
+| Field         | Data Type | Description                                               | Example Values           |
+|---------------|-----------|-----------------------------------------------------------|--------------------------|
+| product_name  | String    | The name of the product                                   | "MongoDB Notebook"       |
+| product_id    | Integer   | Unique identifier for the product                         | 98803                    |
+| action        | String    | Type of action performed on the product (user interaction)| "view", "add_to_cart", "purchase" |
+| price         | Float     | Price of the product                                      | 18.99                    |
+| timestamp     | String    | ISO format timestamp of when the event occurred           | "2024-03-25T12:36:25.428461" |
+| encoded_name  | Integer   | An encoded version of the product name for machine learning models | 23363195            |
+
+An events object, with it's associated tensors would look like: 
+````
+{
+  "_id": "660161b999d84b36a26c164f",
+  "product_name": "MongoDB Notebook",
+  "product_id": 98803,
+  "action": "view",
+  "price": {
+    "amount": 15,
+    "currency": "USD"
+  },
+  "timestamp": "2024-03-25T12:36:25.428461",
+  "encoded_name": 23363195,
+  "tensor": [
+    [
+      0.0005624396083488047,
+      -0.9579731008383453
+    ]
+  ]
+}
+````
 
 ## Demo Components
 ### Data Ingestion with Google Cloud Pub/Sub ###
@@ -258,8 +292,8 @@ __Connect to Your Cluster__: Use the connection string provided by Atlas to conn
 >[!TIP]
 >If you want to try a really simple pricing algorithm check out [this jupyter notebook guide](dynamicPricing/modelTraining_notebook.ipynb). You'll need the same data model we are using in this small demo.
 
++ __generator.py__ This python script will generate fake customer events following the data model explained above. The events will be pushed to a Pub/Sub topic and to your Atlas feature store collection. You can tweak the number of events and their cadence directly in the code.
 
++ __server.py__ FastAPI server. Make sure you run ```pip install requirements.txt```in the VM or Container that will host the microservice.
 
-```gcloud auth login```
-
-```gcloud config set project [YOUR_PROJECT_ID]```
++ __cloudFunction__ Google CloudFunction that will orchestrate converting events data into tensors and its input into the feature store collection as well as invoking the VertexAI Endpoint model. Make sure you add the ```requirements.txt``` file in the Cloud Function folder structure over GCP.
