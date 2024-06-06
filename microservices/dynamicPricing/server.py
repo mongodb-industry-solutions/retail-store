@@ -1,9 +1,8 @@
-from typing import Union
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import subprocess, os, signal
 from fastapi.responses import JSONResponse
-from fastapi import APIRouter
+import asyncio
 
 app = FastAPI()
 
@@ -25,6 +24,7 @@ async def run_dataloader():
     try:
         print("Running...")
         running_process = subprocess.Popen(['python3', 'generator.py'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        asyncio.create_task(stop_script_after_timeout(120)) 
         return JSONResponse(content={"message": "generator.py started successfully."}, status_code=200)
     except Exception as e:
         return JSONResponse(content={"message": "Failed to start generator.py", "error": str(e)}, status_code=500)
@@ -34,11 +34,18 @@ async def stop_dataloader():
     global running_process
     if running_process is None:
         return JSONResponse(content={"message": "No script is currently running."}, status_code=400)
-    try:
-        running_process.send_signal(signal.SIGINT)  
-        stdout, stderr = running_process.communicate()  
-        running_process = None
-        return JSONResponse(content={"message": "Script stopped successfully.", "output": stdout, "error": stderr}, status_code=200)
-    except Exception as e:
-        return JSONResponse(content={"message": "Failed to stop the script", "error": str(e)}, status_code=500)
+    return await force_stop_script()
 
+async def force_stop_script():
+    global running_process
+    try:
+        running_process.send_signal(signal.SIGINT)   
+        running_process = None
+        print("Script stopped successfully after 2 minutes")
+    except Exception as e:
+        print("Script failed to stop after 2 minutes")
+
+async def stop_script_after_timeout(timeout):
+    await asyncio.sleep(timeout)  
+    if running_process:
+        await force_stop_script() 
