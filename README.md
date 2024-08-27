@@ -28,7 +28,7 @@ Clone the repository from GitHub into your computer:
 git clone https://github.com/mongodb-industry-solutions/retail-store.git
 ```
 
-The, install dependencies through npm
+Then, install dependencies through npm
 ```bash
 cd retail-store
 npm install
@@ -36,7 +36,7 @@ npm install
 
 ### Part 2 - Running the server
 
-Then, run the development server:
+To run the development server execute the following command inside /retail-store:
 
 ```bash
 npm run dev
@@ -48,7 +48,10 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Finally, navigate to [http://localhost:3000](http://localhost:3000) with your browser. You should be able to see the landing page, like so:
+
+![Alt Text](media/landing.png)
+
 
 
 # Architecture
