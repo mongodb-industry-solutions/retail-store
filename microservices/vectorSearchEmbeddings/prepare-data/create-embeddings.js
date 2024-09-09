@@ -25,15 +25,6 @@ const FIELDS_TO_EMBED = [
   "brand"
 ];
 
-const EMBEDDING_ENDPOINT = process.env.EMBEDDING_ENDPOINT;
-if (!EMBEDDING_ENDPOINT) {
-    throw new Error(`Add the URL of your Google Cloud Function for generating embeddings to .env: EMBEDDING_ENDPOINT=<your-endpoint>`);
-//`Add the URL of your Google Cloud Function for generating embeddings to .env:
-
-//EMBEDDING_ENDPOINT=<your-endpoint>`
-//    );
-}
-
 const client = new MongoClient(process.env.ATLAS_URI);
 console.log(" - Connecting to MongoDB Atlas...", process.env.ATLAS_URI);
 const connection = await client.connect();
@@ -65,10 +56,12 @@ async function vectorizeProducts() {
         "description": 1,
         "brand": 1
       }
+    },
+    {
+      $limit: 100
     }
   ]);
-  let docCount = collection.countDocuments({id:14293})
-  console.log(`Found ${await docCount} documents`)
+
   await vectorizeData(
     cursor,
     collection,
@@ -92,7 +85,7 @@ async function vectorizeData(cursor, collection, fieldsToEmbed, embeddingFieldNa
         try {
           const document = await cursor.next();
           if (!document) continue
-          console.log('doc, ', document)
+          //console.log('doc: ', document)
           docsToVectorize.push(document);
         } catch(error) {
           continue;
@@ -157,7 +150,7 @@ async function getEmbeddings(text) {
   }
 
   const body = JSON.stringify({ text });
-  console.log(" - gc function body, ", body)
+  //console.log(" - gc function body, ", body)
 
   // Call the Python function
   let options = {
@@ -177,7 +170,6 @@ async function getEmbeddings(text) {
     }
   } catch (error) {
     console.error(error);
-    //console.error(response);
     throw new Error("Parsing embeddings failed.");
   }
 
