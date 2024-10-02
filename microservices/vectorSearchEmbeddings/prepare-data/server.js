@@ -25,7 +25,9 @@ async function loadJson(filePath) {
   }
 }
 const EMBEDDING_FIELD_NAME = "text_embedding";
-
+const FIELDS_TO_EMBED = [
+    "description"
+]
 
 router.get("/embedAllProducts", async (ctx) => {
     console.log('embedAllProducts')
