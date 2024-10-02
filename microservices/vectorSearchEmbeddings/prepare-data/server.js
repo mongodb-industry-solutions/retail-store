@@ -24,6 +24,8 @@ async function loadJson(filePath) {
     throw error;
   }
 }
+const EMBEDDING_FIELD_NAME = "text_embedding";
+
 
 router.get("/embedAllProducts", async (ctx) => {
     console.log('embedAllProducts')
