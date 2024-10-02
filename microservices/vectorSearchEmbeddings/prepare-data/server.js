@@ -34,7 +34,7 @@ router.get("/embedAllProducts", async (ctx) => {
   let db;
   try {
     db = await connectToDatabase();
-    const collection = db.collection(process.env.DB_NAME);
+    const collection = db.collection("products")//process.env.COLLECTION_NAME);
 
     const cursor = collection.aggregate([
         {
