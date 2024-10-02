@@ -75,9 +75,9 @@ router.get("/embedAllProducts", async (ctx) => {
     ctx.body = { error: "Failed to process request" };
     ctx.status = 500;
   } finally {
-    if (db) {
-      await closeDatabase();
-    }
+    // if (db) {
+    //   await closeDatabase();
+    // }
   }
 });
 
@@ -105,9 +105,9 @@ router.get("/embedProduct", async (ctx) => {
     ctx.body = { error: "Failed to process request" };
     ctx.status = 500;
   } finally {
-    if (db) {
-      await closeDatabase();
-    }
+    // if (db) {
+    //   await closeDatabase();
+    // }
   }
 });
 
