@@ -39,7 +39,7 @@ router.get("/embedAllProducts", async (ctx) => {
     const cursor = collection.aggregate([
         {
           $match: {
-            [EMBEDDING_FIELD_NAME]: { $eq: null }
+           // [EMBEDDING_FIELD_NAME]: { $eq: null }
           }
         },
         {
