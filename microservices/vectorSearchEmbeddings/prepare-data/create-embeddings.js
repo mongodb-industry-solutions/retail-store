@@ -117,7 +117,8 @@ async function getEmbeddings(text) {
       verbose: true,
       scriptPath: path.join(__dirname, './../embedder')
   };
-  let response = await PythonShell.run("embedder_function.py", options)
+  //PythonShell.run("source embedder/bin/activate")
+  let response = await PythonShell.run("source embedder/bin/activate && embedder_function.py", options)
   try {
     response = JSON.parse(response[0])
     console.log(" - gc function response status, ", response.status)
