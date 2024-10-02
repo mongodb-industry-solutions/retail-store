@@ -6,6 +6,7 @@ import { PythonShell } from 'python-shell';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { type } from "os";
+
 // Resolve __dirname for ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -21,7 +22,7 @@ const connection = await client.connect();
 console.log(" - Connected to mdb");
 
 // await vectorizeProducts();
-await clearEmbeddings();
+// await clearEmbeddings();
 
 await client.close();
 
