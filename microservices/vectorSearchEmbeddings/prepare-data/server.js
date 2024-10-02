@@ -74,12 +74,56 @@ router.get("/embedAllProducts", async (ctx) => {
     console.error("Error processing request:", error);
     ctx.body = { error: "Failed to process request" };
     ctx.status = 500;
-  } finally {
-    // if (db) {
-    //   await closeDatabase();
-    // }
-  }
+  } 
 });
+
+// TODO nice log for testing
+async function main(){
+    console.log('embedAllProducts')
+    let db;
+    try {
+      db = await connectToDatabase();
+      const collection = db.collection("products")//process.env.COLLECTION_NAME);
+  
+      const cursor = collection.aggregate([
+          {
+            $match: {}
+          },
+          {
+            $project: {
+              "name": 1,
+              "code": 1,
+              "masterCategory": 1,
+              "subCategory": 1,
+              "articleType": 1,
+              "baseColour": 1,
+              "description": 1,
+              "brand": 1
+            }
+          },
+          {
+            $limit: 100
+          }
+        ]);
+      
+        let result = await vectorizeData(
+          cursor,
+          collection,
+          FIELDS_TO_EMBED,
+          EMBEDDING_FIELD_NAME
+        );
+  
+        console.log('hola')
+        console.log(result)
+
+    } catch (error) {
+      console.error("Error processing request:", error);
+    } finally {
+      if (db) {
+        await closeDatabase();
+      }
+    }
+}
 
 router.get("/embedProduct", async (ctx) => {
     console.log('embedAllProducts')
