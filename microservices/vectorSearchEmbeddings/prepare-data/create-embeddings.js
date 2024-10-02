@@ -112,7 +112,7 @@ async function getEmbeddings(text) {
   // Call the Python function
   let options = {
       //pythonPath: '/usr/bin/python3',
-      pythonPath: '/embedder/bin/activate',
+      pythonPath: '../embedder/emb/bin/python3', 
       args: body, // Example argument passed to the Python script
       pythonOptions: ['-u'],
       verbose: true,
