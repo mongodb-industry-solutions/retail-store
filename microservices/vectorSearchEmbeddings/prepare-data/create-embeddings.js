@@ -21,10 +21,10 @@ console.log(" - Connecting to MongoDB Atlas...", process.env.ATLAS_URI);
 const connection = await client.connect();
 console.log(" - Connected to mdb");
 
-// await vectorizeProducts();
+//await vectorizeProducts();
 // await clearEmbeddings();
 
-await client.close();
+// await client.close();
 
 export async function vectorizeData(cursor, collection, fieldsToEmbed, embeddingFieldName) {
   console.log('vectorizeData')
