@@ -111,13 +111,14 @@ async function getEmbeddings(text) {
 
   // Call the Python function
   let options = {
-      pythonPath: '/usr/bin/python3',
+      //pythonPath: '/usr/bin/python3',
+      pythonPath: '/embedder/bin/activate',
       args: body, // Example argument passed to the Python script
       pythonOptions: ['-u'],
       verbose: true,
       scriptPath: path.join(__dirname, './../embedder')
   };
-  PythonShell.run("source embedder/bin/activate")
+  //PythonShell.run("source embedder/bin/activate")
   let response = await PythonShell.run("embedder_function.py", options)
   try {
     response = JSON.parse(response[0])
