@@ -27,7 +27,7 @@ console.log(" - Connected to mdb");
 // await client.close();
 
 export async function vectorizeData(cursor, collection, fieldsToEmbed, embeddingFieldName) {
-  console.log('vectorizeData')
+  console.log('vectorizeData', cursor)
   let promises = [];
   let counter = 1;
 
