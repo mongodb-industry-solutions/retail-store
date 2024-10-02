@@ -14,63 +14,18 @@ dotenv.config();
 const EMBEDDING_FIELD_NAME = "text_embedding";
 const DATABASE = "dotLocalStore";
 const COLLECTION = "products";
-const FIELDS_TO_EMBED = [
-  "name",
-  "code",
-  "masterCategory",
-  "subCategory",
-  "articleType",
-  "baseColour",
-  "description",
-  "brand"
-];
 
 const client = new MongoClient(process.env.ATLAS_URI);
 console.log(" - Connecting to MongoDB Atlas...", process.env.ATLAS_URI);
 const connection = await client.connect();
 console.log(" - Connected to mdb");
 
-
-await vectorizeProducts();
-
-// await clearEmbeddings();
+// await vectorizeProducts();
+await clearEmbeddings();
 
 await client.close();
 
-async function vectorizeProducts() {
-  const collection = await getCollection(DATABASE, COLLECTION);
-  const cursor = collection.aggregate([
-    {
-      $match: {
-        [EMBEDDING_FIELD_NAME]: { $eq: null }
-      }
-    },
-    {
-      $project: {
-        "name": 1,
-        "code": 1,
-        "masterCategory": 1,
-        "subCategory": 1,
-        "articleType": 1,
-        "baseColour": 1,
-        "description": 1,
-        "brand": 1
-      }
-    },
-    {
-      $limit: 100
-    }
-  ]);
-
-  await vectorizeData(
-    cursor,
-    collection,
-    FIELDS_TO_EMBED,
-    EMBEDDING_FIELD_NAME
-  );
-}
-
-async function vectorizeData(cursor, collection, fieldsToEmbed, embeddingFieldName) {
+export async function vectorizeData(cursor, collection, fieldsToEmbed, embeddingFieldName) {
   console.log('vectorizeData')
   let promises = [];
   let counter = 1;
@@ -105,6 +60,8 @@ async function vectorizeData(cursor, collection, fieldsToEmbed, embeddingFieldNa
     promises = [];
     counter++;
   }
+
+  return {promises, counter}
 }
 
 function vectorizeDocuments(documents, collection, fieldsToEmbed, embeddingFieldName) {
@@ -150,7 +107,6 @@ async function getEmbeddings(text) {
   }
 
   const body = JSON.stringify({ text });
-  //console.log(" - gc function body, ", body)
 
   // Call the Python function
   let options = {
