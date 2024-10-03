@@ -27,7 +27,7 @@ console.log(" - Connected to mdb");
 // await client.close();
 
 export async function vectorizeData(cursor, collection, fieldsToEmbed, embeddingFieldName) {
-  console.log('vectorizeData', cursor)
+  console.log('vectorizeData')
   let promises = [];
   let counter = 1;
 
@@ -118,7 +118,6 @@ async function getEmbeddings(text) {
       verbose: true,
       scriptPath: path.join(__dirname, './../embedder')
   };
-  //PythonShell.run("source embedder/bin/activate")
   let response = await PythonShell.run("embedder_function.py", options)
   try {
     response = JSON.parse(response[0])
