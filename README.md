@@ -4,6 +4,11 @@ Restore the e-commerce data to your own MongoDB Atlas database
 ```bash
 mongorestore --gzip --dir=dump/dotLocalStore --uri "mongodb+srv://<user>:<password>@<cluster-url>/<target-database>"
 ```
+Note 1: we can focus for now only on: users, products and locations
+Note 2: This dump was generated from executing the following command on the original db
+```bash
+mongodump --uri "mongodb+srv:/<user>:<password>@<cluster-url>/<source-database>" --gzip
+```
 
 First install dependencies
 ```bash
