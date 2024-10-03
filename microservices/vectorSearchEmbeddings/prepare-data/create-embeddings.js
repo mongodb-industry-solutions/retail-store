@@ -12,7 +12,7 @@ const __dirname = path.dirname(__filename);
 dotenv.config();
 
 const EMBEDDING_FIELD_NAME = "text_embedding";
-const DATABASE = "dotLocalStore";
+const DATABASE = "leafy_popup_store";
 const COLLECTION = "products";
 const FIELDS_TO_EMBED = [
   "name",
