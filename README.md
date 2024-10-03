@@ -1,5 +1,10 @@
 ## Getting Started
 
+Restore the e-commerce data to your own MongoDB Atlas database
+```bash
+mongorestore --gzip --dir=dump/dotLocalStore --uri "mongodb+srv://<user>:<password>@<cluster-url>/<target-database>"
+```
+
 First install dependencies
 ```bash
 npm install

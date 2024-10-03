@@ -3,7 +3,7 @@ import { MongoClient } from "mongodb";
 const uri = process.env.IST_SHARED_MONGODB;
 const client = new MongoClient(uri);
 
-const dbName = "dotLocalStore";
+const dbName = process.env.DATABASE_NAME;
 let db = null;
 
 export async function connectToDatabase() {
