@@ -10,7 +10,16 @@ Note 2: This dump was generated from executing the following command on the orig
 mongodump --uri "mongodb+srv:/<user>:<password>@<cluster-url>/<source-database>" --gzip
 ```
 
-First install dependencies
+Then, create a .env file at the root level woth the following env vars
+```bash
+## .env
+IST_SHARED_MONGODB=<mongodb-connection-string>
+DATABASE_NAME=<your-db-name>
+```
+
+
+
+Finally, install dependencies
 ```bash
 npm install
 ```
