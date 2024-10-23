@@ -5,7 +5,6 @@ import Navbar from "./_components/navbar/Navbar";
 import Footer from "./_components/footer/Footer";
 import HomeComp from "./_components/homeComp/HomeComp";
 
-
 export default function Home() {
   return (
     <>
