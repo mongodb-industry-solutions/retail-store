@@ -6,7 +6,7 @@ import ProductCard from "../productCard/ProductCard";
 import styles from "./productList.module.css";
 import Pagination from "@leafygreen-ui/pagination";
 
-const itemsPerPage = 10;
+const itemsPerPage = 40;
 
 const ProductList = ({ filters }) => {
   const [filteredProducts, setFilteredProducts] = useState([]);
