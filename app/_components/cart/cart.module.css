@@ -1,4 +1,5 @@
 .cartContainer {
+  display: none;
   position: relative;
 }
 
