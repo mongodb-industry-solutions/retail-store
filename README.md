@@ -7,10 +7,10 @@ mongorestore --gzip --dir=dump/dotLocalStore --uri "mongodb+srv://<user>:<passwo
 Note 1: we can focus for now only on: users, products and locations
 Note 2: This dump was generated from executing the following command on the original db
 ```bash
-mongodump --uri "mongodb+srv:/<user>:<password>@<cluster-url>/<source-database>" --gzip
+mongodump --uri "mongodb+srv://<user>:<password>@<cluster-url>/<source-database>" --gzip
 ```
 
-Then, create a .env file at the root level woth the following env vars
+Then, create a .env.local file at the root level woth the following env vars
 ```bash
 ## .env
 IST_SHARED_MONGODB=<mongodb-connection-string>
