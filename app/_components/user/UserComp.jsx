@@ -1,18 +1,41 @@
 
 "use client"
 
-import React, { useState } from 'react';
-import styles from "./userComp.module.css";
-import Icon from '@leafygreen-ui/icon';
-import { Modal, Container } from 'react-bootstrap';
-import { H1, H2, H3, Subtitle, Body, InlineCode, InlineKeyCode, Overline, Link, Description } from '@leafygreen-ui/typography';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { Body } from '@leafygreen-ui/typography';
 import Card from '@leafygreen-ui/card';
-const UserComp = ({user}) => {
+import { Skeleton } from '@leafygreen-ui/skeleton-loader';
+
+import styles from "./userComp.module.css";
+import { setSelectedUser } from '@/redux/slices/UserSlice';
+
+const UserComp = ({user = null, isSelectedUser = false, setOpen}) => {
+    const dispatch = useDispatch();
+
+    const selectUser = () => {
+        dispatch(setSelectedUser(user))
+    }
+    const selectUserAndCloseModal = () => {
+        selectUser();
+        setOpen(false)
+    }
 
     return (
-        <Card className={`${styles.userCard}`}>
-            <img src='rsc/users/66fe219d625d93a100528224.png'></img>
-            <Body className={styles.userName}>John</Body>
+        <Card 
+            className={`${styles.userCard} ${user !== null ? 'cursorPointer' : ''} ${isSelectedUser ? styles.userSelected : ''}`}
+            onMouseEnter={selectUser}
+            onClick={selectUserAndCloseModal}
+        >
+            {
+                user === null
+                ? <Skeleton></Skeleton>
+                : <>
+                    <img src={`rsc/users/${user._id}.png`}></img>
+                    <Body className={styles.userName}>{user.name}</Body>
+                </>
+            }
+
         </Card>
     );
 };

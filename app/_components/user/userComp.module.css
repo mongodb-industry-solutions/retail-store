@@ -16,3 +16,9 @@
 .userName{
     margin-top: 10px;
 }
+.userSelected{
+    background-color: rgba(235, 235, 235, 0.868);
+}
+/* .userCard:hover{
+    cursor: pointer;
+} */
