@@ -30,19 +30,19 @@ const Profile = () => {
                     <ListGroup>
                         <ListGroup.Item className={styles.listGroupItem}>
                             <div className="d-flex flex-row">
-                                <img src="icons/circle-user-solid.svg" alt="Logo" width={18} className="me-1"/> 
+                                <img src="rsc/icons/circle-user-solid.svg" alt="Logo" width={18} className="me-1"/> 
                                 <div><p className={styles.textMyProfile}>My Profile</p><small>Angie</small></div>
                             </div>
                         </ListGroup.Item>
                         <ListGroup.Item className={styles.listGroupItem}>
                             <div className="d-flex flex-row">
-                                <img src="icons/file-lines-solid.svg" alt="Logo" width={15} className="me-1"/>
+                                <img src="rsc/icons/file-lines-solid.svg" alt="Logo" width={15} className="me-1"/>
                                 <p>My Orders</p> 
                             </div>
                         </ListGroup.Item>
                         <ListGroup.Item className={styles.listGroupItem}>
                             <div className="d-flex flex-row">
-                                <img src="icons/cart-shopping-solid.svg" alt="Shopping cart" width={18} className="me-1"/> 
+                                <img src="rsc/icons/cart-shopping-solid.svg" alt="Shopping cart" width={18} className="me-1"/> 
                                 <p>My Cart</p>
                             </div>
                         </ListGroup.Item>
