@@ -3,3 +3,6 @@ html{
     padding-bottom: 100px;
     cursor: default;
 }
+.cursorPointer{
+    cursor: pointer;
+}
