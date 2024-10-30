@@ -1,20 +1,41 @@
 "use client"
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Icon from '@leafygreen-ui/icon';
 import { Modal, Container } from 'react-bootstrap';
 import { H2, Subtitle, Description } from '@leafygreen-ui/typography';
-import UserComp from '../user/UserComp';
 
 import styles from "./loginComp.module.css";
-import { useSelector } from 'react-redux';
+import UserComp from '../user/UserComp';
+import { setLoadingUsersList, setUsersList } from '@/redux/slices/UserSlice';
+import { fetchUsers } from '@/lib/api';
 
 const LoginComp = () => {
+    const dispatch = useDispatch();
     const [open, setOpen] = useState(true);
     const users = useSelector(state => state.User.usersList)
-    const selectedUser = useSelector(state => state.User.selectedUser)
     const usersLoading = useSelector(state => state.User.loading)
+    const [localSelectedUser, setLocalSelectedUser] = useState(null)
 
+    useEffect(() => {
+      const getAllUsers = async () => {
+        try {
+          const result = await fetchUsers();
+          if(result){
+            dispatch(setUsersList(result))
+            if(result.length > 0)
+                setLocalSelectedUser(result[0])
+          }
+          dispatch(setLoadingUsersList(false))
+        } catch (err) {
+  
+        }
+      };
+      getAllUsers();
+      return () => {}
+    }, [])
+  
     const handleClose = () => {
         setOpen(false)
     }
@@ -38,7 +59,7 @@ const LoginComp = () => {
                 </div>
                }
                 <div className={styles.modalMainCOntent}>
-                    <H2 className={styles.centerText} si>Welcome to Leafy Pop-up store</H2>
+                    <H2 className={styles.centerText}>Welcome to Leafy Pop-up store</H2>
                     <Subtitle className={`${styles.weightNormal} ${styles.centerText} mt-2`}>This is a MongoDB demo</Subtitle>
                     <br/>
                     <Description className={styles.descriptionModal}>
@@ -48,11 +69,19 @@ const LoginComp = () => {
                         {
                             usersLoading === true
                             ? [0, 1, 2, 3, 4].map((item) => (
-                                <UserComp key={item}></UserComp>
+                                <UserComp 
+                                    key={item}
+                                ></UserComp>
                             ))
                             : users.length > 0
                             ? users.map((user, index) => (
-                                <UserComp key={index} user={user} isSelectedUser={selectedUser._id === user._id} setOpen={setOpen}></UserComp>
+                                <UserComp 
+                                    key={index} 
+                                    user={user} 
+                                    isSelectedUser={localSelectedUser._id === user._id} 
+                                    setOpen={setOpen}
+                                    setLocalSelectedUser={setLocalSelectedUser}
+                                ></UserComp>
                             ))
                             : 'No users found, please reload'
                         }
@@ -65,6 +94,5 @@ const LoginComp = () => {
         </Modal>
     );
 };
-
 
 export default LoginComp;

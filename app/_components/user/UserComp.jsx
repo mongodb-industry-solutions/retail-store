@@ -10,22 +10,23 @@ import { Skeleton } from '@leafygreen-ui/skeleton-loader';
 import styles from "./userComp.module.css";
 import { setSelectedUser } from '@/redux/slices/UserSlice';
 
-const UserComp = ({user = null, isSelectedUser = false, setOpen}) => {
+const UserComp = ({user = null, isSelectedUser = false, setOpen, setLocalSelectedUser}) => {
     const dispatch = useDispatch();
 
-    const selectUser = () => {
-        dispatch(setSelectedUser(user))
+    const selectUserLocally = () => {
+        setLocalSelectedUser(user)
     }
     const selectUserAndCloseModal = () => {
-        selectUser();
+        selectUserLocally()
+        dispatch(setSelectedUser(user))
         setOpen(false)
     }
 
     return (
         <Card 
             className={`${styles.userCard} ${user !== null ? 'cursorPointer' : ''} ${isSelectedUser ? styles.userSelected : ''}`}
-            onMouseEnter={selectUser}
-            onClick={selectUserAndCloseModal}
+            onMouseEnter={() => selectUserLocally()}
+            onClick={() => selectUserAndCloseModal()}
         >
             {
                 user === null
@@ -39,6 +40,5 @@ const UserComp = ({user = null, isSelectedUser = false, setOpen}) => {
         </Card>
     );
 };
-
 
 export default UserComp;

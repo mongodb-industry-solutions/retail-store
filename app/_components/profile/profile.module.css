@@ -1,11 +1,9 @@
 .profileContainer {
     position: relative;
   }
-  
   .profileIcon {
     cursor: pointer;
   }
-  
   .profilePopup {
     position: absolute;
     top: 100%;
@@ -17,8 +15,6 @@
     z-index: 1;
     color: black;
   }
-  
-  
   .profilePopup p {
       color: black;
       margin: 0;
@@ -33,6 +29,9 @@
   }
   .listGroupItem{
     cursor: pointer;
+  }
+  .listGroupItem a{
+    text-decoration: none;
   }
   .listGroupItem:hover{
     background-color: rgba(235, 235, 235, 0.868);

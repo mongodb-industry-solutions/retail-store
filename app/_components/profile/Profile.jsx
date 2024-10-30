@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import { useSelector } from 'react-redux';
+import Link from "next/link";
+
 import styles from "./profile.module.css";
-import Image from "next/image";
 import IconButton from "@leafygreen-ui/icon-button";
 import LeafyGreenProvider from "@leafygreen-ui/leafygreen-provider";
 import Icon from "@leafygreen-ui/icon";
@@ -42,10 +43,12 @@ const Profile = () => {
                             </div>
                         </ListGroup.Item>
                         <ListGroup.Item className={styles.listGroupItem}>
+                            <Link href="/cart">
                             <div className="d-flex flex-row">
                                 <img src="rsc/icons/cart-shopping-solid.svg" alt="Shopping cart" width={18} className="me-1"/> 
                                 <p>My Cart</p>
                             </div>
+                            </Link>
                         </ListGroup.Item>
                     </ListGroup>
                 </div>

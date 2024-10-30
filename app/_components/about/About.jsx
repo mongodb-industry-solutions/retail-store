@@ -10,6 +10,7 @@ import Button from "@leafygreen-ui/button";
 import Icon from "@leafygreen-ui/icon";
 import LeafyGreenProvider from "@leafygreen-ui/leafygreen-provider";
 import { H1, H2, H3, Subtitle, Body, InlineCode, InlineKeyCode, Overline, Link } from '@leafygreen-ui/typography';
+import { Container } from "react-bootstrap";
 //import Link from "next/link";
 
 const About = () => {
@@ -18,7 +19,7 @@ const About = () => {
 
   return (
 
-    <div className={styles.aboutContainer}>
+    <Container>
 
 
       <H1>About</H1>
@@ -154,7 +155,7 @@ const About = () => {
 
 
 
-    </div>
+    </Container>
   );
 };
 
