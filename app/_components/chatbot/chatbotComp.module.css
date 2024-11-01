@@ -1,0 +1,143 @@
+.modalCenter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.leafyFeel :global(.modal-content) {
+    border-radius: 24px;
+}
+.centerText{
+    text-align: center;
+}
+.weightNormal{
+    font-weight: normal;
+}
+.usersContainer{
+    display: grid;
+    column-gap: 10px;
+    row-gap: 15px;
+    justify-items: center;
+    grid-template-columns:repeat(auto-fit, minmax(105px, 130px));
+    justify-content: space-evenly;
+    margin: 35px 0px 25px 0px;
+}
+.descriptionModal{
+    font-size: 14px;
+    display: inline-flex;
+}
+.customRow{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Ensure even space between cards */
+}
+.modalMainCOntent{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+/* Remove border-radius when modal is fullscreen */
+@media (max-width: 767.98px) { /* Corresponds to md-down */
+    .leafyFeel :global(.modal-content) {
+      border-radius: 0px;
+    }
+}
+
+.chatbotButton {
+    position: fixed;
+    bottom: 70px;
+    right: 20px;
+    background-color: white;
+    border-radius: 50px;
+    width: fit-content;
+    height: fit-content;
+    padding: 0px 15px 0px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    cursor: pointer;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    height: 45px;
+}
+
+.chatbotButton img{
+    width: 45px;
+    margin-right: 7px;
+}
+
+.chatbotButton:hover {
+    background-color: #00ED64;
+}
+
+@media (max-width: 768px) {
+    .chatbotButton {
+        padding: 0;
+        /* Remove padding around the button */
+        width: 60px;
+        height: 60px;
+    }
+}
+.chatbotContainer{
+    background-color: #f8faf9;
+}
+.modalContentTab{
+    min-height: calc(100vh - 400px);
+}
+.chatbotComponent{
+    background-color: pink;
+    min-height: inherit;
+}
+.chatbotInputArea {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    padding: 0px 10px 0px 10px;
+}
+.chatbotInputArea input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin-right: 10px;
+}
+.suggestedQuestions {
+    margin-bottom: 5px;
+    margin-top: 5px;
+    padding-left: 10px;
+    text-align: center;
+}
+.suggestion {
+    background-color: white;
+    border: none;
+    padding: 2px 10px;
+    margin-top: 5px;
+    margin-right: 10px;
+    cursor: pointer;
+    border-radius: 20px;
+    box-shadow: 0px 5px 4px rgba(0, 0, 0, 0.06);
+}
+.suggestion:hover {
+    background-color: #E0FBF6;
+    color: #001E2B;
+}
+.introBubble {
+    background-color: white;
+    box-shadow: 0px 5px 4px rgba(0, 0, 0, 0.06);
+    padding: 5px 10px 5px 10px;
+    border-radius: 20px;
+    display: inline-block;
+    max-width: 90%;
+    word-wrap: break-word;
+    margin-bottom: 10px;
+}
+.chatbotBody {
+    padding-top: 10px;
+    flex-grow: 1;
+    overflow-y: auto;
+    padding-right: 10px;
+    padding-left: 10px;
+    max-height: 100%; /* Set a max height to ensure scrolling */
+}
+.chatMessage {
+    margin-bottom: 10px;
+}
