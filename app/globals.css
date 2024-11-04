@@ -12,3 +12,12 @@ html{
 .weightNormal{
     font-weight: normal;
 }
+.modalLeafyFeel :global(.modal-content) {
+    border-radius: 24px;
+}
+/* Remove border-radius when modal is fullscreen */
+@media (max-width: 767.98px) { /* Corresponds to md-down */
+    .modalLeafyFeel :global(.modal-content) {
+      border-radius: 0px;
+    }
+}

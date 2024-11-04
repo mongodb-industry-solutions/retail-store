@@ -10,13 +10,17 @@ import { Skeleton } from '@leafygreen-ui/skeleton-loader';
 import styles from "./userComp.module.css";
 import { setSelectedUser } from '@/redux/slices/UserSlice';
 
-const UserComp = ({user = null, isSelectedUser = false, setOpen, setLocalSelectedUser}) => {
+const UserComp = ({user = null, isSelectedUser = false, setOpen, setLocalSelectedUser = null}) => {
     const dispatch = useDispatch();
 
     const selectUserLocally = () => {
+        if(!setLocalSelectedUser)
+            return
         setLocalSelectedUser(user)
     }
     const selectUserAndCloseModal = () => {
+        if(!setLocalSelectedUser)
+            return
         selectUserLocally()
         dispatch(setSelectedUser(user))
         setOpen(false)
