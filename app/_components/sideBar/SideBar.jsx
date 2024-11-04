@@ -116,7 +116,7 @@ function Sidebar({ filters, onFilterChange }) {
           {/*console.log(facets?.[0]?.facet?.brand?.buckets)*/}
 
           <div className={styles.checkboxList}>
-            {facets?.[0]?.brands?.map((bucket) => (
+            {facets?.[0]?.facet?.brand?.buckets?.map((bucket) => (
               <Checkbox
                 key={bucket._id}
                 label={`${bucket._id} (${bucket.count})`}
