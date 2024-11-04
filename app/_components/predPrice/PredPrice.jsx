@@ -8,7 +8,6 @@ const PredPrice = ({ productId, initialPredPrice }) => {
   const [prevPredPrice, setPrevPredPrice] = useState(initialPredPrice);
 
   useEffect(() => {
-    if(String(productId) ===  '98796'){
       const fetchUpdatedPredPrice = async () => {
         try {
           const response = await axios.post("/api/getPredPrice", { productId });
@@ -21,10 +20,9 @@ const PredPrice = ({ productId, initialPredPrice }) => {
         }
       };
       fetchUpdatedPredPrice()
-      //const intervalId = setInterval(fetchUpdatedPredPrice, 3000);
+      const intervalId = setInterval(fetchUpdatedPredPrice, 3000);
 
-      //return () => clearInterval(intervalId);
-    }
+      return () => clearInterval(intervalId);
   }, [productId, predPrice]);
 
   const arrowDirection = predPrice > prevPredPrice ? '/arrow_down.png' : predPrice < prevPredPrice ? '/arrow_up.png' : null;

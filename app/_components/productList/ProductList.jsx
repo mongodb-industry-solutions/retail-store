@@ -4,10 +4,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ProductCard from "../productCard/ProductCard";
 import styles from "./productList.module.css";
-import PredPrice from "../predPrice/PredPrice";
 import Pagination from "@leafygreen-ui/pagination";
 
-const itemsPerPage = 10;
+const itemsPerPage = 20;
 
 const ProductList = ({ filters }) => {
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -69,7 +68,7 @@ const ProductList = ({ filters }) => {
       <Pagination
         currentPage={currentPage}
         itemsPerPage={itemsPerPage}
-        itemsPerPageOptions={[8, 16, 32]}
+        //itemsPerPageOptions={[8, 16, 32]}
         numTotalItems={paginationLength}
         onForwardArrowClick={ () => setCurrentPage(currentPage + 1) }
         onBackArrowClick={ () => setCurrentPage(currentPage - 1) }
