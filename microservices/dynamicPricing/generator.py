@@ -31,7 +31,7 @@ topic_path = publisher.topic_path(GOOGLE_CLOUD_PROJECT, PUBSUB_TOPIC_ID)
 
 def fetch_products():
     """Fetch products from MongoDB"""
-    return list(products_collection.find({"id": 98796}))
+    return list(products_collection.find({}) # use {"id": 98796} if you wish to debugg for just one prod
 
 def generate_ecommerce_behavior(product):
     print(product)

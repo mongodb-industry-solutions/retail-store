@@ -19,7 +19,7 @@ const PredPrice = ({ productId, initialPredPrice }) => {
           console.error("Failed to fetch updated predicted price:", error);
         }
       };
-      fetchUpdatedPredPrice()
+      
       const intervalId = setInterval(fetchUpdatedPredPrice, 3000);
 
       return () => clearInterval(intervalId);
