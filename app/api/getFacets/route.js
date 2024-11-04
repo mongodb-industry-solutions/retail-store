@@ -24,7 +24,7 @@ export async function GET() {
             },
         },
     ]).toArray();
-
+    console.log('facets', facets)
     return NextResponse.json({ facets }, { status: 200 });
 
 
