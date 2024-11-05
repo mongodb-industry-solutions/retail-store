@@ -1,0 +1,31 @@
+.OrderItemCard{
+    margin-bottom: 2rem;
+}
+.orderedDate{
+    color: grey;
+}
+.orderData{
+    font-size: 14px;
+    margin: 0;
+}
+.container{
+    display: flex;
+    flex-direction: column;
+}
+
+.item.fullWidth {
+    flex: 1;
+}
+
+.item.fitContent {
+    width: fitContent;
+    display: flex;
+    align-items: flex-end;
+}
+
+/* Layout for larger screens (row layout for laptops and tablets) */
+@media (min-width: 768px) {
+    .container {
+      flex-direction: row;
+    }
+}

@@ -32,22 +32,24 @@ const Profile = () => {
                     <ListGroup>
                         <ListGroup.Item className={styles.listGroupItem}>
                             <div className="d-flex flex-row">
-                                <img src="rsc/icons/circle-user-solid.svg" alt="Logo" width={18} className="me-1"/> 
+                                <img src="rsc/icons/circle-user-solid.svg" alt="Logo" width={18} className="me-1" />
                                 <div><p className={styles.textMyProfile}>My Profile</p><small>{selectedUser.name} {selectedUser.surname}</small></div>
                             </div>
                         </ListGroup.Item>
                         <ListGroup.Item className={styles.listGroupItem}>
-                            <div className="d-flex flex-row">
-                                <img src="rsc/icons/file-lines-solid.svg" alt="Logo" width={15} className="me-1"/>
-                                <p>My Orders</p> 
-                            </div>
+                            <Link href="/orders">
+                                <div className="d-flex flex-row">
+                                    <img src="rsc/icons/file-lines-solid.svg" alt="Logo" width={15} className="me-1" />
+                                    <p>My Orders</p>
+                                </div>
+                            </Link>
                         </ListGroup.Item>
                         <ListGroup.Item className={styles.listGroupItem}>
                             <Link href="/cart">
-                            <div className="d-flex flex-row">
-                                <img src="rsc/icons/cart-shopping-solid.svg" alt="Shopping cart" width={18} className="me-1"/> 
-                                <p>My Cart</p>
-                            </div>
+                                <div className="d-flex flex-row">
+                                    <img src="rsc/icons/cart-shopping-solid.svg" alt="Shopping cart" width={18} className="me-1" />
+                                    <p>My Cart</p>
+                                </div>
                             </Link>
                         </ListGroup.Item>
                     </ListGroup>

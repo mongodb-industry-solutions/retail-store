@@ -8,13 +8,14 @@ import { H2, Subtitle, Description } from '@leafygreen-ui/typography';
 
 import styles from "./loginComp.module.css";
 import UserComp from '../user/UserComp';
-import { setLoadingUsersList, setUsersList } from '@/redux/slices/UserSlice';
+import { fetchUserData, setLoadingUsersList, setUsersList } from '@/redux/slices/UserSlice';
 import { fetchUsers } from '@/lib/api';
 
 const LoginComp = () => {
     const dispatch = useDispatch();
     const [open, setOpen] = useState(true);
     const users = useSelector(state => state.User.usersList)
+    const selectedUser = useSelector(state => state.User.selectedUser)
     const usersLoading = useSelector(state => state.User.loading)
     const [localSelectedUser, setLocalSelectedUser] = useState(null)
 
@@ -35,6 +36,12 @@ const LoginComp = () => {
       getAllUsers();
       return () => {}
     }, [])
+
+    useEffect(() => {
+      if(selectedUser !== null)
+        dispatch(fetchUserData(selectedUser._id))
+    }, [selectedUser, dispatch])
+    
   
     const handleClose = () => {
         setOpen(false)
