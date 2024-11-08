@@ -68,7 +68,7 @@ const ProductList = ({ filters }) => {
       <Pagination
         currentPage={currentPage}
         itemsPerPage={itemsPerPage}
-        //itemsPerPageOptions={[8, 16, 32]}
+        itemsPerPageOptions={[8, 16, itemsPerPage]}
         numTotalItems={paginationLength}
         onForwardArrowClick={ () => setCurrentPage(currentPage + 1) }
         onBackArrowClick={ () => setCurrentPage(currentPage - 1) }
