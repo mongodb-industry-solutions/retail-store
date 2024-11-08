@@ -3,7 +3,7 @@ export const metadata = {
     description: '',
   }
 
-export default function ShopLayout({
+export default function ContactLayout({
     children,
   }) {
     return (
