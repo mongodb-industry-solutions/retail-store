@@ -1,19 +1,12 @@
 "use client";
 
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./sideBar.module.css";
 
 import {
-  H1,
-  H2,
-  H3,
   Subtitle,
-  Body,
-  InlineCode,
-  InlineKeyCode,
-  Disclaimer,
-  Overline,
+  Body
 } from "@leafygreen-ui/typography";
 import Checkbox from "@leafygreen-ui/checkbox";
 import Toggle from "@leafygreen-ui/toggle";

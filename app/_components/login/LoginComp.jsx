@@ -13,7 +13,7 @@ import { fetchUsers } from '@/lib/api';
 
 const LoginComp = () => {
     const dispatch = useDispatch();
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
     const users = useSelector(state => state.User.usersList)
     const selectedUser = useSelector(state => state.User.selectedUser)
     const usersLoading = useSelector(state => state.User.loading)
@@ -41,6 +41,10 @@ const LoginComp = () => {
       if(selectedUser !== null)
         dispatch(fetchUserData(selectedUser._id))
     }, [selectedUser, dispatch])
+    
+    useEffect(() => {
+        setOpen(true);
+    }, []);
     
   
     const handleClose = () => {
@@ -70,7 +74,7 @@ const LoginComp = () => {
                     <Subtitle className={`${styles.weightNormal} ${styles.centerText} mt-2`}>This is a MongoDB demo</Subtitle>
                     <br/>
                     <Description className={styles.descriptionModal}>
-                        Please select a the user you would like to login as
+                        Please select the user you would like to login as
                     </Description>
                     <div className={`${styles.usersContainer}`}>
                         {

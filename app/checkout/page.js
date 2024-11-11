@@ -1,6 +1,7 @@
 
 "use client"
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useSelector, useDispatch } from 'react-redux';
 import { H1, H3, Body } from '@leafygreen-ui/typography';
 import Icon from '@leafygreen-ui/icon';
@@ -10,36 +11,61 @@ import Footer from "../_components/footer/Footer";
 import Navbar from "../_components/navbar/Navbar";
 import { Container } from 'react-bootstrap';
 import Button from "@leafygreen-ui/button";
-import { fetchCart, fetchStoreLocations } from '@/lib/api';
-import { setCartProductsList, setLoading } from '@/redux/slices/CartSlice';
+import { clearCart, createNewOrder, fetchCart, fetchStoreLocations } from '@/lib/api';
+import { clearCartProductsList, setCartProductsList, setLoading } from '@/redux/slices/CartSlice';
 import styles from './checkout.module.css'
 import Card from '@leafygreen-ui/card';
 import HomeAddressComp from '../_components/homeAddressComp/homeAddressComp';
 import BopisComp from '../_components/bopisComp/BopisComp';
 import ProductsModalComp from '../_components/productsModalComp/ProductsModalComp';
 import { CardSkeleton } from '@leafygreen-ui/skeleton-loader';
-
-const shippingMethods = [
-    {value: 'home', label: 'Send to my home address'},
-    {value: 'bopis', label: 'Pick up in store'}
-]
+import { shippingMethods } from '@/lib/constants';
+import Modal from '@leafygreen-ui/modal';
+import { clearOrder } from '@/redux/slices/OrderSlice';
+import { addUsersNewOrder } from '@/redux/slices/UserSlice';
 
 export default function Page() {
+    const router = useRouter();
     const dispatch = useDispatch();
     const cart = useSelector(state => state.Cart);
     const selectedUser = useSelector(state => state.User.selectedUser);
-    const [shippingMethod, setShippingMethod] = useState(shippingMethods[0].value)
+    const [shippingMethod, setShippingMethod] = useState(shippingMethods.bopis)
     const [storeLocations, setStoreLocations] = useState([])
     const [selectedStoreLocation, setSelectedStoreLocation] = useState(null)
     const [productDetailsOpened, setProductDetailsOpened] = useState(false)
-    
-    const onConfirmOrder = () => {
-        // TODO: create order backend part
+    const [processingNewOrder, setProcessingNewOrder] = useState(false)
+
+    const onConfirmOrder = async () => {
+        setProcessingNewOrder(true)
+        console.log(selectedStoreLocation)
+        let order = await createNewOrder(
+            selectedUser._id, 
+            selectedUser.address,
+            cart.products, 
+            shippingMethod, 
+            selectedStoreLocation,
+        )
+        setProcessingNewOrder(false)
+        if(order){
+            // set selected order to null
+            dispatch(clearOrder())
+            // set redux cart to 0 products
+            dispatch(clearCartProductsList())
+            // add order to redux
+            dispatch(addUsersNewOrder({order}))
+            router.push(`/orderDetails/${order._id}`);
+            await clearCart(selectedUser._id)
+            // TODO enhance: alert(`New order created with id ${order._id}`)
+        }
     }
 
     const onShippingMethodChange = (e) => {
-        setShippingMethod(e.target.value)
+        setShippingMethod(shippingMethods[e.target.value])
         setSelectedStoreLocation(null)
+    }
+
+    const onStoreSelect = (store) => {
+        setSelectedStoreLocation(store)
     }
 
     useEffect(() => {
@@ -64,7 +90,6 @@ export default function Page() {
         const getStoreLocations = async () => {
             try {
                 const result = await fetchStoreLocations();
-                console.log('result', result)
                 if (result !== null) {
                     setStoreLocations(result)
                 }
@@ -77,7 +102,6 @@ export default function Page() {
 
       return () => {}
     }, [])
-    
 
     return (
         <>
@@ -86,6 +110,12 @@ export default function Page() {
                 <div className='d-flex align-items-end'>
                     <H1>Checkout</H1>
                 </div>
+                <Modal
+                    open={processingNewOrder}
+                    setOpen={setProcessingNewOrder}
+                >
+                    <H3>Processing order</H3>
+                </Modal>
                 {
                     cart.loading
                         ? <div className='mt-3'>
@@ -121,22 +151,30 @@ export default function Page() {
                                     className="radio-box-group-style mb-3"
                                 >
                                     {
-                                        shippingMethods.map((method, index) => (
+                                        Object.keys(shippingMethods).map((methodKey, index) => (
                                             <RadioBox 
+                                                key={methodKey}
                                                 checked={index == 0} 
-                                                value={method.value}
+                                                value={methodKey}
                                             >
-                                                {method.label}
+                                                {shippingMethods[methodKey].label}
                                             </RadioBox>
 
                                         ))
                                     }
                                 </RadioBoxGroup>
                                 {
-                                    shippingMethod === shippingMethods[0].value // home
-                                    ? <HomeAddressComp address={selectedUser.address} containerStyle={styles.cardInfo}/>
-                                    :  shippingMethod === shippingMethods[1].value // bopis
-                                    ? <BopisComp containerStyle={styles.cardInfo} storeLocations={storeLocations} setSelectedStoreLocation={setSelectedStoreLocation}/>
+                                    shippingMethod.id === shippingMethods.home.id // home
+                                    ? <HomeAddressComp 
+                                        address={selectedUser.address} 
+                                        containerStyle={styles.cardInfo}
+                                    />
+                                    :  shippingMethod.id === shippingMethods.bopis.id // bopis
+                                    ? <BopisComp 
+                                        containerStyle={styles.cardInfo} 
+                                        storeLocations={storeLocations} 
+                                        setSelectedStoreLocation={onStoreSelect}
+                                    />
                                     : 'Unrecognized shipping method, please select another option'
                                 }
                             </Card>
@@ -144,7 +182,7 @@ export default function Page() {
                             <div className='d-flex flex-row-reverse mt-3'>
                                 <Button
                                     variant='primary'
-                                    disabled={cart.products?.length === 0 || (shippingMethod === 'bopis' && selectedStoreLocation === null )}
+                                    disabled={cart.products?.length === 0 || (shippingMethod.id === shippingMethods.bopis && selectedStoreLocation === null )}
                                     onClick={() => onConfirmOrder()}
                                 >
                                     Confirm & order

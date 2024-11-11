@@ -30,7 +30,7 @@ const CartItem = ({ product = null }) => {
                         <Subtitle>{product.name}</Subtitle>
                         <Body className={`weightNormal mt-2 mb-2`}>{product.description}</Body>
                         <Subtitle className={`weightNormal mt-2 mb-2`}>${product.price.amount}</Subtitle>
-                        <Subtitle className={`weightNormal`}>Amount: {product.amount}</Subtitle>
+                        <Subtitle className={`weightNormal`}>Amount: {product.amount || 1}</Subtitle>
                     </div>
                 </>
             }

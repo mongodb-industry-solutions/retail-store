@@ -32,6 +32,16 @@ const UserSlice = createSlice({
         setUsersList: (state, action) => {
             return {...state, usersList: [...action.payload]}
         },
+        addUsersNewOrder: (state, action) => {
+            let newOrders = [...state.orders.list, action.payload.order]
+            return {
+                ...state,
+                orders: {
+                    ...state.orders,
+                    list: newOrders
+                }
+            }
+        },
         setSelectedUser: (state, action) => {
             return {...state, selectedUser: {...action.payload}}
         },
@@ -47,7 +57,7 @@ const UserSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(fetchUserData.fulfilled, (state, action) => {
-            console.log(action.payload)
+            //console.log(action.payload)
             state.orders.loading = false
             state.orders.list = action.payload.orders;
             //TODO: state.cart = action.payload.cart;
@@ -57,6 +67,7 @@ const UserSlice = createSlice({
 
 export const {
     setUsersList, 
+    addUsersNewOrder,
     setSelectedUser, 
     setLoadingUsersList, 
     setErrorUsersList

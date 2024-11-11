@@ -3,13 +3,14 @@ export const metadata = {
     description: '',
   }
 
-export default function ShopLayout({
+export default function AboutLayout({
     children,
   }) {
     return (
-      <section>
-        <nav></nav>
+      <html>
+        <body>
         {children}
-      </section>
+        </body>
+      </html>
     )
   }
