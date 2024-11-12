@@ -30,7 +30,6 @@ export default function Page() {
         </div>
         <div className={styles.productList}>
           <ProductList filters={filters}/>
-         
         </div>
       </div>
 
