@@ -1,41 +1,46 @@
 "use client";
 
 import styles from './searchBar.module.css';
-import { useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import LeafyGreenProvider from "@leafygreen-ui/leafygreen-provider";
 import Toggle from "@leafygreen-ui/toggle";
 
-import {
-    SearchInput,
-    SearchResult,
-    SearchResultGroup
-} from "@leafygreen-ui/search-input";
+import { SearchInput } from "@leafygreen-ui/search-input";
 import { Label } from '@leafygreen-ui/typography';
+import { InfoSprinkle } from '@leafygreen-ui/info-sprinkle';
+import { getProductsWithSearch } from '@/app/_lib/api';
 
 
 const SearchBar = () => {
-    return (
+    const [searchValue, setSearchValue] = useState('');
 
+    const onSearchSubmit = async () => {
+        const data = await getProductsWithSearch(searchValue)
+        console.log('onSearchSubmit', data)
+    }
+
+    return (
         <div className={styles.searchContainer}>
             <LeafyGreenProvider>
                 <div className={styles.searchToggle}>
-                    <SearchInput aria-label="Label">
-                        <SearchResult
-                            onClick={() => {
-                                console.log("SB: Click Apple");
-                            }}
-                            description="This is a description"
-                        >
-                            Apple
-                        </SearchResult>
-                    </SearchInput>
-
-                    <Toggle
-                        aria-label="Dark mode toggle"
-                        className={styles.toggle}
+                    <SearchInput 
+                        aria-label="Label"
+                        onChange={(e) => setSearchValue(e.target.value)} // Update state on change
+                        onSubmit={() => onSearchSubmit()}
+                        value={searchValue} // Use 'value' to make it a controlled component
+                        defaultValue=''
                     />
-
-                    <Label  className={styles.toggleLabel}>Vector Search</Label>
+                    <div className={styles.searchToggleContainer}>
+                        <InfoSprinkle className={styles.infoSprinkle}>
+                            Enable vector search for smart results
+                        </InfoSprinkle>
+                        <Label  className={styles.toggleLabel}>Vector Search</Label>
+                        <Toggle
+                            aria-label="Dark mode toggle"
+                            className={styles.toggle}
+                            size='small'
+                        />
+                    </div>
                 </div>
             </LeafyGreenProvider>
         </div>
