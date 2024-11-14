@@ -63,11 +63,6 @@ const ProductCard = ({ id, photo, name, brand, price, pred_price, items }) => {
   };
 
   const isAddToCartDisabled = !selectedOption; // Disable "Add to Cart" button if no radio button is selected
-
-
-  useEffect(() => {
-    console.log('pred_price', pred_price)
-  }, [pred_price])
   
   return (
     <div className={styles.productContainer}>
