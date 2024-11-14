@@ -8,21 +8,13 @@ import PredPrice from "../predPrice/PredPrice";
 import LeafyGreenProvider from "@leafygreen-ui/leafygreen-provider";
 import Card from "@leafygreen-ui/card";
 import {
-  H1,
-  H2,
-  H3,
-  Subtitle,
-  Body,
-  InlineCode,
-  InlineKeyCode,
-  Overline,
   Label,
   Description,
+  Subtitle
 } from "@leafygreen-ui/typography";
 import Modal from "@leafygreen-ui/modal";
 import Button from "@leafygreen-ui/button";
 import IconButton from "@leafygreen-ui/icon-button";
-import { RadioGroup, Radio } from "@leafygreen-ui/radio-group";
 
 import Image from "next/image";
 
@@ -63,11 +55,6 @@ const ProductCard = ({ id, photo, name, brand, price, pred_price, items }) => {
   };
 
   const isAddToCartDisabled = !selectedOption; // Disable "Add to Cart" button if no radio button is selected
-
-
-  useEffect(() => {
-    console.log('pred_price', pred_price)
-  }, [pred_price])
   
   return (
     <div className={styles.productContainer}>
@@ -184,7 +171,5 @@ ProductCard.propTypes = {
   pred_price: PropTypes.string.isRequired,
   items: PropTypes.string.isRequired,
 };
-
-//<button onClick={addItemToCart}>Add Item to Cart</button>*/
 
 export default ProductCard;

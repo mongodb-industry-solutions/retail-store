@@ -1,4 +1,5 @@
-
+'use client'
+import { usePathname } from 'next/navigation';
 
 import Link from "next/link";
 import styles from "./navbar.module.css";
@@ -8,6 +9,8 @@ import Profile from "../profile/Profile"
 import SearchBar from "../searchBar/SearchBar";
 
 const Navbar = () => {
+  const pathname = usePathname();
+
   return (
     <nav className={styles.navbar}>
       <div className={styles.logo}>
@@ -28,8 +31,8 @@ const Navbar = () => {
         <Link href="/contact">Contact</Link>
       </div>
 
-      <SearchBar></SearchBar>
-      
+      { pathname === '/shop' && <SearchBar/> }
+
       <div className={styles.iconButtons}>
         <Profile></Profile>
         <Cart></Cart>
