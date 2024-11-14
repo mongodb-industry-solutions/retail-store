@@ -1,0 +1,11 @@
+.jsonDisplay{ 
+    font-size: '1rem'; 
+    line-height: '1.5'; 
+    white-space: 'pre-wrap'; 
+    word-wrap: 'break-word'; 
+    background-color: '#f4f4f4'; 
+    padding: '10px';
+    border-radius: '5px';
+    max-height: 200px;
+    width: fit-content;
+}

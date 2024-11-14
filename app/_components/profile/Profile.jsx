@@ -47,11 +47,7 @@ const Profile = () => {
                         <ListGroup.Item className={styles.listGroupItem}>
                             <Link href="/cart">
                                 <div className="d-flex flex-row">
-<<<<<<< HEAD
                                     <img src="/rsc/icons/cart-shopping-solid.svg" alt="Shopping cart" width={18} className="me-1" />
-=======
-                                    <img src="rsc/icons/cart-shopping-solid.svg" alt="Shopping cart" width={18} className="me-1" />
->>>>>>> 5bd92df72e36e2be94982b5ef7cdeb5b5f7a9d5f
                                     <p>My Cart</p>
                                 </div>
                             </Link>

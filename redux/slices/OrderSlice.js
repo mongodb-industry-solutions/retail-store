@@ -1,5 +1,6 @@
 import { shippingMethods } from "@/lib/constants";
 import { createSlice } from "@reduxjs/toolkit";
+/* Order Details Page opened */
 
 const OrderSlice = createSlice({
     name: "Order",

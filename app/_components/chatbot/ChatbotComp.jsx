@@ -1,62 +1,122 @@
 "use client"
 
-import React, { useState } from 'react';
-import { Body, Description } from '@leafygreen-ui/typography';
+import React, { useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Body, Description, H3 } from '@leafygreen-ui/typography';
 import Button from "@leafygreen-ui/button";
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Popover from 'react-bootstrap/Popover';
 
 import styles from "./chatbotComp.module.css";
-
+import { addMessage, setIsLoadingAnswer } from '@/redux/slices/ChatbotSlice';
+import { ROLE } from '@/lib/constants';
+import { fetchAssistantResponse } from '@/lib/api';
+import Typewriter from '../typewriter/Typewriter';
+import Icon from '@leafygreen-ui/icon';
+import JsonDisplay from '../jsonDisplayComp/JsonDisplayComp';
 
 const suggestions = [
     "Can I pickup my order in a physical store?",
     "How much time do I have to cancel my order?"
 ]
-const initialMessage = `Hi there! I am a GenAI Chatbot design to assist you! \n `
 
 const ChatbotComp = () => {
-    const [inputValue, setInputValue] = useState("");
-    const [isAsking, setIsAsking] = useState(false);
-    const [messages, setMessages] = useState([]);
+    const dispatch = useDispatch();
+    const selectedUserId = useSelector(state => state.User.selectedUser?._id);
+    const initialMessage = useSelector(state => state.Chatbot.initialMessage);
+    const minimizedOrderSchema = useSelector(state => state.Chatbot.minimizedOrderSchema);
+    const isLoadingAnswer = useSelector(state => state.Chatbot.isLoadingAnswer);
+    const messages = useSelector(state => state.Chatbot.messages);
+    const askInputRef = useRef(null);
 
-
-    const handleInputChange = (e) => {
-        setInputValue(e.target.value);
-    };
     const handleSuggestion = (index) => {
-        setInputValue(suggestions[index]);
+        askInputRef.current.value = suggestions[index];
     };
 
     const handleAsk = async () => {
-
+        dispatch(setIsLoadingAnswer(true))
+        const userQuery = askInputRef.current.value;
+        askInputRef.current.value = '';
+        // push user's message
+        dispatch(addMessage({
+            content: userQuery,
+            contentType: 'text',
+            role: ROLE.user
+        }))
+        // get assistance response
+        let result = await fetchAssistantResponse(
+            selectedUserId,
+            userQuery,
+            messages,
+            minimizedOrderSchema
+        );
+        if (result) {
+            // push assistance's message
+            dispatch(addMessage({
+                content: result.message,
+                resJson: result.resJson,
+                contentType: 'text',
+                role: ROLE.assistant
+            }))
+        }
+        dispatch(setIsLoadingAnswer(false))
     }
 
     return (
         <div className={`${styles.modalContentTab} d-flex flex-column`}>
             <div className={styles.chatbotBody}>
-                <Body className={styles.introBubble}>{initialMessage}</Body>
-
-                {messages.map((message, index) => (
-                    <div key={index} className={styles.chatMessage}>
-                        <div
-                            className={`${styles.speechBubble} ${index % 2 === 0 ? styles.userBubble : styles.answerBubble}`}
-                        >
-                            {index % 2 === 0 ? (
-                                <Body>{message}</Body>
-                            ) : (
-                                <Body>
-                                    {message}  {/* <Typewriter text={message} />  Typewriter renders the markdown text */}
-                                </Body>
-                            )}
-                        </div>
-                    </div>
-                ))}
+                {
+                    initialMessage &&
+                    <div className={styles.introBubble} dangerouslySetInnerHTML={{ __html: initialMessage.html }} />
+                }
+                {
+                    messages
+                        .filter(msg => msg.contentType !== 'init')
+                        .map((message, index) => (
+                            <div key={`msg-${index}`} className={styles.chatMessage}>
+                                <div
+                                    className={`${styles.speechBubble} ${message.role === ROLE.user ? styles.userBubble : styles.answerBubble}`}
+                                >
+                                    {
+                                        message.role === ROLE.user
+                                            ? <Body>
+                                                {message.content}
+                                            </Body>
+                                            : <div>
+                                                <Typewriter
+                                                    text={message.content}
+                                                ></Typewriter>
+                                                <div className={styles.responseDetailsContainer}>
+                                                    <OverlayTrigger
+                                                        trigger="click"
+                                                        placement={'top'}
+                                                        overlay={
+                                                            <Popover 
+                                                                className={styles.popoverJson}
+                                                            >
+                                                                <Popover.Header as="h3">Response details</Popover.Header>
+                                                                <Popover.Body>
+                                                                    <JsonDisplay data={message.resJson}/>
+                                                                </Popover.Body>
+                                                            </Popover>
+                                                        }
+                                                    >
+                                                        <Button size='xsmall'><Icon glyph='Sparkle'></Icon></Button>
+                                                    </OverlayTrigger>
+                                                </div>
+                                            </div>
+                                    }
+                                </div>
+                            </div>
+                        ))
+                }
             </div>
 
             <div className={styles.suggestedQuestions}>
-                <Body>Suggested Questions:</Body>
+                <Body onClick={() => console.log(messages)}>Suggested Questions:</Body>
                 {
                     suggestions.map((suggestion, index) =>
-                        <button className={styles.suggestion} onClick={() => handleSuggestion(index)}>
+                        <button key={`sug-${index}`} className={styles.suggestion} onClick={() => handleSuggestion(index)}>
                             <Description>{suggestion}</Description>
                         </button>
                     )
@@ -66,12 +126,12 @@ const ChatbotComp = () => {
             <div className={styles.chatbotInputArea}>
                 <input
                     type="text"
-                    value={inputValue}
-                    onChange={handleInputChange}
-                    placeholder="Type your question..."
+                    ref={askInputRef}
+                    disabled={isLoadingAnswer}
+                    placeholder={isLoadingAnswer ? "Assintent processing answer..." : "Type your question..."}
                 />
-                <Button onClick={handleAsk} variant="baseGreen" disabled={!inputValue || isAsking}>
-                    {isAsking ? "Asking..." : "Ask"}
+                <Button onClick={handleAsk} variant="baseGreen" disabled={!askInputRef.current?.value.length === 0 || isLoadingAnswer}>
+                    {isLoadingAnswer ? "Asking..." : "Ask"}
                 </Button>
             </div>
         </div>

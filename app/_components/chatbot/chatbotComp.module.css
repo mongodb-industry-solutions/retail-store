@@ -83,6 +83,15 @@
 .modalContentTab{
     min-height: calc(100vh - 400px);
 }
+.ArchitectureComp{
+    min-height: calc(100vh - 400px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+
 .chatbotComponent{
     background-color: pink;
     min-height: inherit;
@@ -128,7 +137,7 @@
     display: inline-block;
     max-width: 90%;
     word-wrap: break-word;
-    margin-bottom: 10px;
+    margin-bottom: 1rem;
 }
 .chatbotBody {
     padding-top: 10px;
@@ -140,4 +149,67 @@
 }
 .chatMessage {
     margin-bottom: 10px;
+}
+.speechBubble {
+    background-color: #E0FBF6;
+    color: #001E2B;
+    padding: 5px 10px 5px 10px;
+    border-radius: 20px;
+    display: inline-block;
+    max-width: 90%;
+    word-wrap: break-word;
+    box-shadow: 0px 5px 4px rgba(0, 0, 0, 0.06);
+
+}
+/* Speech bubble alignment */
+.userBubble {
+    margin-left: auto; /* Aligns the bubble to the right */
+    background-color: #E0FBF6;
+    text-align: right; /* Aligns text to the right */
+    max-width:fit-content;
+    display: flex; /* Ensures the content is aligned properly */
+    justify-content: flex-end; /* Justifies the content to the right */
+}
+/* Answer bubble styling */
+.answerBubble {
+    background-color: white;
+    box-shadow: 0px 5px 4px rgba(0, 0, 0, 0.06);
+    transition: opacity 0.5s ease-in-out; /* Fade effect */
+    color: #001E2B;
+}
+
+.answerBubble.appear {
+    opacity: 1;
+}
+.loadingOverlay{
+    background-color: rgba(0, 163, 92, 0.037);
+    position: absolute;         /* Position the overlay absolutely */
+    top: 107px;                     /* Cover from the top */
+    left: 0;                    /* Cover from the left */
+    right: 0;                   /* Cover to the right */
+    bottom: 0;                  /* Cover to the bottom */
+    color: white;               /* Text color for "LOADING..." */
+    display: flex;              /* Center the text */
+    align-items: center;        /* Center vertically */
+    justify-content: center;    /* Center horizontally */
+    z-index: 10;                /* Place it above other elements */
+    border-radius: 0 0 24px 24px;
+}
+.responseDetailsContainer{
+    /* background-color: rgba(0, 0, 0, 0.024); */
+    display: flex;
+    flex-direction: row;
+}
+.popoverJson{
+}
+.popoverJson :global(.popover-body){
+    padding: 0;
+    /* max-width: inherit;
+    width: fit-content; */
+}
+.popoverJson pre{
+    /* max-width: 600px;
+    width: fit-content; */
+    overflow-x: auto;
+    max-width: var(--bs-popover-max-width);
 }

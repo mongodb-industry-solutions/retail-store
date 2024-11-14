@@ -24,7 +24,8 @@ const UserSlice = createSlice({
         orders: {
             loading: true,
             error: null,
-            list: []
+            list: [],
+            initialLoad: false
         },
         // TODO cart: {}
     },
@@ -60,6 +61,7 @@ const UserSlice = createSlice({
             //console.log(action.payload)
             state.orders.loading = false
             state.orders.list = action.payload.orders;
+            state.orders.initialLoad = true
             //TODO: state.cart = action.payload.cart;
         });
       },
