@@ -10,6 +10,15 @@ services:
       - "3456:3456"
     restart: always
     container_name: bucket-signer-microservice
+  event-generator:
+    build:
+      context: ./microservices/dynamicPricing
+      dockerfile: Dockerfile
+    image: event-generator:latest
+    ports:
+      - "8000:8000"
+    restart: always
+    container_name: event-generator
   store:
     build:
       context: ./store
