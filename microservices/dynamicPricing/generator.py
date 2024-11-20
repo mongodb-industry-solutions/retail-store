@@ -10,7 +10,8 @@ from datetime import datetime, timedelta
 import json
 from bson import ObjectId
 import hashlib
-
+import certifi
+ 
 # Load environment variables
 load_dotenv()
 MONGODB_URI = os.getenv('MONGODB_URI')
@@ -19,7 +20,7 @@ GOOGLE_CLOUD_PROJECT = os.getenv('GOOGLE_CLOUD_PROJECT')
 PUBSUB_TOPIC_ID = os.getenv('PUBSUB_TOPIC_ID')
 
 # Initialize MongoDB client
-mongo_client = pymongo.MongoClient(MONGODB_URI)
+mongo_client = pymongo.MongoClient(MONGODB_URI, tlsCAFile=certifi.where())
 db = mongo_client["dotLocalStore"]
 behaviors_collection = db["events"]
 products_collection = db["products"]
@@ -30,9 +31,11 @@ topic_path = publisher.topic_path(GOOGLE_CLOUD_PROJECT, PUBSUB_TOPIC_ID)
 
 def fetch_products():
     """Fetch products from MongoDB"""
-    return list(products_collection.find({}))
+    return list(products_collection.find({"brand": "MongoDB"})) # use {"id": 98796} if you wish to debugg for just one prod
+
 
 def generate_ecommerce_behavior(product):
+    #print(product)
     """Generate a single synthetic ecommerce behavior data for a given product"""
     # Encode product_name into a numerical field
     encoded_name = int(hashlib.sha256(product["name"].encode('utf-8')).hexdigest(), 16) % 10**8
@@ -42,7 +45,7 @@ def generate_ecommerce_behavior(product):
         "action": random.choice(["view", "add_to_cart", "purchase"]),
         "price": product["price"],
         "timestamp": datetime.now().isoformat(),  # Format timestamp for JSON serialization
-        "encoded_name": encoded_name
+        "encoded_name": encoded_name,
     }
     return behavior
 
@@ -72,7 +75,7 @@ def push_event_to_pubsub(event):
 
 if __name__ == "__main__":
     products = fetch_products()
-    num_behaviors_per_cycle = 150
+    num_behaviors_per_cycle = 25
 
     try:
         while True:
@@ -86,6 +89,6 @@ if __name__ == "__main__":
                 # Push the behavior to Pub/Sub
                 push_event_to_pubsub(behavior)
                 # Wait for 3 seconds before generating the next behavior
-            time.sleep(3)
+            time.sleep(15)
     except KeyboardInterrupt:
         print("Stopped by the user.")

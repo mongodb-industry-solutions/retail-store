@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./productCard.module.css";
 import PropTypes from "prop-types";
 import PredPrice from "../predPrice/PredPrice";
@@ -72,8 +72,9 @@ const ProductCard = ({ id, photo, name, brand, price, pred_price, items }) => {
             <img src={photo} alt={name} width={200} height={200}></img>
             <Label className={styles.productName}>{name}</Label>
             <Description>{brand}</Description>
-
-            <PredPrice productId={id} initialPredPrice={pred_price} />
+            {brand === "MongoDB" && (
+              <PredPrice productId={id} initialPredPrice={pred_price} />
+            )}
           </div>
 
           <div className={styles.cardFooter}>
@@ -97,11 +98,10 @@ const ProductCard = ({ id, photo, name, brand, price, pred_price, items }) => {
                   <div className={styles.detailInfo}>
                     <Label className={styles.productName}>{name}</Label>
                     <Description>{brand}</Description>
-                    
 
                     <Subtitle className={styles.price}>${price}</Subtitle>
 
-                {/*
+                    {/*
                 
                 <Description>Select a Size:</Description>
                     <RadioGroup
