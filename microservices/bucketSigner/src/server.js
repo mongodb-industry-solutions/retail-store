@@ -3,30 +3,43 @@ import Router from "koa-router";
 import logger from "koa-logger";
 import dotenv from "dotenv";
 import { Storage } from "@google-cloud/storage";
-import serviceAccountKey from "./ist-retail-demo-c2e70dfceaa3.json" assert { type: "json" };
-import { connectToDatabase } from "./connect.js";
+import { connectToDatabase, closeDatabase } from "./connect.js";
+import fs from "fs/promises";
 
 dotenv.config();
 const port = process.env.PORT;
+const jsonFilePath = "/config/serviceAccountKey.json";
 
 const app = new Koa();
 const router = new Router();
 
 app.use(logger());
 
-router.get("/signURLs", async (ctx) => {
+async function loadJson(filePath) {
   try {
+    const data = await fs.readFile(process.cwd() + filePath, "utf8");
+    return JSON.parse(data);
+  } catch (error) {
+    console.error("Failed to load and parse JSON file:", error);
+    throw error;
+  }
+}
+
+router.get("/signURLs", async (ctx) => {
+  let db;
+  try {
+    const serviceAccountKey = await loadJson(jsonFilePath);
     const storage = new Storage({
       credentials: serviceAccountKey,
     });
 
     const bucketName = process.env.GCP_STORAGE_BUCKET;
-    const folderName = "storeProducts/";
+    const folderName = process.env.GCP_BUCKET_FOLDER;
 
     const bucket = storage.bucket(bucketName);
     const [files] = await bucket.getFiles({ prefix: folderName });
 
-    const db = await connectToDatabase();
+    db = await connectToDatabase();
     const collection = db.collection("products");
 
     const updates = await Promise.all(
@@ -47,20 +60,22 @@ router.get("/signURLs", async (ctx) => {
           { $set: { "image.url": signedUrl } }
         );
 
-        return updateResult;
+        return { file: file.name, acknowledged: updateResult.acknowledged };
       })
     );
 
-    const results = updates
-      .filter((result) => result !== null)
-      .map((result) => result.matchedCount);
+    const results = updates.filter((result) => result !== null);
 
-    ctx.body = { GeneratedURLsAndUpdatedCollection: true };
+    ctx.body = { GeneratedURLsAndUpdatedCollection: true, results };
     ctx.status = 200;
   } catch (error) {
     console.error("Error processing request:", error);
     ctx.body = { error: "Failed to process request" };
     ctx.status = 500;
+  } finally {
+    if (db) {
+      await closeDatabase();
+    }
   }
 });
 
