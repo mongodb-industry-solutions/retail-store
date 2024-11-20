@@ -18,7 +18,7 @@ const PredPrice = ({ productId, initialPredPrice }) => {
 
   return (
     <div className={style.predPrice}>
-      Predicted Price: ${initialPredPrice}{" "}
+      Predicted Price: ${Number(initialPredPrice)?.toFixed(2)}{" "}
       {arrowDirection && (
         <img className={style.arrowImg} src={arrowDirection} alt="Arrow" />
       )}
