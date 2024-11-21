@@ -30,7 +30,7 @@ const prettifyDateFormat = (timestamp) => {
     return `${datePart} at ${timePart}`;
 }
 
-const OrderItemCard = ({ order }) => {
+const OrderItemCard = ({ order, updateToggle }) => {
     const dispatch = useDispatch();
     const router = useRouter();
     const [totalPrice, setTotalPrice] = useState(0)
@@ -46,7 +46,7 @@ const OrderItemCard = ({ order }) => {
         setTotalPrice(totalPrice)
         const totalAmount = order.products?.reduce((sum, product) => sum + parseInt(product.amount || 1), 0);
         setTotalAmount(totalAmount)
-    }, [])
+    }, [updateToggle])
     
 
     return (

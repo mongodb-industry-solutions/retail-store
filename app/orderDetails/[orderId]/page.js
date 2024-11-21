@@ -1,44 +1,28 @@
 "use client" // app/order-details/[id]/page.js
 
-import React, { useEffect } from 'react';
+import React, {useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import Footer from "@/app/_components/footer/Footer";
-import Navbar from "@/app/_components/navbar/Navbar";
 import { H1, H3 } from '@leafygreen-ui/typography';
 import Banner from "@leafygreen-ui/banner";
 import { Container } from "react-bootstrap";
+import Badge from '@leafygreen-ui/badge';
+import Button from '@leafygreen-ui/button';
+import Icon from '@leafygreen-ui/icon';
+import Card from '@leafygreen-ui/card';
+import Stepper, { Step } from '@leafygreen-ui/stepper';
+import { CardSkeleton, Skeleton } from '@leafygreen-ui/skeleton-loader';
+
+import styles from '../orderDetails.module.css';
+import Footer from "@/app/_components/footer/Footer";
+import Navbar from "@/app/_components/navbar/Navbar";
+import CartItem from '@/app/_components/cart/CartItem';
+import { handleChangeInOrders, prettifyDateFormat } from '@/lib/helpers';
 import { fetchOrderDetails } from '@/lib/api';
 import { setLoading, setOrder } from '@/redux/slices/OrderSlice';
 
-import styles from '../orderDetails.module.css';
-import Card from '@leafygreen-ui/card';
-import CartItem from '@/app/_components/cart/CartItem';
-import Button from '@leafygreen-ui/button';
-import Icon from '@leafygreen-ui/icon';
-import Stepper, { Step } from '@leafygreen-ui/stepper';
-import { CardSkeleton, Skeleton } from '@leafygreen-ui/skeleton-loader';
-import Badge from '@leafygreen-ui/badge';
-
-const prettifyDateFormat = (timestamp) => {
-    const date = new Date(timestamp);
-    // Format the date part (e.g., "Jan 1, 2000")
-    const datePart = date.toLocaleDateString(undefined, {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric'
-    });
-    // Format the time part (e.g., "12:00:00 AM")
-    const timePart = date.toLocaleTimeString(undefined, {
-        hour: 'numeric',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: true
-    });
-    return `${datePart} at ${timePart}`;
-}
-
 export default function OrderDetailsPage({ params }) {
     const dispatch = useDispatch();
+    const [sseConnection, setSSEConnection] = useState(null)
     const { orderId } = params; // id from the dynamic URL
     const orderDetails = useSelector(state => state.Order)
 
@@ -47,6 +31,30 @@ export default function OrderDetailsPage({ params }) {
             return
         console.log('onArrivedToStoreClick')
     }
+
+    const listenToSSEUpdates = useCallback((orderId) => {
+        console.log('listenToSSEUpdates func')
+        const eventSource = new EventSource(`/api/sseOrderDetails?orderId=${orderId}`)
+
+        eventSource.onopen = () => {
+            console.log('SSE connection opened.')
+            // Save the SSE connection reference in the state
+        }
+
+        eventSource.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            console.log('Received SSE Update:', data);
+            handleChangeInOrders(orderId, data.fullDocument)
+            dispatch(setOrder(data.fullDocument))
+        }
+
+        eventSource.onerror = (event) => {
+            console.error('SSE Error:', event);
+        }
+        setSSEConnection(eventSource);
+        return eventSource;
+    }, []);
+
 
     useEffect(() => {
         const getOrderDetails = async () => {   // fetch the order 
@@ -57,16 +65,28 @@ export default function OrderDetailsPage({ params }) {
                 }
                 dispatch(setLoading(false))
             } catch (err) {
-
             }
         };
         getOrderDetails();
         return () => { }
     }, [orderId]);
 
+    useEffect(() => {
+        if (orderDetails._id !== null) {
+            const eventSource = listenToSSEUpdates(orderDetails._id);
+            return () => {
+                if (eventSource) {
+                    eventSource.close();
+                    console.log('SSE connection closed.');
+                }
+            }
+        }
+    }, [listenToSSEUpdates, orderDetails._id])
+
+
     return (
         <>
-            <Navbar></Navbar>
+            <Navbar/>
             <Container className=''>
                 <div className='d-flex align-items-end'>
                     <H1>Order details</H1>

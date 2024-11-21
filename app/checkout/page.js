@@ -23,6 +23,7 @@ import { shippingMethods } from '@/lib/constants';
 import Modal from '@leafygreen-ui/modal';
 import { clearOrder } from '@/redux/slices/OrderSlice';
 import { addUsersNewOrder } from '@/redux/slices/UserSlice';
+import { handleCreateNewOrder } from '@/lib/helpers';
 
 export default function Page() {
     const router = useRouter();
@@ -37,7 +38,6 @@ export default function Page() {
 
     const onConfirmOrder = async () => {
         setProcessingNewOrder(true)
-        console.log(selectedStoreLocation)
         let order = await createNewOrder(
             selectedUser._id, 
             selectedUser.address,
@@ -52,7 +52,8 @@ export default function Page() {
             // set redux cart to 0 products
             dispatch(clearCartProductsList())
             // add order to redux
-            dispatch(addUsersNewOrder({order}))
+            //dispatch(addUsersNewOrder({order}))
+            handleCreateNewOrder(order)
             router.push(`/orderDetails/${order._id}`);
             await clearCart(selectedUser._id)
             // TODO enhance: alert(`New order created with id ${order._id}`)

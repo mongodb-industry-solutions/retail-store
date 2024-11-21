@@ -47,7 +47,11 @@ const ChatbotSlice = createSlice({
             return {...state,  isLoadingAnswer: action.payload}
         },
         setMinimizedOrderSchema: (state, action) => {
-            return {...state,  minimizedOrderSchema: [...action.payload], initialLoad: true}
+            return {
+                ...state,  
+                minimizedOrderSchema: [...action.payload], 
+                initialLoad: true
+            }
         }
     }
 })

@@ -6,7 +6,6 @@ import { Body } from '@leafygreen-ui/typography';
 
 import styles from "./chatbotComp.module.css";
 import ChatbotModal from './ChatbotModal';
-import Icon from '@leafygreen-ui/icon';
 import { calculateInitialMessage, getMinimizedSchemaForDataworkz } from '@/lib/helpers';
 import { addMessage, setInitialMessage, setMinimizedOrderSchema } from '@/redux/slices/ChatbotSlice';
 import { ROLE } from '@/lib/constants';

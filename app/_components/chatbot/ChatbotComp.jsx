@@ -67,7 +67,11 @@ const ChatbotComp = () => {
             <div className={styles.chatbotBody}>
                 {
                     initialMessage &&
-                    <div className={styles.introBubble} dangerouslySetInnerHTML={{ __html: initialMessage.html }} />
+                    <div 
+                        className={styles.introBubble} 
+                        dangerouslySetInnerHTML={{ __html: initialMessage.html }} 
+                        onClick={() => console.log('minimizedOrderSchema', minimizedOrderSchema)}
+                    />
                 }
                 {
                     messages
