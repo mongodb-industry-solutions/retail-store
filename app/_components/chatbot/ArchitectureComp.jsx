@@ -4,7 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 
 import styles from "./chatbotComp.module.css";
-import { Body, Description, H3, Label } from '@leafygreen-ui/typography';
+import { H3 } from '@leafygreen-ui/typography';
 
 const ArchitectureComp = () => {
 
@@ -12,7 +12,7 @@ const ArchitectureComp = () => {
         <div className={styles.ArchitectureComp}>
             <div style={{ width: '90%' }}>
                 <Image
-                    src="/rsc/diagrams/chatbotDiagram.png" // Replace with your image path
+                    src="/rsc/diagrams/chatbotDiagram.png"
                     alt="Dataworkz + MDB architecture"
                     layout="responsive"
                     width={100} // Arbitrary width for setting aspect ratio

@@ -1,23 +1,20 @@
 "use client"
 
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Body, Description, H3 } from '@leafygreen-ui/typography';
+import { Body, Description } from '@leafygreen-ui/typography';
 import Button from "@leafygreen-ui/button";
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Popover from 'react-bootstrap/Popover';
 
 import styles from "./chatbotComp.module.css";
 import { addMessage, setIsLoadingAnswer } from '@/redux/slices/ChatbotSlice';
 import { ROLE } from '@/lib/constants';
 import { fetchAssistantResponse } from '@/lib/api';
-import Typewriter from '../typewriter/Typewriter';
-import Icon from '@leafygreen-ui/icon';
-import JsonDisplay from '../jsonDisplayComp/JsonDisplayComp';
+import { Spinner } from 'react-bootstrap';
+import AssistantMessageComp from './AssistantMessageComp';
 
 const suggestions = [
-    "Can I pickup my order in a physical store?",
-    "How much time do I have to cancel my order?"
+    "What can you do for me?",
+    "How much time do I have to cancel an order?"
 ]
 
 const ChatbotComp = () => {
@@ -61,12 +58,12 @@ const ChatbotComp = () => {
         }
         dispatch(setIsLoadingAnswer(false))
     }
-
+    
     return (
         <div className={`${styles.modalContentTab} d-flex flex-column`}>
             <div className={styles.chatbotBody}>
                 {
-                    initialMessage &&
+                    initialMessage && 
                     <div 
                         className={styles.introBubble} 
                         dangerouslySetInnerHTML={{ __html: initialMessage.html }} 
@@ -83,36 +80,32 @@ const ChatbotComp = () => {
                                 >
                                     {
                                         message.role === ROLE.user
-                                            ? <Body>
+                                            ? <div>
                                                 {message.content}
-                                            </Body>
-                                            : <div>
-                                                <Typewriter
-                                                    text={message.content}
-                                                ></Typewriter>
-                                                <div className={styles.responseDetailsContainer}>
-                                                    <OverlayTrigger
-                                                        trigger="click"
-                                                        placement={'top'}
-                                                        overlay={
-                                                            <Popover 
-                                                                className={styles.popoverJson}
-                                                            >
-                                                                <Popover.Header as="h3">Response details</Popover.Header>
-                                                                <Popover.Body>
-                                                                    <JsonDisplay data={message.resJson}/>
-                                                                </Popover.Body>
-                                                            </Popover>
-                                                        }
-                                                    >
-                                                        <Button size='xsmall'><Icon glyph='Sparkle'></Icon></Button>
-                                                    </OverlayTrigger>
-                                                </div>
                                             </div>
+                                            : <AssistantMessageComp 
+                                                index={index} 
+                                                content={message.content} 
+                                                resJson={message.resJson}
+                                                isAnimationDone={message.isAnimationDone}
+                                                stylesResponseDetailsContainer={styles.responseDetailsContainer}
+                                                stylesPopoverJson={styles.popoverJson}
+                                            />
                                     }
                                 </div>
                             </div>
                         ))
+                }
+                {
+                   ( isLoadingAnswer || initialMessage === null ) &&
+                    <div className={styles.chatMessage}>
+                        <div className={`${styles.speechBubble} ${styles.answerBubble}`}>
+                            <Spinner size="sm" animation="border" role="status" variant="success" className='me-2'>
+                                <span className="visually-hidden">Loading...</span>
+                            </Spinner>
+                            Thinking...
+                        </div>
+                    </div>
                 }
             </div>
 
@@ -132,7 +125,7 @@ const ChatbotComp = () => {
                     type="text"
                     ref={askInputRef}
                     disabled={isLoadingAnswer}
-                    placeholder={isLoadingAnswer ? "Assintent processing answer..." : "Type your question..."}
+                    placeholder={isLoadingAnswer ? "Assistant processing answer..." : "Type your question..."}
                 />
                 <Button onClick={handleAsk} variant="baseGreen" disabled={!askInputRef.current?.value.length === 0 || isLoadingAnswer}>
                     {isLoadingAnswer ? "Asking..." : "Ask"}

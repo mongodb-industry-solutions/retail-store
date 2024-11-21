@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ReactMarkdown from 'react-markdown';
 
-const Typewriter = ({ text }) => {
+const Typewriter = ({ text, completedCallback = null }) => {
     const [displayedText, setDisplayedText] = useState("");
     const [completed, setCompleted] = useState(false);
 
@@ -22,6 +22,9 @@ const Typewriter = ({ text }) => {
             return () => clearInterval(typing); // Cleanup on unmount
         } else {
             setDisplayedText(text); // Ensure the full text is displayed after typing
+        }
+        if(completed && completedCallback !== null){
+            completedCallback()
         }
     }, [text, completed]);
 

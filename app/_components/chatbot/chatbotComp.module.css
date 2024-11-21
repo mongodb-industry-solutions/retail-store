@@ -138,6 +138,7 @@
     max-width: 90%;
     word-wrap: break-word;
     margin-bottom: 1rem;
+    font-size: 13px;
 }
 .chatbotBody {
     padding-top: 10px;
@@ -159,7 +160,7 @@
     max-width: 90%;
     word-wrap: break-word;
     box-shadow: 0px 5px 4px rgba(0, 0, 0, 0.06);
-
+    font-size: 13px;
 }
 /* Speech bubble alignment */
 .userBubble {

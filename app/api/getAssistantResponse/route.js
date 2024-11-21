@@ -247,8 +247,8 @@ export async function POST(request) {
     let resJson = await response.json();
 
     if (response.ok) { // response.ok is true if the status code is in the 200-299 range
-        output = resJson.answer;
+        output = resJson.answer || output;
     }
-    // console.log('-- resJson: ', resJson);
+    console.log('-- resJson: ', resJson);
     return NextResponse.json({ message: output || null, resJson }, { status: 200 });
 }

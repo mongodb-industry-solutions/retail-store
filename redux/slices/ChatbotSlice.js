@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { act } from "react";
 /*
 This is a minimized version of the schema that is send to dataworkz chatbot
 */
@@ -15,7 +16,8 @@ const ChatbotSlice = createSlice({
         // {
         //     content: '' || <></>,
         //     contentType: 'text' || 'html',
-        //     role: ROLE.assistant || ROLE.user
+        //     role: ROLE.assistant || ROLE.user,
+        //     isAnimationDone: false || true
         // }
     },
     reducers: {
@@ -36,12 +38,30 @@ const ChatbotSlice = createSlice({
             if (error === null)
                 return { ...state, error: null }
             else
-                return { ...state, error: { ...action.payload } }
+                return { ...state, error: { ...action.payload} }
         },
         addMessage: (state, action) => {
             return {
                 ...state, 
-                messages: [...state.messages, action.payload] }
+                messages: [
+                    ...state.messages, 
+                    {...action.payload, isAnimationDone: false }
+                ],
+            }
+        },
+        setAnimationMessage: (state, action) => {
+            let newMessages = [...state.messages].map((message, i) =>
+                i === action.payload.index
+                ? { 
+                    ...message, 
+                    isAnimationDone: action.payload.isAnimationDone 
+                }
+                : {...message}
+            )
+            return {
+                ...state,
+                messages: [...newMessages],
+            }
         },
         setIsLoadingAnswer: (state, action) => {
             return {...state,  isLoadingAnswer: action.payload}
@@ -62,7 +82,8 @@ export const {
     setError,
     addMessage,
     setIsLoadingAnswer,
-    setMinimizedOrderSchema
+    setMinimizedOrderSchema,
+    setAnimationMessage
 } = ChatbotSlice.actions
 
 export default ChatbotSlice.reducer

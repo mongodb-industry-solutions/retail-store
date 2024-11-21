@@ -19,6 +19,9 @@ import CartItem from '@/app/_components/cart/CartItem';
 import { handleChangeInOrders, prettifyDateFormat } from '@/lib/helpers';
 import { fetchOrderDetails } from '@/lib/api';
 import { setLoading, setOrder } from '@/redux/slices/OrderSlice';
+import { shippingMethods } from '@/lib/constants';
+import Image from 'next/image';
+import ShippingMethodBadgeComp from '@/app/_components/shippingMethodBadgeComp/ShippingMethodBadgeComp';
 
 export default function OrderDetailsPage({ params }) {
     const dispatch = useDispatch();
@@ -89,7 +92,7 @@ export default function OrderDetailsPage({ params }) {
             <Navbar/>
             <Container className=''>
                 <div className='d-flex align-items-end'>
-                    <H1>Order details</H1>
+                    <H1 onClick={() => console.log(orderDetails)}>Order details</H1>
                 </div>
                 <div className='mt-3'>
                     <H3 className="mb-2">Summary</H3>
@@ -113,11 +116,13 @@ export default function OrderDetailsPage({ params }) {
                                             <p className={styles.orderData}><strong>Status:</strong> {
                                                 orderDetails.isCanceled
                                                     ? <Badge variant="red">{orderDetails.status_history[orderDetails.status_history.length - 1]?.status}</Badge>
-                                                    : orderDetails.status_history[orderDetails.status_history.length - 1]?.status
+                                                    : orderDetails.status_history[orderDetails.status_history.length - 1]?.status === shippingMethods.bopis.steps[3]?.label || orderDetails.status_history[orderDetails.status_history.length - 1]?.status === shippingMethods.home.steps[4]?.label
+                                                    ? <Badge variant="green">{orderDetails.status_history[orderDetails.status_history.length - 1]?.status}</Badge>
+                                                    : <Badge variant="gray">{orderDetails.status_history[orderDetails.status_history.length - 1]?.status}</Badge>
                                             }</p>
                                         </div>
                                         <div className='col'>
-                                            <p className={styles.orderData}><strong>Type:</strong> {orderDetails.type}</p>
+                                            <p className={styles.orderData}><strong>Type:</strong><ShippingMethodBadgeComp orderDetails={orderDetails}/></p>
                                             <p className={styles.orderData}><strong>Address:</strong> {orderDetails.shipping_address}</p>
                                         </div>
                                         <div className='col'>
@@ -143,7 +148,7 @@ export default function OrderDetailsPage({ params }) {
                                         </Stepper>
                                     }
                                     {
-                                        orderDetails.packageIsInTheStore &&
+                                        (orderDetails.packageIsInTheStore === true) &&
                                         <Banner className='mb-2 mt-2' image={<Icon glyph="Bell"></Icon>}>
                                             <div className='d-flex flex-row align-items-center justify-content-between'>
                                                 <strong className='m-0'>Let the store know you have arrived for your package.</strong>  <Button onClick={() => onArrivedToStoreClick()}>I am here</Button>

@@ -18,7 +18,7 @@ const OrderSlice = createSlice({
             const shippingMethod = action.payload.type.toLowerCase().includes('store') 
                 ? shippingMethods.bopis 
                 : shippingMethods.home;
-            const packageIsInTheStore = action.payload.status_history[action.payload.status_history.length - 1]?.status.toLowerCase().includes('ready')
+            const packageIsInTheStore =  (shippingMethod.id === shippingMethods.bopis.id) && (action.payload.status_history[action.payload.status_history.length - 1]?.status.toLowerCase().includes('ready'))
             const isCanceled = action.payload.status_history[action.payload.status_history.length - 1]?.status.toLowerCase().includes('cancel')
             const totalPrice = action.payload.products?.reduce((sum, product) => sum + (product.price.amount * (product.amount || 1)), 0);
             const totalAmount = action.payload.products?.reduce((sum, product) => sum + (product.amount || 1), 0);

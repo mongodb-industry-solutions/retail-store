@@ -10,6 +10,8 @@ import Badge from "@leafygreen-ui/badge";
 import styles from "./orderItemCard.module.css";
 import Button from "@leafygreen-ui/button";
 import { clearOrder } from "@/redux/slices/OrderSlice";
+import { shippingMethods } from "@/lib/constants";
+import ShippingMethodBadgeComp from "../shippingMethodBadgeComp/ShippingMethodBadgeComp";
 
 
 const prettifyDateFormat = (timestamp) => {
@@ -55,9 +57,9 @@ const OrderItemCard = ({ order, updateToggle }) => {
                 <H3 className='me-3'>Order #{order._id}</H3>
                 {
                     order.type.toLowerCase().includes('home')
-                    ? <Badge variant='blue'>Buy Online, Get Delivery at Home</Badge>
+                    ? <ShippingMethodBadgeComp orderDetails={{shippingMethod: shippingMethods.home}}/>
                     : order.type.toLowerCase().includes('store')
-                    ? <Badge variant='yellow'>Buy Online, Pick Up in Store</Badge>
+                    ? <ShippingMethodBadgeComp orderDetails={{shippingMethod: shippingMethods.bopis}}/>
                     : <Badge variant='lightgrey'>{order.type}</Badge>
                 }
             </div>

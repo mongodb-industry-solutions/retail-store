@@ -35,7 +35,7 @@ const UserSlice = createSlice({
             return {...state, usersList: [...action.payload]}
         },
         addUsersNewOrder: (state, action) => {
-            let newOrders = [...state.orders.list, action.payload.order]
+            let newOrders = [action.payload.order, ...state.orders.list]
             return {
                 ...state,
                 orders: {
