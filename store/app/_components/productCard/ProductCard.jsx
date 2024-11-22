@@ -71,7 +71,8 @@ const ProductCard = (props) => {
   return (
     <div className={styles.productContainer}>
       <LeafyGreenProvider>
-        <Card className={styles.card} onClick={() => setOpen((o) => !o)}>
+        <Card className={styles.card} >
+          {/* onClick={() => setOpen((o) => !o)}> */}
           <div className={styles.scoreContainer}>
             {
               score &&
