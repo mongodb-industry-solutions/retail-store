@@ -2,17 +2,16 @@ import { MongoClient } from "mongodb";
 import dotenv from "dotenv";
 dotenv.config();
 
-const uri = process.env.IST_SHARED_MONGODB;
+const uri = process.env.MONGODB_URI;
 let db = null;
 
 const client = new MongoClient(uri);
-const dbName = "dotLocalStore";
+const dbName = process.env.DB_NAME;
 
 export async function connectToDatabase() {
   if (db) {
     return db;
   }
-
   try {
     await client.connect();
     console.log("Connected successfully to MongoDB Atlas");
@@ -25,7 +24,8 @@ export async function connectToDatabase() {
 }
 
 export function closeDatabase() {
-  if (client.isConnected()) {
+  if (client.topology.isConnected()) {
+    console.log("Connection closed successfully to MongoDB Atlas");
     return client.close();
   }
   return Promise.resolve();

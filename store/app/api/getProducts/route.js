@@ -21,9 +21,20 @@ export async function POST(request) {
 
     }
 
-
+    const projection = {
+      projection: { 
+        name: 1, 
+        price: 1, 
+        brand: 1, 
+        image:1, 
+        id: 1, 
+        _id: 1, 
+        pred_price: 1, 
+        items: 1 
+      }
+    }
     const products = await collection
-        .find({"$and":[queryBrand, queryCategory]}, { projection: { name: 1, price: 1, brand: 1, image:1, id: 1, _id: 1, pred_price: 1, items: 1 }})
+        .find({$and:[queryBrand, queryCategory]}, projection)
         .toArray();
 
        //console.log(products.items.name);

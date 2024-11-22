@@ -11,6 +11,7 @@ node_modules/
 /coverage
 
 # next.js
+store/.next
 /.next/
 /out/
 
