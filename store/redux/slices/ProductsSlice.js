@@ -1,4 +1,4 @@
-import { SEARCH_TYPES } from "@/app/_lib/constants";
+import { SEARCH_TYPES } from "@/store/app/_lib/constants";
 import { createSlice } from "@reduxjs/toolkit";
 
 const ProductsSlice = createSlice({
