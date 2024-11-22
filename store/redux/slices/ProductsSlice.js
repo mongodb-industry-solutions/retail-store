@@ -1,21 +1,20 @@
-import { SEARCH_TYPES } from "@/store/app/_lib/constants";
 import { createSlice } from "@reduxjs/toolkit";
+import { SEARCH_TYPES } from "../../app/_lib/constants";
 
 const ProductsSlice = createSlice({
     name: "Products",
     initialState: {
-        products: [],
+        products: {}, // {id: {...}, id: {...}, ...}
         filters: {},
         searchType: SEARCH_TYPES.atlasSearch,
         searchIsLoading: false,
         initialLoad: false,
         error: null,         // null or {msg: ""}
-        loading: false,
         openedProductDetails: null // null or {...} este es el 
     },
     reducers: {
         setLoading: (state, action) => {
-            return { ...state, loading: action.payload }
+            return { ...state, searchIsLoading: action.payload }
         },
         setError: (state, action) => {
             if (error === null)
@@ -23,13 +22,34 @@ const ProductsSlice = createSlice({
             else
                 return { ...state, error: { ...action.payload } }
         },
-        setOpenedProductDetails
+        setInitialLoad: (state, action) => {
+            return { ...state, initialLoad: action.payload }
+        },
+        setSearchTypeValue: (state, action) => {
+            return {
+                ...state,
+                searchType: action.payload
+            }
+        },
+        setProducts: (state, action) => {
+            return {
+                ...state,
+                products: {...action.payload},
+                searchIsLoading: false,
+                error: null,
+
+            }
+        },
+        //setOpenedProductDetails
     }
 })
 
 export const {
     setLoading,
     setError,
+    setSearchTypeValue,
+    setProducts,
+    setInitialLoad
 } = ProductsSlice.actions
 
 export default ProductsSlice.reducer

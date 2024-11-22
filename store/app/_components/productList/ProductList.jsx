@@ -1,17 +1,23 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import axios from "axios";
+import { useSelector, useDispatch } from 'react-redux';
 import ProductCard from "../productCard/ProductCard";
 import styles from "./productList.module.css";
 import Pagination from "@leafygreen-ui/pagination";
+import ProductListLoading from "./ProductListLoading";
+import { setInitialLoad, setLoading, setProducts } from "../../../redux/slices/ProductsSlice";
+import { getProductsWithSearch } from "../../_lib/api";
 
 const itemsPerPage = 20;
 
 const ProductList = ({ filters }) => {
+  const dispatch = useDispatch();
+  const products = useSelector(state => state.Products.products)
+  const searchIsLoading = useSelector(state => state.Products.searchIsLoading)
+  const initialLoad = useSelector(state => state.Products.initialLoad)
   const [sseConnection, setSSEConnection] = useState(null);
   const [filteredProducts, setFilteredProducts] = useState({});
-  const [paginationLength, setPaginationLength] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [firstIndex, setFirstIndex] = useState(0);
   const [lastIndex, setLastIndex] = useState(itemsPerPage - 1);
@@ -48,33 +54,54 @@ const ProductList = ({ filters }) => {
   }, []);
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const getAllProducts = async () => {
       try {
-        const response = await axios.post("/api/getProducts", filters);
-        let transformedProducts = {};
-        console.log("/api/getProducts", response.data.products);
-        response.data.products.map(
-          (product) =>
-            (transformedProducts[product._id] = {
-              _id: product._id,
-              id: product.id,
-              photo: product.image.url,
-              name: product.name,
-              brand: product.brand,
-              price: `${product.price.amount.toFixed(2)}`,
-              pred_price: `${product.pred_price.toFixed(2)}`,
-              items: product.items,
-            })
-        );
-        setFilteredProducts(transformedProducts);
-        setPaginationLength(Object.keys(transformedProducts).length);
-      } catch (error) {
-        console.error("There was a problem with your fetch operation:", error);
+        dispatch(setLoading(true))
+        let result = await getProductsWithSearch();
+        if(result){
+            console.log('getAllProducts result', Object.keys(result).length)
+            dispatch(setInitialLoad(true))
+            dispatch(setProducts(result))
+        }
+      } catch (err) {
+          console.log(`Error getting all products, ${err}`)
       }
-    };
+    }
 
-    fetchProducts();
-  }, [filters]);
+    if(initialLoad === false){
+      getAllProducts()
+    }
+  }, [initialLoad]);
+
+  // useEffect(() => {
+  //   const fetchProducts = async () => {
+  //     try {
+  //       const response = await axios.post("/api/getProducts", filters);
+  //       let transformedProducts = {};
+  //       console.log("/api/getProducts", response.data.products);
+  //       response.data.products.map(
+  //         (product) =>
+  //           (transformedProducts[product._id] = {
+  //             ...product,
+  //             _id: product._id,
+  //             id: product.id,
+  //             photo: product.image.url,
+  //             name: product.name,
+  //             brand: product.brand,
+  //             price: `${product.price.amount.toFixed(2)}`,
+  //             pred_price: `${product.pred_price.toFixed(2)}`,
+  //             items: product.items,
+  //           })
+  //       );
+  //       setFilteredProducts(transformedProducts);
+  //       setPaginationLength(Object.keys(transformedProducts).length);
+  //     } catch (error) {
+  //       console.error("There was a problem with your fetch operation:", error);
+  //     }
+  //   };
+
+  //   fetchProducts();
+  // }, [filters]);
 
   useEffect(() => {
     let firstIndex = (currentPage - 1) * itemsPerPage
@@ -97,21 +124,26 @@ const ProductList = ({ filters }) => {
   return (
     <div>
       <div className={styles.productContainer}>
-        {Object.values(filteredProducts)
-          .slice(firstIndex, lastIndex)
-          .map((product, index) => (
-            <div key={index}>
-              <ProductCard
-                id={product.id}
-                photo={product.photo}
-                name={product.name}
-                brand={product.brand}
-                price={product.price}
-                pred_price={product.pred_price}
-                items={product.items}
-              />
-            </div>
-          ))}
+        {
+          searchIsLoading || !initialLoad
+          ? <ProductListLoading/>
+          : Object.values(products)
+            .slice(firstIndex, lastIndex)
+            .map((product, index) => (
+              <div key={index} onClick={() => console.log(product)}>
+                <ProductCard
+                  id={product.id}
+                  photo={product.photo}
+                  name={product.name}
+                  brand={product.brand}
+                  price={product.price}
+                  pred_price={product.pred_price}
+                  items={product.items}
+                  score={product.score}
+                />
+              </div>
+            ))
+        }
       </div>
       <br></br>
       <hr className={styles.hr}></hr>
@@ -119,7 +151,7 @@ const ProductList = ({ filters }) => {
         currentPage={currentPage}
         itemsPerPage={itemsPerPage}
         itemsPerPageOptions={[8, 16, itemsPerPage]}
-        numTotalItems={paginationLength}
+        numTotalItems={Object.keys(products).length}//paginationLength}
         onForwardArrowClick={ () => setCurrentPage(currentPage + 1) }
         onBackArrowClick={ () => setCurrentPage(currentPage - 1) }
       ></Pagination>

@@ -17,8 +17,20 @@ import Button from "@leafygreen-ui/button";
 import IconButton from "@leafygreen-ui/icon-button";
 
 import Image from "next/image";
+import Badge from "@leafygreen-ui/badge";
+import Icon from "@leafygreen-ui/icon";
 
-const ProductCard = ({ id, photo, name, brand, price, pred_price, items }) => {
+const ProductCard = (props) => {
+  const {
+    id,
+    photo,
+    name,
+    brand,
+    price,
+    pred_price,
+    items,
+    score
+  } = props;
   const [open, setOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
 
@@ -55,11 +67,20 @@ const ProductCard = ({ id, photo, name, brand, price, pred_price, items }) => {
   };
 
   const isAddToCartDisabled = !selectedOption; // Disable "Add to Cart" button if no radio button is selected
-  
+
   return (
     <div className={styles.productContainer}>
       <LeafyGreenProvider>
         <Card className={styles.card} onClick={() => setOpen((o) => !o)}>
+          <div className={styles.scoreContainer}>
+            {
+              score &&
+              <Badge className={styles.scorebadge} variant="yellow">
+                <Icon glyph="Favorite" />
+                {score.toFixed(5)}
+              </Badge>
+            }
+          </div>
           <div className={styles.productInfo}>
             <img src={photo} alt={name} width={200} height={200}></img>
             <Label className={styles.productName}>{name}</Label>
