@@ -1,6 +1,6 @@
 .bannerContainer{
     width: 100%;
-    height: 600px;
+    min-height: 600px; 
     background-color: #001E2B;
     display: flex;
     border-bottom-left-radius: 100px; 
@@ -30,9 +30,15 @@
 }
 
 .imgContainer{
-    margin-left: 200px;
+    /* margin-left: 200px; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
 }
-
+.imgContainer img{
+    max-width: 760px;
+}
 .title{
     color: white;
     margin-top: 20px;

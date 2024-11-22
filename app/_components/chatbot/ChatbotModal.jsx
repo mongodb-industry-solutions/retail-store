@@ -9,6 +9,7 @@ import { Tabs, Tab } from '@leafygreen-ui/tabs';
 import styles from "./chatbotComp.module.css";
 import ChatbotComp from './ChatbotComp';
 import ArchitectureComp from './ArchitectureComp';
+import Image from 'next/image';
 
 const ChatbotModal = ({ isOpen, handleClose }) => {
     const [selected, setSelected] = useState(0)
@@ -26,7 +27,7 @@ const ChatbotModal = ({ isOpen, handleClose }) => {
         >
             <ModalHeader className="d-flex flex-row justify-content-between">
                 <div/>
-                <H3>RAG Chatbot</H3>
+                <H3><Image width={25} height={25} alt="Chat Icon" src="/rsc/icons/headphones-solid.svg"/> RAG Chatbot </H3>
                 <Icon className='cursorPointer' onClick={() => handleClose()} glyph="X" />
             </ModalHeader>
             <Tabs setSelected={setSelected} selected={selected}>

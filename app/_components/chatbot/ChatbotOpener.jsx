@@ -9,6 +9,7 @@ import ChatbotModal from './ChatbotModal';
 import { calculateInitialMessage, getMinimizedSchemaForDataworkz } from '@/lib/helpers';
 import { addMessage, setInitialMessage, setMinimizedOrderSchema } from '@/redux/slices/ChatbotSlice';
 import { ROLE } from '@/lib/constants';
+import Image from 'next/image';
 
 const ChatbotOpener = () => {
     const dispatch = useDispatch();
@@ -54,10 +55,18 @@ const ChatbotOpener = () => {
     return (
         <>
             <ChatbotModal isOpen={isOpen} handleClose={handleClose}/> 
-            <div className={styles.chatbotButton} onClick={() => setIsOpen(true)}>
-                {/* <Icon className={styles.chatIcon} glyph='Sparkle' ></Icon> */}
-                <img src="/rsc/icons/chat_icon.png" alt="Chat Icon" className={styles.chatIcon} />
-                <span><Body className={styles.chatbotText}><strong>How can I help?</strong></Body></span>
+            <div 
+                className={`${styles.chatbotButton}`} 
+                onClick={() => setIsOpen(true)}
+            >
+                <div  className={`d-flex justify-content-center align-items-center ${styles.chatIcon}`} >
+                    <Image width={18} height={18} alt="Chat Icon"  src="/rsc/icons/headphones-solid.svg"/>
+                </div >
+                <span className={` ${styles.expandableContent}`}>
+                    <Body className={styles.chatbotText}>
+                        <strong>How can I help?</strong>
+                    </Body>
+                </span>
             </div>
         </>
     );

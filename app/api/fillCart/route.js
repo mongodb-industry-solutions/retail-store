@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { closeDatabase, connectToDatabase } from "../../_db/connect";
-import { current } from "@reduxjs/toolkit";
 const { ObjectId } = require('mongodb');
 
 export async function POST(request) {

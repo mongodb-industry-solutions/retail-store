@@ -17,10 +17,9 @@ import Footer from "@/app/_components/footer/Footer";
 import Navbar from "@/app/_components/navbar/Navbar";
 import CartItem from '@/app/_components/cart/CartItem';
 import { handleChangeInOrders, prettifyDateFormat } from '@/lib/helpers';
-import { fetchOrderDetails } from '@/lib/api';
+import { addOrderStatusHistory, fetchOrderDetails } from '@/lib/api';
 import { setLoading, setOrder } from '@/redux/slices/OrderSlice';
 import { shippingMethods } from '@/lib/constants';
-import Image from 'next/image';
 import ShippingMethodBadgeComp from '@/app/_components/shippingMethodBadgeComp/ShippingMethodBadgeComp';
 
 export default function OrderDetailsPage({ params }) {
@@ -28,11 +27,22 @@ export default function OrderDetailsPage({ params }) {
     const [sseConnection, setSSEConnection] = useState(null)
     const { orderId } = params; // id from the dynamic URL
     const orderDetails = useSelector(state => state.Order)
+    const [isBtnDisabled, setIsBtnDisabled] = useState(false)
 
-    const onArrivedToStoreClick = () => {
-        if (!orderDetails.packageIsInTheStore)
+    const onArrivedToStoreClick = async () => {
+        if (!orderDetails.packageIsInTheStore || isBtnDisabled)
             return
-        console.log('onArrivedToStoreClick')
+        setIsBtnDisabled(true)
+        let result = await addOrderStatusHistory(
+            orderId,
+            {
+                status: shippingMethods.bopis.steps[2].label, 
+                timestamp: Number(Date.now())
+            }
+        );
+        if (result) {
+            console.log('result', result)
+        }
     }
 
     const listenToSSEUpdates = useCallback((orderId) => {
@@ -151,7 +161,8 @@ export default function OrderDetailsPage({ params }) {
                                         (orderDetails.packageIsInTheStore === true) &&
                                         <Banner className='mb-2 mt-2' image={<Icon glyph="Bell"></Icon>}>
                                             <div className='d-flex flex-row align-items-center justify-content-between'>
-                                                <strong className='m-0'>Let the store know you have arrived for your package.</strong>  <Button onClick={() => onArrivedToStoreClick()}>I am here</Button>
+                                                <strong className='m-0'>Let the store know you have arrived for your package.</strong>  
+                                                <Button disabled={isBtnDisabled} onClick={() => onArrivedToStoreClick()}>I am here</Button>
                                             </div>
                                         </Banner>
                                     }

@@ -36,7 +36,15 @@ const Banner = () => {
             </div>
 
             <div className={styles.imgContainer}>
-                <Image src="/placeholder.png" alt="Cart" width={550} height={550}></Image>
+                <Image 
+                    src="/placeholder.png" 
+                    alt="Cart" 
+                    // width={550} 
+                    // height={auto}
+                    layout="responsive"
+                    width={80} // Arbitrary width for setting aspect ratio
+                    height={40} // Arbitrary height to set the aspect ratio
+                />
             </div>
         </div>
     );

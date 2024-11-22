@@ -42,41 +42,52 @@
     }
 }
 
+/* CHATBOT OPENER START */
 .chatbotButton {
     position: fixed;
-    bottom: 70px;
+    bottom: 60px;
     right: 20px;
     background-color: white;
     border-radius: 50px;
-    width: fit-content;
-    height: fit-content;
-    padding: 0px 15px 0px 0px;
+    width: 45px; /* Initial width to match the image */
+    height: 45px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start; /* Align items to the start */
     color: black;
     cursor: pointer;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    height: 45px;
-}
-
-.chatbotButton img{
+    transition: width 0.3s ease; /* Transition for width */
+    overflow: hidden; /* Hide overflow content */
+  }
+  .chatbotButton:hover {
+    width: 160px; /* Expanded width */
+  }
+  .chatIcon {
     width: 45px;
-    margin-right: 7px;
-}
+    margin-right: 7px; /* Ensure there's space for the text */
+    flex-shrink: 0; /* Prevent the image from shrinking */
+    background-color:#00ED64;
+    height: 100%;
+    border-top-right-radius: 20px;
+  }
+  .expandableContent {
+    width: 0; /* Start with no width */
+    opacity: 0;
+    transition: width 0.3s ease, opacity 0.3s ease; /* Transition for width and opacity */
+    white-space: nowrap; /* Prevent text wrapping */
+    overflow: hidden; /* Hide overflow content */
+  }
+  .chatbotButton:hover .expandableContent {
+    width: auto; /* Allow the text to take up space */
+    opacity: 1;
+  }
 
-.chatbotButton:hover {
-    background-color: #00ED64;
-}
+/* CHATBOT OPENER START */
 
-@media (max-width: 768px) {
-    .chatbotButton {
-        padding: 0;
-        /* Remove padding around the button */
-        width: 60px;
-        height: 60px;
-    }
-}
+
+
+/* MODAL START */
 .chatbotContainer{
     background-color: #f8faf9;
 }
@@ -90,8 +101,6 @@
     align-items: center;
 
 }
-
-
 .chatbotComponent{
     background-color: pink;
     min-height: inherit;
@@ -178,7 +187,6 @@
     transition: opacity 0.5s ease-in-out; /* Fade effect */
     color: #001E2B;
 }
-
 .answerBubble.appear {
     opacity: 1;
 }
@@ -201,8 +209,6 @@
     display: flex;
     flex-direction: row;
 }
-.popoverJson{
-}
 .popoverJson :global(.popover-body){
     padding: 0;
     /* max-width: inherit;
@@ -214,3 +220,4 @@
     overflow-x: auto;
     max-width: var(--bs-popover-max-width);
 }
+/* MODAL START */
