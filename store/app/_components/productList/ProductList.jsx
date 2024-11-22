@@ -9,9 +9,9 @@ import Pagination from "@leafygreen-ui/pagination";
 const itemsPerPage = 20;
 
 const ProductList = ({ filters }) => {
-  const [sseConnection, setSSEConnection] = useState(null)
+  const [sseConnection, setSSEConnection] = useState(null);
   const [filteredProducts, setFilteredProducts] = useState({});
-  const [paginationLength, setPaginationLength] = useState(0)
+  const [paginationLength, setPaginationLength] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [firstIndex, setFirstIndex] = useState(0);
   const [lastIndex, setLastIndex] = useState(itemsPerPage - 1);
@@ -51,10 +51,11 @@ const ProductList = ({ filters }) => {
     const fetchProducts = async () => {
       try {
         const response = await axios.post("/api/getProducts", filters);
-        let transformedProducts = {}
-        console.log("/api/getProducts", response.data.products)
-        response.data.products.map((product) => (
-            transformedProducts[product._id] = {
+        let transformedProducts = {};
+        console.log("/api/getProducts", response.data.products);
+        response.data.products.map(
+          (product) =>
+            (transformedProducts[product._id] = {
               _id: product._id,
               id: product.id,
               photo: product.image.url,
@@ -63,10 +64,10 @@ const ProductList = ({ filters }) => {
               price: `${product.price.amount.toFixed(2)}`,
               pred_price: `${product.pred_price.toFixed(2)}`,
               items: product.items,
-            }
-        ));
+            })
+        );
         setFilteredProducts(transformedProducts);
-        setPaginationLength(Object.keys(transformedProducts).length)
+        setPaginationLength(Object.keys(transformedProducts).length);
       } catch (error) {
         console.error("There was a problem with your fetch operation:", error);
       }

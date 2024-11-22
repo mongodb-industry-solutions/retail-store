@@ -32,7 +32,7 @@ async function getPredPriceChangeStream() {
     const database = client.db(dbName);
     const productsCollection = database.collection(collectionName);
 
-    const pipeline = [ ]//{ $match: { 'documentKey._id': new ObjectId(vehicleId) } } ];
+    const pipeline = [ ]
     predPriceDataChangeStream = productsCollection.watch(pipeline);
 
     predPriceDataChangeStream.on('change', (change) => {
