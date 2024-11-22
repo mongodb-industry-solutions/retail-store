@@ -8,7 +8,7 @@ import Toggle from "@leafygreen-ui/toggle";
 import { SearchInput } from "@leafygreen-ui/search-input";
 import { Label } from '@leafygreen-ui/typography';
 import { InfoSprinkle } from '@leafygreen-ui/info-sprinkle';
-import { getProductsWithSearch } from '@/store/app/_lib/api';
+import { getProductsWithSearch } from '../../_lib/api';
 
 
 const SearchBar = () => {

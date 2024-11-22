@@ -1,6 +1,6 @@
 
-import { getPredPriceChangeStream } from '@/store/app/_lib/mongodb';
 import { NextResponse } from 'next/server';
+import { getPredPriceChangeStream } from '../../_lib/mongodb';
 
 const HEARTBEAT_INTERVAL = 5000 // Keep alive interval in milliseconds
 
