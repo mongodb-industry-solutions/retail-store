@@ -5,7 +5,8 @@ const ProductsSlice = createSlice({
     name: "Products",
     initialState: {
         products: {}, // {id: {...}, id: {...}, ...}
-        filters: {},
+        query: '', 
+        filters: {}, // {selectedBrands: {String, String...}, selectedCategories: {String, String...} }
         searchType: SEARCH_TYPES.atlasSearch,
         searchIsLoading: false,
         initialLoad: false,
@@ -13,6 +14,9 @@ const ProductsSlice = createSlice({
         openedProductDetails: null // null or {...} este es el 
     },
     reducers: {
+        setQuery: (state, action) => {
+            return { ...state, query: action.payload }
+        },
         setLoading: (state, action) => {
             return { ...state, searchIsLoading: action.payload }
         },
@@ -40,6 +44,15 @@ const ProductsSlice = createSlice({
 
             }
         },
+        setFilters: (state, action) => {
+            return {
+                ...state,
+                filters: {...action.payload},
+                searchIsLoading: false,
+                error: null,
+
+            }
+        },
         //setOpenedProductDetails
     }
 })
@@ -49,7 +62,9 @@ export const {
     setError,
     setSearchTypeValue,
     setProducts,
-    setInitialLoad
+    setInitialLoad,
+    setFilters,
+    setQuery
 } = ProductsSlice.actions
 
 export default ProductsSlice.reducer
