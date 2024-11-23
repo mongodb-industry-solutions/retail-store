@@ -7,15 +7,19 @@ import styles from "./productList.module.css";
 import Pagination from "@leafygreen-ui/pagination";
 import ProductListLoading from "./ProductListLoading";
 import { setInitialLoad, setLoading, setProducts } from "../../../redux/slices/ProductsSlice";
-import { getProductsWithSearch } from "../../_lib/api";
+import { getProductsWithSearch, getProductsWithVectorSearch } from "../../_lib/api";
+import { SEARCH_TYPES } from "../../_lib/constants";
 
 const itemsPerPage = 20;
 
-const ProductList = ({ filters }) => {
+const ProductList = () => {
   const dispatch = useDispatch();
   const products = useSelector(state => state.Products.products)
   const searchIsLoading = useSelector(state => state.Products.searchIsLoading)
   const initialLoad = useSelector(state => state.Products.initialLoad)
+  const filters = useSelector(state => state.Products.filters)
+  const query = useSelector(state => state.Products.query)
+  const searchType = useSelector(state => state.Products.searchType)
   const [sseConnection, setSSEConnection] = useState(null);
   const [filteredProducts, setFilteredProducts] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
@@ -72,6 +76,34 @@ const ProductList = ({ filters }) => {
       getAllProducts()
     }
   }, [initialLoad]);
+
+  useEffect(() => {
+    const getProducts = async () => {
+      console.log('- FILTERS CHANGED', filters)
+      try {
+        dispatch(setLoading(true))
+        let response;
+        dispatch(setLoading(true))
+        if(searchType === SEARCH_TYPES.atlasSearch)
+            response = await getProductsWithSearch(query, filters)
+        else if (searchType === SEARCH_TYPES.vectorSearch)
+            response = await getProductsWithVectorSearch(query, filters)
+        if(response){
+            console.log('getAllProducts result', Object.keys(response).length)
+            dispatch(setProducts(response))
+        }
+      } catch (err) {
+          console.log(`Error getting all products, ${err}`)
+      }
+    }
+    if(initialLoad === true )
+      getProducts()
+  }, [filters]);
+
+  useEffect(() => {
+    console.log('- products changed', Object.keys(products).length)
+  }, [products])
+  
 
   // useEffect(() => {
   //   const fetchProducts = async () => {

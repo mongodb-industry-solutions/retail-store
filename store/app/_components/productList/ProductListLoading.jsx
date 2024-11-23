@@ -13,16 +13,13 @@ const ProductListLoading = () => {
     <div className={styles.productContainer}>
         {
             [0, 1, 2, 3, 4, 5, 6, 7, 8].map(index => (
-                <Card className={styles.card}>
-                <Skeleton ></Skeleton>
-                <ParagraphSkeleton ></ParagraphSkeleton>
-                <ParagraphSkeleton ></ParagraphSkeleton>
+                <Card className={styles.card} key={`loading-${index}`}>
+                    <Skeleton ></Skeleton>
+                    <ParagraphSkeleton ></ParagraphSkeleton>
+                    <ParagraphSkeleton ></ParagraphSkeleton>
                 </Card>
             ))
         }
-
-        {/* <CardSkeleton className={styles.card}>
-        </CardSkeleton> */}
     </div>
   );
 };

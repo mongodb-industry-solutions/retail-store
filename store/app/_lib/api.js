@@ -5,7 +5,7 @@ export async function getProductsWithSearch(query = '', filters = {}) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({query, filters}),
+      body: JSON.stringify({query, facets: filters}),
     });
     if (!response.ok) {
       console.log(response)
@@ -32,3 +32,4 @@ export async function getProductsWithSearch(query = '', filters = {}) {
     console.log('data: ', data)
     return data.products;
   }
+  

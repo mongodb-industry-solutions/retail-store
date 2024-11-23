@@ -2,8 +2,8 @@ import { NextResponse } from "next/server";
 import { connectToDatabase } from "../../_db/connect";
 
 export async function POST(request) {
-    const { query, filters } = await request.json();
-    console.log('HOLA', query);
+    const { query, facets } = await request.json();
+    console.log('HOLA', query, facets);
 
     try {
         const db = await connectToDatabase();
@@ -25,6 +25,27 @@ export async function POST(request) {
             });
         }
 
+        // Add facet filtering stages if facets are provided
+        if (facets) {
+            const { selectedBrands, selectedCategories } = facets;
+
+            if (selectedBrands && selectedBrands.length > 0) {
+                pipeline.push({
+                    $match: {
+                        brand: { $in: selectedBrands }
+                    }
+                });
+            }
+
+            if (selectedCategories && selectedCategories.length > 0) {
+                pipeline.push({
+                    $match: {
+                        masterCategory: { $in: selectedCategories }
+                    }
+                });
+            }
+        }
+
         // Add the $addFields and $limit stages
         pipeline.push(
             {
@@ -32,9 +53,9 @@ export async function POST(request) {
                     score: { $meta: "searchScore" }
                 }
             },
-            // {
-            //     //$limit: 100, // Limit the number of results
-            // }
+            {
+                $limit: 3000, // Limit the number of results
+            }
         );
 
         // Perform the aggregation query

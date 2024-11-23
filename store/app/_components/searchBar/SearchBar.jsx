@@ -1,7 +1,6 @@
 "use client";
 
 import { useSelector, useDispatch } from 'react-redux';
-import { useRef, useEffect, useState } from "react";
 import LeafyGreenProvider from "@leafygreen-ui/leafygreen-provider";
 import Toggle from "@leafygreen-ui/toggle";
 
@@ -11,25 +10,30 @@ import { Label } from '@leafygreen-ui/typography';
 import { InfoSprinkle } from '@leafygreen-ui/info-sprinkle';
 import { getProductsWithSearch, getProductsWithVectorSearch } from '../../_lib/api';
 import { SEARCH_TYPES } from '../../_lib/constants';
-import { setLoading, setProducts, setSearchTypeValue } from '../../../redux/slices/ProductsSlice';
+import { setLoading, setProducts, setQuery, setSearchTypeValue } from '../../../redux/slices/ProductsSlice';
 
 
 const SearchBar = () => {
     const dispatch = useDispatch();
     const searchType = useSelector(state => state.Products.searchType)
+    const query = useSelector(state => state.Products.query)
+    const filters = useSelector(state => state.Products.filters)
     const searchIsLoading = useSelector(state => state.Products.searchIsLoading)
-    const [searchQuery, setSearchQuery] = useState('')
     
     const onSearchSubmit = async () => {
         let response;
         dispatch(setLoading(true))
+
         if(searchType === SEARCH_TYPES.atlasSearch)
-            response = await getProductsWithSearch(searchQuery)
+            response = await getProductsWithSearch(query, filters)
         else if (searchType === SEARCH_TYPES.vectorSearch)
-            response = await getProductsWithVectorSearch(searchQuery)
+            response = await getProductsWithVectorSearch(query, filters)
         if(response){
             dispatch(setProducts(response))
         }
+    }
+    const setSearchQuery = (searchQuery) => {
+        dispatch(setQuery(searchQuery))
     }
     const onSearchTypeChange = (checked) => {
         console.log('onSearchTypeChange', checked)
@@ -47,7 +51,7 @@ const SearchBar = () => {
                         aria-label="Label"
                         onChange={(e) => setSearchQuery(e.target.value)} // Update state on change
                         onSubmit={() => onSearchSubmit()}
-                        value={searchQuery} // Use 'value' to make it a controlled component
+                        value={query} // Use 'value' to make it a controlled component
                         defaultValue=''
                     />
                     <div className={styles.searchToggleContainer}>
