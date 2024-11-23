@@ -1,28 +1,21 @@
 "use client";
 
 import React, { useState, useContext, useEffect } from "react";
+import { useSelector, useDispatch } from 'react-redux';
 import axios from "axios";
 import styles from "./sideBar.module.css";
 
 import {
-  H1,
-  H2,
-  H3,
   Subtitle,
   Body,
-  InlineCode,
-  InlineKeyCode,
-  Disclaimer,
-  Overline,
 } from "@leafygreen-ui/typography";
 import Checkbox from "@leafygreen-ui/checkbox";
 import Toggle from "@leafygreen-ui/toggle";
-import { Label } from '@leafygreen-ui/typography';
 import { InfoSprinkle } from '@leafygreen-ui/info-sprinkle';
-import Button from "@leafygreen-ui/button";
 
+function Sidebar({ onFilterChange }) {
+  const filters = useSelector(state => state.Products.filters)
 
-function Sidebar({ filters, onFilterChange }) {
   const [selectedBrands, setSelectedBrands] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [facets, setFacets] = useState([]);
@@ -43,7 +36,7 @@ function Sidebar({ filters, onFilterChange }) {
 
   const handleBrandChange = (event) => {
     const item = event;
-    let updatedSelectedBrands = selectedBrands;
+    let updatedSelectedBrands = [...selectedBrands];
 
     if (selectedBrands.includes(item)) {
       updatedSelectedBrands = selectedBrands.filter((g) => g !== item);

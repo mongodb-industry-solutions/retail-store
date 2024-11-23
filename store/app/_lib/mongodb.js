@@ -16,7 +16,7 @@ let clientPromise;
 let predPriceDataChangeStream;
 
 if (!global._mongoClientPromise) {
-  client = new MongoClient(uri); //, options);
+  client = new MongoClient(uri)//, options);
   clientPromise = client.connect();
   global._mongoClientPromise = clientPromise;
 } else {
@@ -26,24 +26,24 @@ if (!global._mongoClientPromise) {
 async function getPredPriceChangeStream() {
   if (!predPriceDataChangeStream) {
     const dbName = process.env.DATABASE_NAME;
-    const collectionName = process.env.COLLECTION_NAME;
+    const collectionName = process.env.COLLECTION_NAME
 
     const client = await clientPromise;
     const database = client.db(dbName);
     const productsCollection = database.collection(collectionName);
 
-    const pipeline = []; //{ $match: { 'documentKey._id': new ObjectId(vehicleId) } } ];
+    const pipeline = [ ]
     predPriceDataChangeStream = productsCollection.watch(pipeline);
 
-    predPriceDataChangeStream.on("change", (change) => {
-      console.log("Change: ", change);
+    predPriceDataChangeStream.on('change', (change) => {
+      console.log('Change: ', change);
     });
 
-    predPriceDataChangeStream.on("error", (error) => {
-      console.log("Error: ", error);
+    predPriceDataChangeStream.on('error', (error) => {
+      console.log('Error: ', error);
     });
   }
   return predPriceDataChangeStream;
 }
 
-export { clientPromise, getPredPriceChangeStream };
+export { clientPromise, getPredPriceChangeStream};
