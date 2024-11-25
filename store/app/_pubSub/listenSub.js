@@ -1,5 +1,5 @@
 import { PubSub } from "@google-cloud/pubsub";
-import { connectToDatabase } from "@/app/_db/connect";
+import { connectToDatabase } from "@/store/app/_db/connect";
 
 const db = await connectToDatabase();
 
