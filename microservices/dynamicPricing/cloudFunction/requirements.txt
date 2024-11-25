@@ -1,6 +1,6 @@
 functions-framework==3.*
 pymongo
-scikit-learn==1.2.2
+scikit-learn>=1.5.0
 numpy
 google-cloud-aiplatform
 google-auth
