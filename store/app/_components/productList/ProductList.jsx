@@ -6,7 +6,7 @@ import ProductCard from "../productCard/ProductCard";
 import styles from "./productList.module.css";
 import Pagination from "@leafygreen-ui/pagination";
 import ProductListLoading from "./ProductListLoading";
-import { setInitialLoad, setLoading, setProducts } from "../../../redux/slices/ProductsSlice";
+import { setInitialLoad, setLoading, setProducts, updateProductPrice } from "../../../redux/slices/ProductsSlice";
 import { getProductsWithSearch, getProductsWithVectorSearch } from "../../_lib/api";
 import { SEARCH_TYPES } from "../../_lib/constants";
 
@@ -43,10 +43,11 @@ const ProductList = () => {
         const objectId = data.documentKey._id
         const newPredPrice = data.updateDescription.updatedFields.pred_price
         console.log(`the pred price changed to ${newPredPrice} for product with id ${objectId}`)
-        setFilteredProducts((prevData) => {
-          prevData[objectId] =  {...prevData[objectId], pred_price: newPredPrice}
-          return {...prevData}
-        });
+        dispatch(updateProductPrice({objectId, newPredPrice}))
+        // setFilteredProducts((prevData) => {
+        //   prevData[objectId] =  {...prevData[objectId], pred_price: newPredPrice}
+        //   return {...prevData}
+        // });
       }
     }
 

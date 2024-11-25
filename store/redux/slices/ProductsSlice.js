@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { SEARCH_TYPES } from "../../app/_lib/constants";
+import { act } from "react";
 
 const ProductsSlice = createSlice({
     name: "Products",
@@ -44,6 +45,20 @@ const ProductsSlice = createSlice({
 
             }
         },
+        updateProductPrice: (state, action) => {
+            let newProducts = {...state.products}
+            newProducts[action.payload.objectId] = {
+                ...state.products[action.payload.objectId], 
+                pred_price: action.payload.newPredPrice
+            }
+            return {
+                ...state,
+                products: {...newProducts},
+                searchIsLoading: false,
+                error: null,
+
+            }
+        },
         setFilters: (state, action) => {
             return {
                 ...state,
@@ -64,7 +79,8 @@ export const {
     setProducts,
     setInitialLoad,
     setFilters,
-    setQuery
+    setQuery,
+    updateProductPrice
 } = ProductsSlice.actions
 
 export default ProductsSlice.reducer
