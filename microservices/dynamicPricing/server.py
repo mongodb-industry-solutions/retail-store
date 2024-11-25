@@ -16,6 +16,10 @@ app.add_middleware(
 
 running_process = None
 
+@app.get("/")
+def status():
+    return {"status": "OK"} 
+
 @app.get("/start")
 async def run_dataloader():
     global running_process
