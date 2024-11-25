@@ -16,5 +16,9 @@ display: flex;
 
 .toggleLabel{
     margin-left: 10px;
-    margin-top: 7px;
+}
+.searchToggleContainer{
+    display: flex;
+    align-items: center;
+    margin-left: 15px;
 }
