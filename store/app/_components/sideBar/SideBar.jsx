@@ -1,20 +1,17 @@
 "use client";
 
 import React, { useState, useContext, useEffect } from "react";
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import styles from "./sideBar.module.css";
 
-import {
-  Subtitle,
-  Body,
-} from "@leafygreen-ui/typography";
+import { Subtitle, Body } from "@leafygreen-ui/typography";
 import Checkbox from "@leafygreen-ui/checkbox";
 import Toggle from "@leafygreen-ui/toggle";
-import { InfoSprinkle } from '@leafygreen-ui/info-sprinkle';
+import { InfoSprinkle } from "@leafygreen-ui/info-sprinkle";
 
 function Sidebar({ onFilterChange }) {
-  const filters = useSelector(state => state.Products.filters)
+  const filters = useSelector((state) => state.Products.filters);
 
   const [selectedBrands, setSelectedBrands] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -67,10 +64,13 @@ function Sidebar({ onFilterChange }) {
     setIsScriptRunning(!isScriptRunning);
     try {
       if (!isScriptRunning) {
-        const startResponse = await axios.get("http://localhost:8000/start");
+        const startResponse = await axios.get(
+          process.env.NEXT_PUBLIC_URL_START
+        );
+        console.log(process.env.URL_START);
         console.log(startResponse.data.message);
       } else {
-        const stopResponse = await axios.get("http://localhost:8000/stop");
+        const stopResponse = await axios.get(process.env.NEXT_PUBLIC_URL_STOP);
         console.log(stopResponse.data.message);
       }
     } catch (error) {
@@ -80,17 +80,16 @@ function Sidebar({ onFilterChange }) {
 
   return (
     <div className={styles.filterContainer}>
-
       <div className={styles.openStoreSection}>
-
         <div className={styles.openStore}>
-
           <Subtitle className={styles.subtitle}>Open Store</Subtitle>
-          <InfoSprinkle className={styles.infoSprinkle}>Simulate sale events and get predicted prices fo each item in the store</InfoSprinkle>
+          <InfoSprinkle className={styles.infoSprinkle}>
+            Simulate sale events and get predicted prices fo each item in the
+            store
+          </InfoSprinkle>
         </div>
 
         <Toggle
-
           checked={isScriptRunning}
           onChange={toggleScript}
           aria-label="Script toggle"
@@ -139,10 +138,6 @@ function Sidebar({ onFilterChange }) {
           </div>
         </div>
       </>
-
-
-
-
     </div>
   );
 }
