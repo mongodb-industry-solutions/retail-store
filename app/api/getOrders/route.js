@@ -9,6 +9,7 @@ export async function POST(request) {
 
     const orders = await collection
         .find({user: new ObjectId(String(userId)) })
+        .sort({ _id: -1 }) // Sort by _id in descending order for newest first
         .toArray()
     
     return NextResponse.json({ orders: orders || [] }, { status: 200 });

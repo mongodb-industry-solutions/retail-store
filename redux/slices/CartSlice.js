@@ -12,22 +12,39 @@ const CartSlice = createSlice({
     },
     reducers: {
         setCartProductsList: (state, action) => {
-          console.log(action)
             if(action.payload === null){ 
               // cart is null when the document for this user's cart does not exist on Atlas
               return {...state, products: [], totalPrice: 0, totalAmount: 0, _id: null, loading: false, error: null}
             }else{
-              const totalPrice = action.payload.products.reduce((sum, product) => sum + (product.price.amount * product.amount), 0);
-              const totalAmount = action.payload.products.reduce((sum, product) => sum + product.amount, 0);
-              return {...state, products: [...action.payload.products], totalPrice, totalAmount,  _id: action.payload._id, loading: false, error: null}
+              const totalPrice = action.payload.products.reduce((sum, product) => sum + (product.price.amount * product.amount), 0) || 0;
+              const totalAmount = action.payload.products.reduce((sum, product) => sum + product.amount, 0) || 0;
+              return {
+                ...state, 
+                products: [...action.payload.products], 
+                totalPrice, 
+                totalAmount, 
+                 _id: action.payload._id, 
+                 loading: false, 
+                 error: null
+              }
             }
         },
+        clearCartProductsList: (state, action) => {
+          return {
+            ...state, 
+            products: [], 
+            totalPrice: 0, 
+            totalAmount: 0, 
+              loading: false, 
+              error: null
+          }
+        },
         addProduct: (state, action) => {
-          // TODO re calculate totalPrice and totalAmount
+            // TODO if you wish to use this method first: re calculate totalPrice and totalAmount
             return {...state, products: [...state.products, action.payload]}            
         },
         removeProduct: (state, action) => {
-            // TODO re calculate totalPrice and totalAmount
+            // TODO  if you wish to use this method first: re calculate totalPrice and totalAmount
             let newList = state.products.filter(product => product.id !== action.payload.id)
             return {...state, products: [...newList]}        
         },
@@ -51,6 +68,7 @@ const CartSlice = createSlice({
 
 export const {
     setCartProductsList,
+    clearCartProductsList,
     addProduct, 
     removeProduct, 
     setTotalPrice,

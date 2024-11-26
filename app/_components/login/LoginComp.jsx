@@ -41,6 +41,7 @@ const LoginComp = () => {
       if(selectedUser !== null)
         dispatch(fetchUserData(selectedUser._id))
     }, [selectedUser, dispatch])
+    
     useEffect(() => {
         setOpen(true);
     }, []);
@@ -73,7 +74,7 @@ const LoginComp = () => {
                     <Subtitle className={`${styles.weightNormal} ${styles.centerText} mt-2`}>This is a MongoDB demo</Subtitle>
                     <br/>
                     <Description className={styles.descriptionModal}>
-                        Please select a the user you would like to login as
+                        Please select the user you would like to login as
                     </Description>
                     <div className={`${styles.usersContainer}`}>
                         {

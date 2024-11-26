@@ -1,0 +1,12 @@
+.orderData{
+    font-size: 14px;
+    margin: 0;
+    margin-bottom: 5px;
+}
+.isCanceled li  div[aria-current="step"] div:nth-of-type(2){
+    color: rgb(149, 15, 15);
+} 
+.isCanceled li  div[aria-current="step"] div:first-of-type{
+    background-color: rgb(222, 25, 25);
+    color: white;
+} 

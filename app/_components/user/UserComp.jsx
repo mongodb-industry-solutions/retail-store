@@ -36,7 +36,7 @@ const UserComp = ({user = null, isSelectedUser = false, setOpen, setLocalSelecte
                 user === null
                 ? <Skeleton></Skeleton>
                 : <>
-                    <img src={`rsc/users/${user._id}.png`}></img>
+                    <img src={`/rsc/users/${user._id}.png`}></img>
                     <Body className={styles.userName}>{user.name}</Body>
                 </>
             }

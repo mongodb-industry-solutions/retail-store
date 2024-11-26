@@ -6,7 +6,7 @@ const BopisComp = ({storeLocations, setSelectedStoreLocation}) => {
   
   const onStoreLocationChange = (value)  => {
     // value is the index of the storeLocations[] selected
-    const storeSelected = storeLocations[value]
+    const storeSelected = storeLocations[value.split('-')[0]]
     setSelectedStoreLocation(storeSelected)
   }
 

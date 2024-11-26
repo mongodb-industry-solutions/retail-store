@@ -1,6 +1,6 @@
 
 "use client"
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import { H1, H3, Disclaimer, Body } from '@leafygreen-ui/typography';
@@ -20,15 +20,18 @@ export default function CartPage() {
     const cart = useSelector(state => state.Cart);
 
     const onCheckout = () => {
-        // Todo: process cart and move to checkout page
         router.push('/checkout');
     }
 
     const onFillCart = async () => {
         if (selectedUser !== null && cart.products?.length < 1) {
             try {
-                const result = await fillCartRandomly();
-                // Todo: process result and render returned cart
+                dispatch(setLoading(true))
+                const cart = await fillCartRandomly(selectedUser._id);
+                console.log('result', cart)
+                if(cart)
+                    dispatch(setCartProductsList(cart))
+                dispatch(setLoading(false))
             } catch (err) {
                 console.log(`Error filling cart ${err}`)
             }
@@ -52,7 +55,6 @@ export default function CartPage() {
 
         return () => { }
     }, [selectedUser]);
-
 
     return (
         <>

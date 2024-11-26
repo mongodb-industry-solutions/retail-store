@@ -13,7 +13,7 @@ mongodump --uri "mongodb+srv://<user>:<password>@<cluster-url>/<source-database>
 Then, create a .env.local file at the root level woth the following env vars
 ```bash
 ## .env
-IST_SHARED_MONGODB=<mongodb-connection-string>
+MONGODB_URI=<mongodb-connection-string>
 DATABASE_NAME=<your-db-name>
 ```
 
