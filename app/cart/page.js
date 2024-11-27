@@ -10,14 +10,14 @@ import Navbar from "../_components/navbar/Navbar";
 import { Container } from 'react-bootstrap';
 import Button from "@leafygreen-ui/button";
 import { fetchCart, fillCartRandomly } from '@/lib/api';
-import { setCartProductsList, setLoading } from '@/redux/slices/CartSlice';
 import CartItem from '../_components/cart/CartItem';
+import { setCartLoading, setCartProductsList } from '@/redux/slices/UserSlice';
 
 export default function CartPage() {
     const router = useRouter();
     const dispatch = useDispatch();
     const selectedUser = useSelector(state => state.User.selectedUser);
-    const cart = useSelector(state => state.Cart);
+    const cart = useSelector(state => state.User.cart);
 
     const onCheckout = () => {
         router.push('/checkout');
@@ -26,35 +26,17 @@ export default function CartPage() {
     const onFillCart = async () => {
         if (selectedUser !== null && cart.products?.length < 1) {
             try {
-                dispatch(setLoading(true))
+                dispatch(setCartLoading(true))
                 const cart = await fillCartRandomly(selectedUser._id);
                 console.log('result', cart)
                 if(cart)
                     dispatch(setCartProductsList(cart))
-                dispatch(setLoading(false))
+                dispatch(setCartLoading(false))
             } catch (err) {
                 console.log(`Error filling cart ${err}`)
             }
         }
     }
-
-    useEffect(() => {
-        const getCart = async () => {
-            try {
-                const result = await fetchCart(selectedUser._id);
-                if (result !== null) {
-                    dispatch(setCartProductsList(result))
-                }
-                dispatch(setLoading(false))
-            } catch (err) {
-                console.log(`Error fetching cart ${err}`)
-            }
-        }
-        if(cart.loading === true && selectedUser !== null)
-            getCart();
-
-        return () => { }
-    }, [selectedUser]);
 
     return (
         <>

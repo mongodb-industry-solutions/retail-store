@@ -1,0 +1,27 @@
+.leafyFeel :global(.modal-content) {
+    border-radius: 24px;
+}
+/* Remove border-radius when modal is fullscreen */
+@media (max-width: 767.98px) { /* Corresponds to md-down */
+    .leafyFeel :global(.modal-content) {
+      border-radius: 0px;
+    }
+}
+.detailModal {
+    display: flex;
+   }
+   .detailInfo{
+    margin-left: 20px;
+}
+.productName{
+    font-size: 16px;
+    text-align: center;
+}
+.price{
+    padding-top: 20px;
+    font-size: 30px;
+    padding-bottom: 20px;
+}
+.detailCart{
+    margin-top: 20px;
+}   

@@ -10,7 +10,6 @@ const OrderSlice = createSlice({
         isCanceled: false,  // true || false
         loading: true,      // true or false
         error: null         // null or {msg: ""}
-
         // ... rest of the fields
     },
     reducers: {

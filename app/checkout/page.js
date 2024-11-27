@@ -12,7 +12,6 @@ import Navbar from "../_components/navbar/Navbar";
 import { Container } from 'react-bootstrap';
 import Button from "@leafygreen-ui/button";
 import { clearCart, createNewOrder, fetchCart, fetchStoreLocations } from '@/lib/api';
-import { clearCartProductsList, setCartProductsList, setLoading } from '@/redux/slices/CartSlice';
 import styles from './checkout.module.css'
 import Card from '@leafygreen-ui/card';
 import HomeAddressComp from '../_components/homeAddressComp/homeAddressComp';
@@ -22,13 +21,13 @@ import { CardSkeleton } from '@leafygreen-ui/skeleton-loader';
 import { shippingMethods } from '@/lib/constants';
 import Modal from '@leafygreen-ui/modal';
 import { clearOrder } from '@/redux/slices/OrderSlice';
-import { addUsersNewOrder } from '@/redux/slices/UserSlice';
+import { setCartProductsList, setCartLoading, clearCartProductsList } from '@/redux/slices/UserSlice';
 import { handleCreateNewOrder } from '@/lib/helpers';
 
 export default function Page() {
     const router = useRouter();
     const dispatch = useDispatch();
-    const cart = useSelector(state => state.Cart);
+    const cart = useSelector(state => state.User.cart);
     const selectedUser = useSelector(state => state.User.selectedUser);
     const [shippingMethod, setShippingMethod] = useState(shippingMethods.bopis)
     const [storeLocations, setStoreLocations] = useState([])
@@ -76,7 +75,7 @@ export default function Page() {
                 if (result !== null) {
                     dispatch(setCartProductsList(result))
                 }
-                dispatch(setLoading(false))
+                dispatch(setCartLoading(false))
             } catch (err) {
                 console.log(`Error fetching cart ${err}`)
             }

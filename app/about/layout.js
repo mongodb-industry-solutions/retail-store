@@ -7,10 +7,8 @@ export default function AboutLayout({
     children,
   }) {
     return (
-      <html>
-        <body>
+      <section>
         {children}
-        </body>
-      </html>
+      </section>
     )
   }

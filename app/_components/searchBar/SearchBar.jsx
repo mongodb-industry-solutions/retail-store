@@ -16,7 +16,7 @@ import { Label } from '@leafygreen-ui/typography';
 const SearchBar = () => {
     return (
 
-        <div className={styles.searchContainer}>
+        <div className={`${styles.searchContainer} d-none`}>
             <LeafyGreenProvider>
                 <div className={styles.searchToggle}>
                     <SearchInput aria-label="Label">

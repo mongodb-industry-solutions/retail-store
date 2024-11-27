@@ -15,13 +15,11 @@ import { Container } from "react-bootstrap";
 
 const About = () => {
 
-  const githubRepoUrl = "https://github.com/mongodb-industry-solutions/retail-store";
+  const githubRepoUrl = "https://github.com/mongodb-industry-solutions/retail-store-v2";
 
   return (
 
     <Container>
-
-
       <H1>About</H1>
 
       <div className={styles.firstSection}>
@@ -59,48 +57,44 @@ const About = () => {
         />
 
         <TeamCard
-          photo="/francesco.png"
-          name="Francesco Baldissera"
-          title="Retail Consultant, Industry Solutions"
-          subtitle="Project Manager"
+          photo="/prashant.png"
+          name="Prashant Juttukonda"
+          title="Retail Principal, Industry Solutions"
+          subtitle="Product Owner"
+        />
+        
+        <TeamCard
+          photo="/rsc/images/rodri.png"
+          name="Rodrigo Leal"
+          title="Retail Principal, Industry Solutions"
+          subtitle="Product Owner"
         />
 
+        <TeamCard
+          photo="/rsc/images/angie.jpeg"
+          name="Angie Güemes"
+          title="Sr. Specialist, Industry Solutions"
+          subtitle="Full Stack Developer"
+        />
+        
         <TeamCard
           photo="/pedro.png"
           name="Pedro Bereilh"
           title="Specialist, Industry Solutions"
-          subtitle="Full Stack Developer"
-        />
-
-
-        <TeamCard
-          photo="/rami.png"
-          name="Rami Pinto"
-          title="Sr Specialist, Industry Solutions"
-          subtitle="Cloud Engineer"
+          subtitle="Full Stack Developer & Cloud Engine"
         />
 
         <TeamCard
           photo="/ainhoa.png"
           name="Ainhoa Mugica"
           title="Sr. Specialist, Industry Solutions"
-          subtitle="Designer and Frontend Developer"
-        />
-
-        <TeamCard
-          photo="/prashant.png"
-          name="Prashant Juttukonda"
-          title="Retail Principal, Industry Solutions"
-          subtitle="Product Owner"
+          subtitle="Project Manager"
         />
 
         {/* Add more TeamMemberCard components as needed */}
       </div>
 
       <H3>Related Resources</H3>
-
-      <LeafyGreenProvider>
-
         <div className={styles.githubButton}>
           <a href={githubRepoUrl} target="_blank" rel="noopener noreferrer">
             <Button>
@@ -109,51 +103,6 @@ const About = () => {
             </Button>
           </a>
         </div>
-
-<div className={styles.cards} >
-        <div className={styles.resourcesCard}>
-          <Subtitle>E-Commerce AI-Enhanced Search</Subtitle>
-
-          <Body className={styles.resourcesBody}>Integrate MongoDB and Databricks to create AI-augmented search solutions that meet current and future market expectations, ultimately improving the retail customer's search experience.</Body>
-
-          <ul>
-            <li><Link href="https://www.mongodb.com/blog/post/fusing-mongodb-databricks-deliver-ai-augmented-search#:~:text=Combining%20MongoDB%20with%20Databricks%2C%20using,the%20customer%20is%20using%20it.">Blog - Fusing MongoDB and Databricks to Deliver AI-Augmented Search</Link></li>
-          </ul>
-
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/jntZz9RTC5g?si=7xu4aA2MxnXyL6lL" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-        </div>
-
-       
-        <div className={styles.resourcesCard}>
-          <Subtitle>Inventory Management</Subtitle>
-
-          <Body className={styles.resourcesBody}>Leverage MongoDB's document data model to implement an efficient inventory management system in the retail sector, aligning with customer demands and optimizing operational processes.</Body>
-          <ul>
-            <li><Link href="https://www.mongodb.com/blog/post/how-enhance-inventory-management-real-time-data-strategies">Blog - How to enhance inventory management with real-time data strategies</Link></li>
-            <li><Link href="https://www.mongodb.com/developer/products/atlas/build-inventory-management-system-using-mongodb-atlas/">Tutorial - Build an Inventory Management System Using MongoDB Atlas</Link></li>
-            <li><Link href="https://github.com/mongodb-industry-solutions/Inventory_mgmt">Inventory Management Github Repo</Link></li>
-          </ul>
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/sV2KfMk1CdM?si=u2-TeIFVmuC3E2VL" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-
-        </div>
-
-        
-        <div className={styles.resourcesCard}>
-          <Subtitle>Fueling Real-Time Pricing Strategies</Subtitle>
-          <Body className={styles.resourcesBody}>Integrate MongoDB Atlas and Databricks can be a powerful combination for implementing real-time AI-driven pricing strategies.</Body>
-
-          <ul>
-            <li><Link href="https://www.mongodb.com/blog/post/fueling-pricing-strategies-mongodb-databricks">Blog - Fueling pricing strategies with MongoDB and Databricks</Link></li>
-            <li><Link href="https://www.mongodb.com/developer/products/mongodb/leverage-event-driven-architecture-mongodb-databricks/">Tutorial - How to leverage an event-driven architecture with MongoDB and Databricks</Link></li>
-            <li><Link href="https://github.com/mongodb-industry-solutions/Real-Time-Pricing">Real-Time Pricing Github Repo</Link></li>
-          </ul>
-
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/Za8jMb3HXAc?si=H19NLxDk-ICw0RS5&amp;start=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-        </div>
-        </div>
-      </LeafyGreenProvider>
-
-
 
     </Container>
   );
