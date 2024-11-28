@@ -21,7 +21,7 @@ const agentSpec = {
             "toolRefs": [
                 {
                     "name": "GetPolicies",
-                    "toolId": "e682ac1f-d5e8-4a9e-b3e6-dc78c7412ac1",
+                    "toolId": "870b2e58-10bc-4dd6-a656-2be31e7ea475",
                     "properties": {}
                 }
 
@@ -36,7 +36,7 @@ const agentSpec = {
             "toolRefs": [
                 {
                     "name": "GetPolicies",
-                    "toolId": "e682ac1f-d5e8-4a9e-b3e6-dc78c7412ac1",
+                    "toolId": "870b2e58-10bc-4dd6-a656-2be31e7ea475",
                     "properties": {}
                 },
                 {
@@ -235,6 +235,7 @@ export async function POST(request) {
     // console.log('--', agentSpec.agentSpec.tools[0].implConfig.data)
     // console.log('--', string_dialogue)
     json_data["conversationHistory"] = string_dialogue;
+    console.log(`-- fetch api: ${urlTemplate}${userText}`)
     const response = await fetch(`${urlTemplate}${userText}`, {
         method: "POST",
         headers: {
@@ -243,6 +244,7 @@ export async function POST(request) {
         },
         body: JSON.stringify(json_data)
     });
+    console.log('-- response', response)
     let output = "I am sorry but I was unable to get a response.";
     let resJson = await response.json();
 

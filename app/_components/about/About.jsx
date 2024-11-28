@@ -81,7 +81,7 @@ const About = () => {
           photo="/pedro.png"
           name="Pedro Bereilh"
           title="Specialist, Industry Solutions"
-          subtitle="Full Stack Developer & Cloud Engine"
+          subtitle="Cloud Engineer"
         />
 
         <TeamCard
