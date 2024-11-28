@@ -16,6 +16,7 @@
     "@leafygreen-ui/card": "^10.0.6",
     "@leafygreen-ui/checkbox": "^12.1.0",
     "@leafygreen-ui/combobox": "^8.1.4",
+    "@leafygreen-ui/guide-cue": "^5.1.0",
     "@leafygreen-ui/icon": "^11.27.1",
     "@leafygreen-ui/icon-button": "^15.0.19",
     "@leafygreen-ui/info-sprinkle": "^1.0.3",
