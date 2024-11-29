@@ -56,6 +56,7 @@ export async function GET(req) {
 
     const changeListener = (change) => {
       // Notify the client about the change
+      console.log('- changeListener: ', change)
       sendUpdate(change);
     };
 
