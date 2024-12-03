@@ -21,7 +21,7 @@ const agentSpec = {
             "toolRefs": [
                 {
                     "name": "GetPolicies",
-                    "toolId": "870b2e58-10bc-4dd6-a656-2be31e7ea475",
+                    "toolId": "ee4e69c0-076d-4f96-93ab-c0acb241e2a3",
                     "properties": {}
                 }
 
@@ -36,7 +36,7 @@ const agentSpec = {
             "toolRefs": [
                 {
                     "name": "GetPolicies",
-                    "toolId": "870b2e58-10bc-4dd6-a656-2be31e7ea475",
+                    "toolId": "ee4e69c0-076d-4f96-93ab-c0acb241e2a3",
                     "properties": {}
                 },
                 {
