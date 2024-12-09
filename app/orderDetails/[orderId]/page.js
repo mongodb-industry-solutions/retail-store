@@ -1,6 +1,6 @@
 "use client" // app/order-details/[id]/page.js
 
-import React, {useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { H1, H3 } from '@leafygreen-ui/typography';
 import Banner from "@leafygreen-ui/banner";
@@ -11,6 +11,7 @@ import Icon from '@leafygreen-ui/icon';
 import Card from '@leafygreen-ui/card';
 import Stepper, { Step } from '@leafygreen-ui/stepper';
 import { CardSkeleton, Skeleton } from '@leafygreen-ui/skeleton-loader';
+import { v4 as uuidv4 } from "uuid";
 
 import styles from '../orderDetails.module.css';
 import Footer from "@/app/_components/footer/Footer";
@@ -24,7 +25,8 @@ import ShippingMethodBadgeComp from '@/app/_components/shippingMethodBadgeComp/S
 
 export default function OrderDetailsPage({ params }) {
     const dispatch = useDispatch();
-    const [sseConnection, setSSEConnection] = useState(null)
+    const sseConnection = useRef(null);
+    const sessionId = useRef(uuidv4());
     const { orderId } = params; // id from the dynamic URL
     const orderDetails = useSelector(state => state.Order)
     const [isBtnDisabled, setIsBtnDisabled] = useState(false)
@@ -36,7 +38,7 @@ export default function OrderDetailsPage({ params }) {
         let result = await addOrderStatusHistory(
             orderId,
             {
-                status: shippingMethods.bopis.steps[2].label, 
+                status: shippingMethods.bopis.steps[2].label,
                 timestamp: Number(Date.now())
             }
         );
@@ -45,9 +47,12 @@ export default function OrderDetailsPage({ params }) {
         }
     }
 
-    const listenToSSEUpdates = useCallback((orderId) => {
-        console.log('listenToSSEUpdates func')
-        const eventSource = new EventSource(`/api/sseOrderDetails?orderId=${orderId}`)
+    const listenToSSEUpdates = useCallback(() => {
+        console.log('listenToSSEUpdates func: ', orderId)
+        const collection = "orders";
+        const eventSource = new EventSource(
+            `/api/sse?sessionId=${sessionId.current}&colName=${collection}&_id=${orderId}`
+        )
 
         eventSource.onopen = () => {
             console.log('SSE connection opened.')
@@ -64,9 +69,16 @@ export default function OrderDetailsPage({ params }) {
         eventSource.onerror = (event) => {
             console.error('SSE Error:', event);
         }
-        setSSEConnection(eventSource);
+
+        // Close the previous connection if it exists
+        if (sseConnection.current) {
+            sseConnection.current.close();
+            console.log("Previous SSE connection closed - dashboard.");
+        }
+
+        sseConnection.current = eventSource;
         return eventSource;
-    }, []);
+    }, [orderId]);
 
 
     useEffect(() => {
@@ -85,21 +97,32 @@ export default function OrderDetailsPage({ params }) {
     }, [orderId]);
 
     useEffect(() => {
-        if (orderDetails._id !== null) {
-            const eventSource = listenToSSEUpdates(orderDetails._id);
-            return () => {
-                if (eventSource) {
-                    eventSource.close();
-                    console.log('SSE connection closed.');
-                }
+        const eventSource = listenToSSEUpdates();
+        return () => {
+            if (eventSource) {
+                eventSource.close();
+                console.log("SSE connection closed.");
             }
-        }
+        };
     }, [listenToSSEUpdates, orderDetails._id])
 
+    useEffect(() => {
+        const handleBeforeUnload = () => {
+            if (sseConnection.current) {
+                console.info("Closing SSE connection before unloading the page.");
+                sseConnection.current.close();
+            }
+        };
+        window.addEventListener("beforeunload", handleBeforeUnload);
+        // Clean up the event listener when the component is unmounted
+        return () => {
+            window.removeEventListener("beforeunload", handleBeforeUnload);
+        };
+    }, [sseConnection]);
 
     return (
         <>
-            <Navbar/>
+            <Navbar />
             <Container className=''>
                 <div className='d-flex align-items-end'>
                     <H1 onClick={() => console.log(orderDetails)}>Order details</H1>
@@ -127,12 +150,12 @@ export default function OrderDetailsPage({ params }) {
                                                 orderDetails.isCanceled
                                                     ? <Badge variant="red">{orderDetails.status_history[orderDetails.status_history.length - 1]?.status}</Badge>
                                                     : orderDetails.status_history[orderDetails.status_history.length - 1]?.status === shippingMethods.bopis.steps[3]?.label || orderDetails.status_history[orderDetails.status_history.length - 1]?.status === shippingMethods.home.steps[4]?.label
-                                                    ? <Badge variant="green">{orderDetails.status_history[orderDetails.status_history.length - 1]?.status}</Badge>
-                                                    : <Badge variant="gray">{orderDetails.status_history[orderDetails.status_history.length - 1]?.status}</Badge>
+                                                        ? <Badge variant="green">{orderDetails.status_history[orderDetails.status_history.length - 1]?.status}</Badge>
+                                                        : <Badge variant="gray">{orderDetails.status_history[orderDetails.status_history.length - 1]?.status}</Badge>
                                             }</p>
                                         </div>
                                         <div className='col'>
-                                            <p className={styles.orderData}><strong>Type:</strong><ShippingMethodBadgeComp orderDetails={orderDetails}/></p>
+                                            <p className={styles.orderData}><strong>Type:</strong><ShippingMethodBadgeComp orderDetails={orderDetails} /></p>
                                             <p className={styles.orderData}><strong>Address:</strong> {orderDetails.shipping_address}</p>
                                         </div>
                                         <div className='col'>
@@ -161,7 +184,7 @@ export default function OrderDetailsPage({ params }) {
                                         (orderDetails.packageIsInTheStore === true) &&
                                         <Banner className='mb-2 mt-2' image={<Icon glyph="Bell"></Icon>}>
                                             <div className='d-flex flex-row align-items-center justify-content-between'>
-                                                <strong className='m-0'>Let the store know you have arrived for your package.</strong>  
+                                                <strong className='m-0'>Let the store know you have arrived for your package.</strong>
                                                 <Button disabled={isBtnDisabled} onClick={() => onArrivedToStoreClick()}>I am here</Button>
                                             </div>
                                         </Banner>

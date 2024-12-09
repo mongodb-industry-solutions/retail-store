@@ -20,6 +20,7 @@ const LoginComp = () => {
     const [localSelectedUser, setLocalSelectedUser] = useState(null)
 
     useEffect(() => {
+        console.log("HOLA")
       const getAllUsers = async () => {
         try {
           const result = await fetchUsers();

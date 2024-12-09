@@ -1,56 +1,85 @@
 "use client"
 
-import React, {useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Container } from 'react-bootstrap';
 import { H1 } from '@leafygreen-ui/typography';
+import { v4 as uuidv4 } from "uuid";
 
 import Footer from "../_components/footer/Footer";
 import Navbar from "../_components/navbar/Navbar";
 import OrderItemCard from '../_components/orderItemCard/OrderItemCard';
 import { CardSkeleton } from '@leafygreen-ui/skeleton-loader';
-import { handleChangeInOrders } from '@/lib/helpers';
+import { handleChangeInOrders, handleCreateNewOrder } from '@/lib/helpers';
 
 export default function Page() {
-    const [sseConnection, setSSEConnection] = useState(null)
+    const sseConnection = useRef(null);
+    const sessionId = useRef(uuidv4());
     const userId = useSelector(state => state.User.selectedUser?._id)
     const orders = useSelector(state => state.User.orders)
 
-    const listenToSSEUpdates = useCallback((userId) => {
-        console.log('listenToSSEUpdates func')
-        const eventSource = new EventSource(`/api/sse?userId=${userId}`)
+    const listenToSSEUpdates = useCallback(() => {
+        console.log('listenToSSEUpdates func: ', userId)
+        const collection = "orders";
+        const user = userId;
+        const eventSource = new EventSource(
+            `/api/sse?sessionId=${sessionId.current}&colName=${collection}&user=${user}`
+        )
 
         eventSource.onopen = () => {
-          console.log('SSE connection opened.')
-          // Save the SSE connection reference in the state
+            console.log('SSE connection opened.')
+            // Save the SSE connection reference in the state
         }
 
         eventSource.onmessage = (event) => {
             const data = JSON.parse(event.data);
-            console.log('Received SSE Update:',  data);
-            // validate if the change was on the status_history field            
+            console.log('Received SSE Update:', data);
             const orderId = data.documentKey._id
-            handleChangeInOrders(orderId, data.fullDocument)
+            if(data.operationType === 'update')
+                handleChangeInOrders(orderId, data.fullDocument)
+            else if(data.operationType === 'insert')
+                handleCreateNewOrder(data.fullDocument)
         }
 
         eventSource.onerror = (event) => {
-          console.error('SSE Error:', event);
+            console.error('SSE Error:', event);
         }
-        setSSEConnection(eventSource);
+
+        // Close the previous connection if it exists
+        if (sseConnection.current) {
+            sseConnection.current.close();
+            console.log("Previous SSE connection closed - dashboard.");
+        }
+
+        sseConnection.current = eventSource;
         return eventSource;
-    }, []);
+    }, [userId]);
 
     useEffect(() => {
-        if(userId){
-            const eventSource = listenToSSEUpdates(userId);
+        if (userId) {
+            const eventSource = listenToSSEUpdates();
             return () => {
                 if (eventSource) {
                     eventSource.close();
-                    console.log('SSE connection closed.');
+                    console.log("SSE connection closed.");
                 }
-            }
+            };
         }
     }, [listenToSSEUpdates, userId]);
+
+    useEffect(() => {
+        const handleBeforeUnload = () => {
+            if (sseConnection.current) {
+                console.info("Closing SSE connection before unloading the page.");
+                sseConnection.current.close();
+            }
+        };
+        window.addEventListener("beforeunload", handleBeforeUnload);
+        // Clean up the event listener when the component is unmounted
+        return () => {
+            window.removeEventListener("beforeunload", handleBeforeUnload);
+        };
+    }, [sseConnection]);
 
     return (
         <>
@@ -62,20 +91,20 @@ export default function Page() {
                 <div className='mt-3 mb-2' >
                     {
                         orders.loading === true
-                        ? [0, 1, 2].map(loadCard => (
-                            <CardSkeleton className='mb-2' key={loadCard}></CardSkeleton>
-                        ))
-                        : orders.list.map((order, index) => (
-                            <OrderItemCard 
-                                key={index} 
-                                order={order} 
-                                updateToggle={orders.updateToggle}
-                            />
-                        ))
+                            ? [0, 1, 2].map(loadCard => (
+                                <CardSkeleton className='mb-2' key={loadCard}></CardSkeleton>
+                            ))
+                            : orders.list.map((order, index) => (
+                                <OrderItemCard
+                                    key={index}
+                                    order={order}
+                                    updateToggle={orders.updateToggle}
+                                />
+                            ))
                     }
                 </div>
             </Container>
-            <Footer/>
+            <Footer />
         </>
     );
 }

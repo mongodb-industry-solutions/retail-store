@@ -134,7 +134,6 @@ const UserSlice = createSlice({
             state.orders.list = action.payload.orders;
             state.orders.initialLoad = true
             // Load initial cart
-            console.log('AQUI', action.payload.cart)
             if(action.payload.cart === null){
                 state.cart = {...initCart}
             }else{
