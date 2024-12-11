@@ -5,7 +5,6 @@ const { ObjectId } = require('mongodb');
 export async function POST(request) {
     try {
         let { userId, numProducts = 0, productsToAdd = [] } = await request.json();
-        console.log(userId, numProducts);
         const db = await connectToDatabase();
         const productsCollection = db.collection('products');
         const cartsCollection = db.collection('carts');
@@ -35,7 +34,7 @@ export async function POST(request) {
                     { $sample: { size: numProducts } }
                 ]).toArray();
 
-            console.log('selectedProducts', selectedProducts);
+            //console.log('selectedProducts', selectedProducts);
 
             // Prepare the products to be added to the cart
             let randomProducts = selectedProducts.map(product => ({

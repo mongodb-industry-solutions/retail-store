@@ -221,3 +221,11 @@
     max-width: var(--bs-popover-max-width);
 }
 /* MODAL START */
+.tooltipClass{
+
+}
+.guideCue{
+    position: fixed;
+    bottom: 113px;
+    right: 5px;
+}
