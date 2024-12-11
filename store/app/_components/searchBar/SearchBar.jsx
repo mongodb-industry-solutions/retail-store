@@ -56,10 +56,11 @@ const SearchBar = () => {
                     />
                     <div className={styles.searchToggleContainer}>
                         <InfoSprinkle className={styles.infoSprinkle}>
-                            Enable vector search for smart results
+                            Enable vector search for smart results (WIP)
                         </InfoSprinkle>
                         <Label  className={styles.toggleLabel}>Vector Search</Label>
                         <Toggle
+                            disabled={true}
                             aria-label="Dark mode toggle"
                             className={styles.toggle}
                             size='small'
