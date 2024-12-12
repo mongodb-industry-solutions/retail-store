@@ -60,7 +60,7 @@ const SearchBar = () => {
                         </InfoSprinkle>
                         <Label  className={styles.toggleLabel}>Vector Search</Label>
                         <Toggle
-                            disabled={true}
+                            // disabled={true}
                             aria-label="Dark mode toggle"
                             className={styles.toggle}
                             size='small'

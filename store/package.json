@@ -34,7 +34,7 @@
     "@reduxjs/toolkit": "^2.3.0",
     "axios": "^1.6.5",
     "geist": "^1.2.1",
-    "google-auth-library": "^9.6.3",
+    "google-auth-library": "^9.15.0",
     "mongodb": "^6.3.0",
     "next": "^14.0.4",
     "react": "^18.2.0",

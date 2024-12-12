@@ -36,7 +36,7 @@ async function getPredPriceChangeStream() {
     predPriceDataChangeStream = productsCollection.watch(pipeline);
 
     predPriceDataChangeStream.on('change', (change) => {
-      console.log('Change: ', change);
+      //console.log('Change: ', change);
     });
 
     predPriceDataChangeStream.on('error', (error) => {
