@@ -100,10 +100,6 @@ const ProductList = () => {
     if(initialLoad === true )
       getProducts()
   }, [filters]);
-
-  useEffect(() => {
-    console.log('- products changed', Object.keys(products).length)
-  }, [products])
   
 
   // useEffect(() => {
@@ -172,7 +168,7 @@ const ProductList = () => {
                   price={product.price}
                   pred_price={product.pred_price}
                   items={product.items}
-                  score={product.score}
+                  score={product.searchScore}
                 />
               </div>
             ))

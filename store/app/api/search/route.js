@@ -50,7 +50,7 @@ export async function POST(request) {
         pipeline.push(
             {
                 $addFields: {
-                    score: { $meta: "searchScore" }
+                    searchScore: { $meta: "searchScore" }
                 }
             },
             {
