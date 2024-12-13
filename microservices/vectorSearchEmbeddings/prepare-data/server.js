@@ -1,6 +1,3 @@
-import Koa from "koa";
-import Router from "koa-router";
-import logger from "koa-logger";
 import dotenv from "dotenv";
 import { connectToDatabase, closeDatabase } from "./connect.js";
 import fs from "fs/promises";
@@ -9,11 +6,10 @@ import { vectorizeData } from "./create-embeddings.js";
 dotenv.config();
 const port = process.env.PORT;
 const jsonFilePath = "/config/serviceAccountKey.json";
+const express = require('express');
+const app = express();
 
-const app = new Koa();
-const router = new Router();
-
-app.use(logger());
+app.use(express.json()); // Middleware to parse JSON
 
 async function loadJson(filePath) {
   try {
@@ -29,7 +25,42 @@ const FIELDS_TO_EMBED = [
     "description"
 ]
 
-router.get("/embedAllProducts", async (ctx) => {
+app.post("/generate_embeddings", async (req, res) =>  {
+  console.log('Request Body:', req.body);
+  console.log(req)
+  if (!text) {
+    console.log(" - No text to embed");
+    return;
+  }
+
+  const body = JSON.stringify({ text });
+
+  // Call the Python function
+  let options = {
+      //pythonPath: '/usr/bin/python3',
+      pythonPath: '../embedder/emb/bin/python3', 
+      args: body, // Example argument passed to the Python script
+      pythonOptions: ['-u'],
+      verbose: true,
+      scriptPath: path.join(__dirname, './../embedder')
+  };
+  let response = await PythonShell.run("embedder_function.py", options)
+  try {
+    response = JSON.parse(response[0])
+    console.log(" - gc function response status, ", response.status)
+    if (response.status !== 200) {
+      console.error(response.error);
+      throw new Error("Generating embeddings failed.");
+    }
+  } catch (error) {
+    console.error(error);
+    throw new Error("Parsing embeddings failed.");
+  }
+
+  return response?.vectors || [];
+});
+
+app.get("/embedAllProducts", async (ctx) => {
     console.log('embedAllProducts')
   let db;
   try {
@@ -125,7 +156,7 @@ async function main(){
     }
 }
 
-router.get("/embedProduct", async (ctx) => {
+app.get("/embedProduct", async (ctx) => {
     console.log('embedAllProducts')
   let db;
   try {
@@ -154,42 +185,6 @@ router.get("/embedProduct", async (ctx) => {
     // }
   }
 });
-
-router.get("/generate_embeddings", async (ctx) =>  {
-  console.log(ctx)
-  if (!text) {
-    console.log(" - No text to embed");
-    return;
-  }
-
-  const body = JSON.stringify({ text });
-
-  // Call the Python function
-  let options = {
-      //pythonPath: '/usr/bin/python3',
-      pythonPath: '../embedder/emb/bin/python3', 
-      args: body, // Example argument passed to the Python script
-      pythonOptions: ['-u'],
-      verbose: true,
-      scriptPath: path.join(__dirname, './../embedder')
-  };
-  let response = await PythonShell.run("embedder_function.py", options)
-  try {
-    response = JSON.parse(response[0])
-    console.log(" - gc function response status, ", response.status)
-    if (response.status !== 200) {
-      console.error(response.error);
-      throw new Error("Generating embeddings failed.");
-    }
-  } catch (error) {
-    console.error(error);
-    throw new Error("Parsing embeddings failed.");
-  }
-
-  return response?.vectors || [];
-});
-
-app.use(router.routes());
 
 app.listen(port, () => {
   console.log("Server is running on port " + port);
