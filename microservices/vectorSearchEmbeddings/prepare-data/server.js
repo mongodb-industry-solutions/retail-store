@@ -155,6 +155,40 @@ router.get("/embedProduct", async (ctx) => {
   }
 });
 
+router.get("/generate_embeddings", async (ctx) =>  {
+  console.log(ctx)
+  if (!text) {
+    console.log(" - No text to embed");
+    return;
+  }
+
+  const body = JSON.stringify({ text });
+
+  // Call the Python function
+  let options = {
+      //pythonPath: '/usr/bin/python3',
+      pythonPath: '../embedder/emb/bin/python3', 
+      args: body, // Example argument passed to the Python script
+      pythonOptions: ['-u'],
+      verbose: true,
+      scriptPath: path.join(__dirname, './../embedder')
+  };
+  let response = await PythonShell.run("embedder_function.py", options)
+  try {
+    response = JSON.parse(response[0])
+    console.log(" - gc function response status, ", response.status)
+    if (response.status !== 200) {
+      console.error(response.error);
+      throw new Error("Generating embeddings failed.");
+    }
+  } catch (error) {
+    console.error(error);
+    throw new Error("Parsing embeddings failed.");
+  }
+
+  return response?.vectors || [];
+});
+
 app.use(router.routes());
 
 app.listen(port, () => {
