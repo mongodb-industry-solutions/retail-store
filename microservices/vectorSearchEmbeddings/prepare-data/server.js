@@ -2,11 +2,17 @@ import dotenv from "dotenv";
 import { connectToDatabase, closeDatabase } from "./connect.js";
 import fs from "fs/promises";
 import { vectorizeData } from "./create-embeddings.js";
+import express from 'express';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { PythonShell } from 'python-shell';
+import { spawn } from 'child_process';
 
 dotenv.config();
 const port = process.env.PORT;
 const jsonFilePath = "/config/serviceAccountKey.json";
-const express = require('express');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const app = express();
 
 app.use(express.json()); // Middleware to parse JSON
@@ -27,7 +33,7 @@ const FIELDS_TO_EMBED = [
 
 app.post("/generate_embeddings", async (req, res) =>  {
   console.log('Request Body:', req.body);
-  console.log(req)
+  let {text} = req.body
   if (!text) {
     console.log(" - No text to embed");
     return;
@@ -35,27 +41,32 @@ app.post("/generate_embeddings", async (req, res) =>  {
 
   const body = JSON.stringify({ text });
 
-  // Call the Python function
-  let options = {
-      //pythonPath: '/usr/bin/python3',
-      pythonPath: '../embedder/emb/bin/python3', 
-      args: body, // Example argument passed to the Python script
-      pythonOptions: ['-u'],
-      verbose: true,
-      scriptPath: path.join(__dirname, './../embedder')
-  };
-  let response = await PythonShell.run("embedder_function.py", options)
-  try {
-    response = JSON.parse(response[0])
-    console.log(" - gc function response status, ", response.status)
-    if (response.status !== 200) {
-      console.error(response.error);
-      throw new Error("Generating embeddings failed.");
+const pythonScript = path.join(__dirname, '../embedder/embedder_function.py');
+  const args = [pythonScript, JSON.stringify({ text })];
+
+  const pythonProcess = spawn('python3', args);
+
+  let response = '';
+  pythonProcess.stdout.on('data', (data) => {
+    response += data.toString();
+  });
+
+  pythonProcess.stderr.on('data', (data) => {
+    console.error('Python Error:', data.toString());
+  });
+
+  pythonProcess.on('close', (code) => {
+    if (code !== 0) {
+      return res.status(500).json({ error: 'Python script failed' });
     }
-  } catch (error) {
-    console.error(error);
-    throw new Error("Parsing embeddings failed.");
-  }
+    try {
+      const parsedResponse = JSON.parse(response);
+      return res.json(parsedResponse);
+    } catch (err) {
+      console.error('Parsing Error:', err);
+      return res.status(500).json({ error: 'Failed to parse response' });
+    }
+  });
 
   return response?.vectors || [];
 });
