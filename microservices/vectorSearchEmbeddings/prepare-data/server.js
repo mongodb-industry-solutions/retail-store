@@ -28,7 +28,12 @@ async function loadJson(filePath) {
 }
 const EMBEDDING_FIELD_NAME = "text_embedding";
 const FIELDS_TO_EMBED = [
-    "description"
+    "description",
+    "name",
+    "season",
+    "articleType",
+    "brand",
+    "baseColour"
 ]
 
 app.post("/generate_embeddings", async (req, res) =>  {
@@ -71,45 +76,45 @@ const pythonScript = path.join(__dirname, '../embedder/embedder_function.py');
   return response?.vectors || [];
 });
 
+async function embeddAllProducts () {
+  let db;
+  db = await connectToDatabase();
+  const collection = db.collection("products")//process.env.COLLECTION_NAME);
+  const count = await collection.countDocuments({});
+  console.log("Total documents:", count);
+  const cursor = collection.find(
+      {},
+      {
+        projection: {
+          "name": 1,
+          "code": 1,
+          "masterCategory": 1,
+          "subCategory": 1,
+          "articleType": 1,
+          "baseColour": 1,
+          "description": 1,
+          "brand": 1,
+          "season": 1
+        }
+      }
+    ).limit(6000);
+    let results = await cursor.toArray();
+    console.log("Cursor Results:", results);
+    let result = await vectorizeData(
+      cursor,
+      collection,
+      FIELDS_TO_EMBED,
+      EMBEDDING_FIELD_NAME
+    );
+
+    console.log('hola')
+    console.log(result)
+
+}
 app.get("/embedAllProducts", async (ctx) => {
     console.log('embedAllProducts')
-  let db;
   try {
-    db = await connectToDatabase();
-    const collection = db.collection("products")//process.env.COLLECTION_NAME);
-
-    const cursor = collection.aggregate([
-        {
-          $match: {
-           // [EMBEDDING_FIELD_NAME]: { $eq: null }
-          }
-        },
-        {
-          $project: {
-            "name": 1,
-            "code": 1,
-            "masterCategory": 1,
-            "subCategory": 1,
-            "articleType": 1,
-            "baseColour": 1,
-            "description": 1,
-            "brand": 1
-          }
-        },
-        {
-          $limit: 100
-        }
-      ]);
-    
-      let result = await vectorizeData(
-        cursor,
-        collection,
-        FIELDS_TO_EMBED,
-        EMBEDDING_FIELD_NAME
-      );
-
-      console.log('hola')
-      console.log(result)
+    embeddAllProducts()
     ctx.body = { suc: true };
     ctx.status = 200;
   } catch (error) {
@@ -120,51 +125,9 @@ app.get("/embedAllProducts", async (ctx) => {
 });
 
 // TODO nice log for testing
+main()
 async function main(){
-    console.log('embedAllProducts')
-    let db;
-    try {
-      db = await connectToDatabase();
-      const collection = db.collection("products")//process.env.COLLECTION_NAME);
-  
-      const cursor = collection.aggregate([
-          {
-            $match: {}
-          },
-          {
-            $project: {
-              "name": 1,
-              "code": 1,
-              "masterCategory": 1,
-              "subCategory": 1,
-              "articleType": 1,
-              "baseColour": 1,
-              "description": 1,
-              "brand": 1
-            }
-          },
-          {
-            $limit: 100
-          }
-        ]);
-      
-        let result = await vectorizeData(
-          cursor,
-          collection,
-          FIELDS_TO_EMBED,
-          EMBEDDING_FIELD_NAME
-        );
-  
-        console.log('hola')
-        console.log(result)
-
-    } catch (error) {
-      console.error("Error processing request:", error);
-    } finally {
-      if (db) {
-        await closeDatabase();
-      }
-    }
+  embeddAllProducts()
 }
 
 app.get("/embedProduct", async (ctx) => {
@@ -182,8 +145,6 @@ app.get("/embedProduct", async (ctx) => {
         EMBEDDING_FIELD_NAME
       );
 
-      console.log('hola')
-      console.log(result)
     ctx.body = { suc: true };
     ctx.status = 200;
   } catch (error) {

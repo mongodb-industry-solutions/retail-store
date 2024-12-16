@@ -17,10 +17,9 @@ export async function POST(request) {
     try {
         embeddedSearchTerms = await createEmbedding(query);    
     } catch (error) {
-        
+        console.log('error: ',error)
     }
     
-    //console.log('embeddedSearchTerms. ', embeddedSearchTerms)
     const db = await connectToDatabase();
       const products = await db.collection("products").aggregate([  
         {  
@@ -28,8 +27,8 @@ export async function POST(request) {
             index: 'vector_index_products',  
             path: 'text_embedding',  
             queryVector:  embeddedSearchTerms,
-            numCandidates: 20,  
-            limit: 10  
+            numCandidates: 30,  
+            limit: 30
           }  
         },
         {
