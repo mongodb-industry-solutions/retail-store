@@ -22,7 +22,7 @@ const connection = await client.connect();
 console.log(" - Connected to mdb");
 
 //await vectorizeProducts();
-// await clearEmbeddings();
+//await clearEmbeddings();
 
 // await client.close();
 
@@ -139,11 +139,13 @@ async function getCollection(databaseName, collectionName) {
 }
 
 async function clearEmbeddings() {
+  console.log('clearEmbeddings')
   const collection = await getCollection(DATABASE, COLLECTION);
-  await collection.updateMany(
+  let res = await collection.updateMany(
     {},
     {
       $unset: { [EMBEDDING_FIELD_NAME]: 1 }
     }
   );
+  console.log(res)
 }

@@ -3,7 +3,6 @@ import { connectToDatabase } from "../../_db/connect";
 
 export async function POST(request) {
     const { query, facets } = await request.json();
-    console.log('HOLA', query, facets);
 
     try {
         const db = await connectToDatabase();
