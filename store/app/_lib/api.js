@@ -23,7 +23,7 @@ export async function getProductsWithSearch(query = '', filters = {}) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({query, filters}),
+      body: JSON.stringify({query, facets: filters}),
     });
     if (!response.ok) {
       throw new Error(`Error fetching cart: ${response.status}`);

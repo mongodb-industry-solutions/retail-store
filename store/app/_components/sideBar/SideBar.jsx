@@ -85,7 +85,7 @@ function Sidebar({ onFilterChange }) {
           <Subtitle className={styles.subtitle}>Open Store</Subtitle>
           <InfoSprinkle className={styles.infoSprinkle}>
             Simulate sale events and get predicted prices fo each item in the
-            store
+            store. Store will automatically close after 2min.
           </InfoSprinkle>
         </div>
 
