@@ -56,7 +56,7 @@ const SearchBar = () => {
                     />
                     <div className={styles.searchToggleContainer}>
                         <InfoSprinkle className={styles.infoSprinkle}>
-                            Enable vector search for smart results (WIP)
+                            Enable vector search for smart results
                         </InfoSprinkle>
                         <Label  className={styles.toggleLabel}>Vector Search</Label>
                         <Toggle
