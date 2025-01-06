@@ -15,7 +15,7 @@ def generate_embeddings(request):
 
     vertexai.init(project="ist-retail-demo", location="us-central1")
 
-    model = TextEmbeddingModel.from_pretrained("textembedding-gecko@001")
+    model = TextEmbeddingModel.from_pretrained("text-embedding-005")
     embeddings = model.get_embeddings(text)
     vectors = []
     for embedding in embeddings:
