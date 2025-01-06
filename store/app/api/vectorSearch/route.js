@@ -4,7 +4,7 @@ import createEmbedding from "../createEmbeddings/route";
 
 export async function POST(request) {
     let { query, facets } = await request.json();
-    console.log('aqui, ', query, facets)
+    //console.log('aqui, ', query, facets)
     let limit = request?.query?.limit || 12;
     if (!limit || limit > 100) {
       limit = 12;
@@ -15,17 +15,18 @@ export async function POST(request) {
   
     let embeddedSearchTerms = []
     try {
-        embeddedSearchTerms = await createEmbedding(query);    
+        embeddedSearchTerms = await createEmbedding([query]);    
+
     } catch (error) {
         console.log('error: ',error)
     }
-    
+    const EMBEDDING_FIELD_NAME = "embedding_desc_name_brand";
     const db = await connectToDatabase();
       const products = await db.collection("products").aggregate([  
         {  
           $vectorSearch: {  
             index: 'vector_index_products',  
-            path: 'text_embedding',  
+            path: EMBEDDING_FIELD_NAME,  
             queryVector:  embeddedSearchTerms,
             numCandidates: 30,  
             limit: 30
