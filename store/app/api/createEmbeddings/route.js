@@ -26,5 +26,5 @@ export default async function createEmbedding(query) {
     }
     //console.log("RESPONSE VECTOR SIZE, ", response.vectors[0].length)
 
-    return response?.vectors || [];
+    return response?.vectors[0] || [];
 };

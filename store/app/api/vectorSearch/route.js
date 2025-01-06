@@ -4,7 +4,7 @@ import createEmbedding from "../createEmbeddings/route";
 
 export async function POST(request) {
     let { query, facets } = await request.json();
-    //console.log('aqui, ', query, facets)
+    
     let limit = request?.query?.limit || 12;
     if (!limit || limit > 100) {
       limit = 12;
@@ -16,7 +16,6 @@ export async function POST(request) {
     let embeddedSearchTerms = []
     try {
         embeddedSearchTerms = await createEmbedding([query]);    
-
     } catch (error) {
         console.log('error: ',error)
     }
