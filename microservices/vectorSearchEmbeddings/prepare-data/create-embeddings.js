@@ -12,7 +12,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config();
 
-const EMBEDDING_FIELD_NAME = "text_embedding";
+const EMBEDDING_FIELD_NAME = "embedding_desc_name_brand";
 const DATABASE = "dotLocalStore";
 const COLLECTION = "products";
 
@@ -101,7 +101,7 @@ function vectorizeDocuments(documents, collection, fieldsToEmbed, embeddingField
   });
 }
 
-async function getEmbeddings(text) {
+export async function getEmbeddings(text) {
   if (!text) {
     console.log(" - No text to embed");
     return;
@@ -111,8 +111,8 @@ async function getEmbeddings(text) {
 
   // Call the Python function
   let options = {
-      //pythonPath: '/usr/bin/python3',
-      pythonPath: '../embedder/emb/bin/python3', 
+      pythonPath: '/usr/bin/python3',
+      //pythonPath: '../embedder/emb/bin/python3', 
       args: body, // Example argument passed to the Python script
       pythonOptions: ['-u'],
       verbose: true,
@@ -121,7 +121,9 @@ async function getEmbeddings(text) {
   let response = await PythonShell.run("embedder_function.py", options)
   try {
     response = JSON.parse(response[0])
+    console.log(" - gc function args, ", body)
     console.log(" - gc function response status, ", response.status)
+    console.log(" - gc function response, ", response.vectors.length)
     if (response.status !== 200) {
       console.error(response.error);
       throw new Error("Generating embeddings failed.");
