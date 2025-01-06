@@ -1,7 +1,7 @@
 export default async function createEmbedding(query) {
     const url = process.env.EMBEDDING_ENDPOINT;
     const body = JSON.stringify({
-        'text': query    
+        'text': [query]    
     });
     let response = await fetch(
         url, 
@@ -26,5 +26,5 @@ export default async function createEmbedding(query) {
     }
     //console.log("RESPONSE VECTOR SIZE, ", response.vectors[0].length)
 
-    return response?.vectors[0] || [];
+    return response?.vectors || [];
 };
