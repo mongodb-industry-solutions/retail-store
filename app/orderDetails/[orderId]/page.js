@@ -98,16 +98,17 @@ export default function OrderDetailsPage({ params }) {
     }, [orderId]);
 
     useEffect(() => {
-        console.log('myStepperRef 1', myStepperRef.current)
+        console.log('myStepperRef 1', myStepperRef.current, document.getElementById('myStepperRef'))
         const eventSource = listenToSSEUpdates();
-        console.log('myStepperRef 2', myStepperRef.current)
-        return () => {
-            if (eventSource) {
-                eventSource.close();
-                console.log("SSE connection closed UEFF.");
-            }
-        };
+        console.log('myStepperRef 2', myStepperRef.current, document.getElementById('myStepperRef'))
+        // return () => {
+        //     // if (eventSource) {
+        //     //     eventSource.close();
+        //     //     console.log("SSE connection closed UEFF.");
+        //     // }
+        // };
     }, [listenToSSEUpdates, orderDetails._id])
+
 
     useEffect(() => {
         const handleBeforeUnload = () => {
@@ -119,6 +120,7 @@ export default function OrderDetailsPage({ params }) {
         window.addEventListener("beforeunload", handleBeforeUnload);
         // Clean up the event listener when the component is unmounted
         return () => {
+            console.log('CLEAN COMPONENT ORDER DETAILS')
             window.removeEventListener("beforeunload", handleBeforeUnload);
         };
     }, [sseConnection]);
@@ -171,6 +173,7 @@ export default function OrderDetailsPage({ params }) {
                                     {
                                         !orderDetails.isCanceled &&
                                         <Stepper
+                                            id='myStepperRef'
                                             ref={myStepperRef}
                                             className={`${orderDetails.isCanceled ? styles.isCanceled : ''}`}
                                             // if the order is canceled it means that only the first step was completed. 
