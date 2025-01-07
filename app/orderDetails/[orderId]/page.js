@@ -50,6 +50,8 @@ export default function OrderDetailsPage({ params }) {
 
     const listenToSSEUpdates = useCallback(() => {
         console.log('listenToSSEUpdates func: ', orderId)
+        console.log('-- orderId', orderId)
+        console.log('-- sessionId', sessionId)
         const collection = "orders";
         const eventSource = new EventSource(
             `/api/sse?sessionId=${sessionId.current}&colName=${collection}&_id=${orderId}`
@@ -69,12 +71,14 @@ export default function OrderDetailsPage({ params }) {
 
         eventSource.onerror = (event) => {
             console.error('-- (onerror) SSE Error:', event);
+            console.log('-- (onerror) SSE Error:', event);
         }
 
         // Close the previous connection if it exists
         if (sseConnection.current) {
+            console.log(sseConnection.current)
             sseConnection.current.close();
-            console.log("-- Previous SSE connection closed - dashboard.");
+            console.log("-- Previous SSE connection closed - dashboard sessionId.", sessionId );
         }
 
         sseConnection.current = eventSource;
@@ -98,7 +102,10 @@ export default function OrderDetailsPage({ params }) {
     }, [orderId]);
 
     useEffect(() => {
+        if(orderDetails._id !== orderId)
+            return
         console.log('myStepperRef 1', myStepperRef.current, document.getElementById('myStepperRef'))
+        sseConnection?.current?.close();
         const eventSource = listenToSSEUpdates();
         console.log('myStepperRef 2', myStepperRef.current, document.getElementById('myStepperRef'))
         // return () => {
