@@ -30,6 +30,7 @@ export default function OrderDetailsPage({ params }) {
     const { orderId } = params; // id from the dynamic URL
     const orderDetails = useSelector(state => state.Order)
     const [isBtnDisabled, setIsBtnDisabled] = useState(false)
+    const myStepperRef = useRef(null)
 
     const onArrivedToStoreClick = async () => {
         if (!orderDetails.packageIsInTheStore || isBtnDisabled)
@@ -55,25 +56,25 @@ export default function OrderDetailsPage({ params }) {
         )
 
         eventSource.onopen = () => {
-            console.log('SSE connection opened.')
+            console.log('-- (onopen) SSE connection opened.')
             // Save the SSE connection reference in the state
         }
 
         eventSource.onmessage = (event) => {
             const data = JSON.parse(event.data);
-            console.log('Received SSE Update:', data);
+            console.log('-- (onmessage) Received SSE Update:', data);
             handleChangeInOrders(orderId, data.fullDocument)
             dispatch(setOrder(data.fullDocument))
         }
 
         eventSource.onerror = (event) => {
-            console.error('SSE Error:', event);
+            console.error('-- (onerror) SSE Error:', event);
         }
 
         // Close the previous connection if it exists
         if (sseConnection.current) {
             sseConnection.current.close();
-            console.log("Previous SSE connection closed - dashboard.");
+            console.log("-- Previous SSE connection closed - dashboard.");
         }
 
         sseConnection.current = eventSource;
@@ -97,11 +98,13 @@ export default function OrderDetailsPage({ params }) {
     }, [orderId]);
 
     useEffect(() => {
+        console.log('myStepperRef 1', myStepperRef.current)
         const eventSource = listenToSSEUpdates();
+        console.log('myStepperRef 2', myStepperRef.current)
         return () => {
             if (eventSource) {
                 eventSource.close();
-                console.log("SSE connection closed.");
+                console.log("SSE connection closed UEFF.");
             }
         };
     }, [listenToSSEUpdates, orderDetails._id])
@@ -109,7 +112,7 @@ export default function OrderDetailsPage({ params }) {
     useEffect(() => {
         const handleBeforeUnload = () => {
             if (sseConnection.current) {
-                console.info("Closing SSE connection before unloading the page.");
+                console.info("** Closing current SSE connection before unloading the page (order details).");
                 sseConnection.current.close();
             }
         };
@@ -168,6 +171,7 @@ export default function OrderDetailsPage({ params }) {
                                     {
                                         !orderDetails.isCanceled &&
                                         <Stepper
+                                            ref={myStepperRef}
                                             className={`${orderDetails.isCanceled ? styles.isCanceled : ''}`}
                                             // if the order is canceled it means that only the first step was completed. 
                                             // because we defined by business rule that we can only cancel an order if the order is in the first stage (a.k.a: In progress)

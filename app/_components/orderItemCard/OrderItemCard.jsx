@@ -12,6 +12,7 @@ import Button from "@leafygreen-ui/button";
 import { clearOrder } from "@/redux/slices/OrderSlice";
 import { shippingMethods } from "@/lib/constants";
 import ShippingMethodBadgeComp from "../shippingMethodBadgeComp/ShippingMethodBadgeComp";
+import { deleteOrder } from "@/lib/api";
 
 
 const prettifyDateFormat = (timestamp) => {
@@ -37,10 +38,17 @@ const OrderItemCard = ({ order, updateToggle }) => {
     const router = useRouter();
     const [totalPrice, setTotalPrice] = useState(0)
     const [totalAmount, setTotalAmount] = useState(0)
+    const [keysPressed, setKeysPressed] = useState(new Set());
 
-    const onPastOrderClick = () => {
+    const onSeeOrderClick =  () => {
         router.push(`/orderDetails/${order._id}`);
         dispatch(clearOrder())
+    }
+    const onOrderClick = async () => {
+        if(!keysPressed.has('d'))
+            return
+        const result = await deleteOrder(order._id);
+
     }
 
     useEffect(() => {
@@ -50,9 +58,30 @@ const OrderItemCard = ({ order, updateToggle }) => {
         setTotalAmount(totalAmount)
     }, [updateToggle])
     
+    useEffect(() => {
+        const handleKeyDown = (event) => {
+          setKeysPressed((prev) => new Set(prev).add(event.key));
+        };
+    
+        const handleKeyUp = (event) => {
+          setKeysPressed((prev) => {
+            const newSet = new Set(prev);
+            newSet.delete(event.key);
+            return newSet;
+          });
+        };
+    
+        window.addEventListener('keydown', handleKeyDown);
+        window.addEventListener('keyup', handleKeyUp);
+    
+        return () => {
+          window.removeEventListener('keydown', handleKeyDown);
+          window.removeEventListener('keyup', handleKeyUp);
+        };
+      }, []);
 
     return (
-        <Card className={styles.OrderItemCard} >
+        <Card className={styles.OrderItemCard} onClick={() => onOrderClick()}>
             <div className="d-flex align-items-center">
                 <H3 className='me-3'>Order #{order._id}</H3>
                 {
@@ -74,7 +103,7 @@ const OrderItemCard = ({ order, updateToggle }) => {
                 <div className={`${styles.item} ${styles.fitContent}`}>
                     <Button
                         variant='primary'
-                        onClick={() => onPastOrderClick()}
+                        onClick={() => onSeeOrderClick()}
                     >
                         See details
                     </Button>
