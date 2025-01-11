@@ -13,6 +13,7 @@ const ChatbotSlice = createSlice({
         isLoadingAnswer: false,
         initialLoad:false,
         messages: [],
+        allowChatbot: false, 
         // {
         //     content: '' || <></>,
         //     contentType: 'text' || 'html',
@@ -72,7 +73,13 @@ const ChatbotSlice = createSlice({
                 minimizedOrderSchema: [...action.payload], 
                 initialLoad: true
             }
-        }
+        },
+        setAllowChatbot: (state, action) => {
+            return {
+                ...state,  
+                allowChatbot: action.payload
+            }
+        },
     }
 })
 
@@ -83,7 +90,8 @@ export const {
     addMessage,
     setIsLoadingAnswer,
     setMinimizedOrderSchema,
-    setAnimationMessage
+    setAnimationMessage,
+    setAllowChatbot
 } = ChatbotSlice.actions
 
 export default ChatbotSlice.reducer

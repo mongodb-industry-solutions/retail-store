@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Icon from '@leafygreen-ui/icon';
 import { Modal, Container, ModalHeader, ModalFooter } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 import { H3} from '@leafygreen-ui/typography';
 import { Tabs, Tab } from '@leafygreen-ui/tabs';
 
@@ -10,9 +11,12 @@ import styles from "./chatbotComp.module.css";
 import ChatbotComp from './ChatbotComp';
 import ArchitectureComp from './ArchitectureComp';
 import Image from 'next/image';
+import ChatbotLogin from './ChatbotLogin';
 
 const ChatbotModal = ({ isOpen, handleClose }) => {
     const [selected, setSelected] = useState(0)
+    const allowChatbot = useSelector(state => state.Chatbot.allowChatbot)
+
 
     return (
         <Modal
@@ -33,7 +37,11 @@ const ChatbotModal = ({ isOpen, handleClose }) => {
             <Tabs setSelected={setSelected} selected={selected}>
                 <Tab className={styles.backgroundGray}  name="Chatbot">
                     <Container className={`${styles.chatbotContainer} p-3 h-100`}>
-                        <ChatbotComp/>
+                        {
+                            allowChatbot === true
+                            ? <ChatbotComp/>
+                            : <ChatbotLogin/>
+                        }
                     </Container>
                 </Tab>
                 <Tab className={styles.backgroundGray}  name="Architecture">

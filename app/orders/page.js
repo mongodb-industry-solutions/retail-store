@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useCallback, useEffect, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Container } from 'react-bootstrap';
 import { H1 } from '@leafygreen-ui/typography';
 import { v4 as uuidv4 } from "uuid";
