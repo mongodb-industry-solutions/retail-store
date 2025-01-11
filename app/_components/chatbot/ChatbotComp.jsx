@@ -59,6 +59,11 @@ const ChatbotComp = () => {
         dispatch(setIsLoadingAnswer(false))
     }
     
+    const onKeyDownInput = (e) => {
+        if(e.key === 'Enter')
+            handleAsk()
+    }
+
     return (
         <div className={`${styles.modalContentTab} d-flex flex-column`}>
             <div className={styles.chatbotBody}>
@@ -126,6 +131,7 @@ const ChatbotComp = () => {
                     ref={askInputRef}
                     disabled={isLoadingAnswer}
                     placeholder={isLoadingAnswer ? "Assistant processing answer..." : "Type your question..."}
+                    onKeyDown={(e) => onKeyDownInput(e)}
                 />
                 <Button onClick={handleAsk} variant="baseGreen" disabled={!askInputRef.current?.value.length === 0 || isLoadingAnswer}>
                     {isLoadingAnswer ? "Asking..." : "Ask"}
