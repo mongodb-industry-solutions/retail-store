@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import { connectToDatabase, closeDatabase } from "./connect.js";
 import fs from "fs/promises";
-import { vectorizeData } from "./create-embeddings.js";
+import { getEmbeddings, vectorizeData } from "./create-embeddings.js";
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -26,14 +26,15 @@ async function loadJson(filePath) {
     throw error;
   }
 }
-const EMBEDDING_FIELD_NAME = "text_embedding";
+const EMBEDDING_FIELD_NAME = "embedding_desc_name_brand";
 const FIELDS_TO_EMBED = [
     "description",
-    "name",
-    "season",
     "articleType",
+    "name",
     "brand",
-    "baseColour"
+    // "season",
+    // "articleType",
+    // "baseColour"
 ]
 
 app.post("/generate_embeddings", async (req, res) =>  {
@@ -81,9 +82,9 @@ async function embeddAllProducts () {
   db = await connectToDatabase();
   const collection = db.collection("products")//process.env.COLLECTION_NAME);
   const count = await collection.countDocuments({});
-  console.log("Total documents:", count);
+  console.log("Total :", count);
   const cursor = collection.find(
-      {},
+    {"embedding_desc_name_brand": {$exists: false}},
       {
         projection: {
           "name": 1,
@@ -97,9 +98,9 @@ async function embeddAllProducts () {
           "season": 1
         }
       }
-    ).limit(6000);
-    let results = await cursor.toArray();
-    console.log("Cursor Results:", results);
+    ).limit(100);
+    // let results = await cursor.toArray();
+    // console.log("Cursor Results:", results.length);
     let result = await vectorizeData(
       cursor,
       collection,
@@ -110,6 +111,10 @@ async function embeddAllProducts () {
     console.log('hola')
     console.log(result)
 
+}
+async function getEmbeddingFromQuery (query) {
+  let embeddings = await getEmbeddings([query]);
+  console.log(embeddings)
 }
 app.get("/embedAllProducts", async (ctx) => {
     console.log('embedAllProducts')
@@ -128,6 +133,8 @@ app.get("/embedAllProducts", async (ctx) => {
 main()
 async function main(){
   embeddAllProducts()
+  //const query = "Clothes for winter"
+  //getEmbeddingFromQuery(query)
 }
 
 app.get("/embedProduct", async (ctx) => {

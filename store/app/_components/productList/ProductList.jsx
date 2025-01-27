@@ -140,6 +140,8 @@ const ProductList = () => {
   }, [currentPage])
 
   useEffect(() => {
+      console.log("useEffect: listenToSSEUpdates ")
+      sseConnection?.current?.close();
       const eventSource = listenToSSEUpdates();
 
       return () => {
