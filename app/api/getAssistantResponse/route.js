@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
 import { ROLE } from "@/lib/constants";
 
-const service = process.env.SERVICE
-const systemId = process.env.SYSTEM_ID
-const llmId = process.env.LLM_ID
-const token = process.env.TOKEN
+const service = process.env.DATAWORKZ_SERVICE
+const agentId = process.env.DATAWORKZ_AGENT_ID
+const llmId = process.env.DATAWORKZ_LLM_ID
+const token = process.env.DATAWORKZ_TOKEN
 // agentSpec.tools[0].implConfig.data will be replaced with the user's orders
 const agentSpec = {
     agentSpec: {
@@ -21,7 +21,7 @@ const agentSpec = {
             "toolRefs": [
                 {
                     "name": "GetPolicies",
-                    "toolId": "ee4e69c0-076d-4f96-93ab-c0acb241e2a3",
+                    "toolId": "e682ac1f-d5e8-4a9e-b3e6-dc78c7412ac1",
                     "properties": {}
                 }
 
@@ -36,7 +36,7 @@ const agentSpec = {
             "toolRefs": [
                 {
                     "name": "GetPolicies",
-                    "toolId": "ee4e69c0-076d-4f96-93ab-c0acb241e2a3",
+                    "toolId": "e682ac1f-d5e8-4a9e-b3e6-dc78c7412ac1",
                     "properties": {}
                 },
                 {
@@ -223,9 +223,11 @@ const agentSpec = {
 
 export async function POST(request) {
     const { userId, userText, messages, ordersMinimizedSchema } = await request.json();
-    const urlTemplate = service + "/api/qna/v1/systems/" + systemId + "/call-agent?llmProviderId=" + llmId + "&userText=";
-    agentSpec.agentSpec.tools[0].implConfig.data = [...ordersMinimizedSchema];
-    let json_data = agentSpec;
+    //const urlTemplate = service + "/api/qna/v1/systems/" + systemId + "/call-agent?llmProviderId=" + llmId + "&userText=";
+    const urlTemplate = service + "/api/qna/v1/agents/" + agentId + "/response?llmProviderId=" + llmId + "&userText=";
+    //agentSpec.agentSpec.tools[0].implConfig.data = [...ordersMinimizedSchema];
+    //let json_data = agentSpec;
+    let json_data = {};
     let string_dialogue = [];
 
     messages.map(message => {
