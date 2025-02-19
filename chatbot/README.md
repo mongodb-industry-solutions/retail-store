@@ -404,9 +404,4 @@ Now you are all set to run the demo. Go back to the terminal, at the root of the
 npm run dev
 ```
 
-Then, open your browser and navigate to http://localhost:8080/cart and you should see the interface shown on Figure 6.
-
-
-Figure 6. Omnichannel Ordering demo interface.
-
-Congratulations, you have successfully set up the demo in your own environment! Select any user to see their cart and click on ‘Proceed to checkout’ to start your Omnichannel Ordering experience.
+Congratulations, you have successfully set up the demo in your own environment! Open your browser and navigate to http://localhost:8080/cart.Select any user to see their cart and click on the chatbot button at the bottom right corner to see the chatbot in action.
