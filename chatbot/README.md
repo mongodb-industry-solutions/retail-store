@@ -63,10 +63,14 @@ You have 2 options to connect to MongoDB.
 
 Dataworkz has hosted a MongoDB cluster that is pre-populated with data for this demo and is ready-to-use. The pre-configured MongoDB is meant only for the chatbot demo. It is a read-only database and will not be suitable for other parts of this demo. However, if you are interested in recreating the chatbot experience, it is the easiest and fastest way to get going.
 Edit your .env.local file to use the following - 
+The MONGODB_URI has the format: `mongodb+src://<username>:<pwd>@agenticrag.8inaw.mongodb.net
+the username for the publicly hosted instance is : `dataworkz`
+the password is : `agenticragmadeeasy`
 
+Please replace these values in the MONGODB_URI line below when you edit your `.env.local`
 
 ```bash
-MONGODB_URI=mongodb+srv://dataworkz:agenticragmadeeasy@agenticrag.8inaw.mongodb.net
+MONGODB_URI=mongodb+srv://<username>:<pwd>@agenticrag.8inaw.mongodb.net
 DATABASE_NAME="leafy_popup_store"
 COLLECTION_NAME="orders"
 NODE_ENV="development"
