@@ -1,4 +1,4 @@
-# Buying experience (RAG chatbot & Omnichannel ordering)
+# Setting up the RAG Chatbot experience
 
 This README will help you re-create the chatbot experience in Leafy Portal. The chatbot consists of a few parts - 
 - The web application that shows the chat interface
