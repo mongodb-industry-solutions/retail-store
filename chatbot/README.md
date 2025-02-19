@@ -154,13 +154,22 @@ Temperature: 0.0
 
 - Click on `Choose Files` and locate the file `LeafyCorpPolicy.pdf` in the `resources` folder where you cloned this repo
 - Click `Upload` and then once the upload is complete click `Save`
-- You can now click `Next` until the wizard completes with `Review And Submit`.
 
 ![Create RAG App - 5](dw_rag_app_4.png)
 
-- Once the wizard is successful, it will add an entry to the RAG Applications table for the Leafy_Portal_Policies RAG Applications. Give it a few minutes to complete ingesting, chunking, vectorizing and creating the App. When all sections say `View Details` you can click on the document search icon under `Actions`
-- In the search page try asking a question like - `Do you ship internationally?`. You should see an answer to the question coming from the policy document we uploaded.
+- You can now click `Next` until the wizard completes with `Review And Submit`.
+
+![Create RAG App - 6](dw_rag_app_5.png)
+
+- Once the wizard is successful, it will add an entry to the RAG Applications table for the Leafy_Portal_Policies RAG Applications. Give it a few minutes to complete ingesting, chunking, vectorizing and creating the App. When the RAG App is ready, the search action will enable and all sections say `View Details`.
+
+![Create RAG App - 7](dw_rag_app_6.png)
+
+- You can click on the document search icon under `Actions`
+- In the search page try asking a question like - `When can an order be cancelled?`. You should see an answer to the question coming from the policy document we uploaded.
 - Try another question - `What is the returns process?`
+
+![Ask questions in RAG App](dw_rag_app_7.png)
 
 Congratulations! You have created a RAG application for Store policies. 
 
@@ -173,6 +182,9 @@ Now that we have our RAG Application, lets wrap it in a Tool so it is available 
 ![Create AI App Tool](dw_agent_1.png)
 
 - From the list of options select `AI app`
+
+![Create AI App Tool - 1](dw_agent_1a.png)
+
 - From the UI that appears enter the following - 
 ```
 Tool name: GetLeafyPortalPolicyDetails
@@ -182,6 +194,8 @@ LLM: <pick the LLM you configured for this RAG Application in Step 4.1.2>
 Examples: Pick the example questions you tried as examples - leave empty otherwise
 ```
 - Press Save
+
+![Create AI App Tool - 2](dw_agent_1b.png)
 
 You have created the RAG Application as a tool for Agents to use!
 
@@ -216,6 +230,7 @@ Password: agenticragmadeeasy
 - Save
 
 In the list of MongoDB connections, you should now see the entry you just created. Copy the id with the button that is against the Storage name - we will need this in the next section.
+
 
 ### Step 4.3.2. Create Tool to connect to MongoDB
 Dataworkz Agents are composed of Tools. In this step, we will create a MongoDB tool for our `orders` collection. This will allow our Agent access to our MongoDB data. Our MongoDB Tool returns an Order object (details of an order) for a specified orderId. Therefore, we will make orderId a parameter to the tool that will be passed to it during execution by the Agent. The Agent will extract the orderId from the user's question or the conversation history.
@@ -345,7 +360,13 @@ Users should be able to do the following -
 ![Create Agent](dw_agent_7.png)
 
 - Click on the `FAQ` scenario in the left section - it should expand. Under Tool References you might see a suggestion to include the `GetLeafyPortalPolicyDetails` AI App tool we created in the previous section. Select `Add`. If you do not see it then you can click on `View all tools` and locate `GetLeafyPortalPolicyDetails` and click on `Use tool` next to it. After this you should see `GetLeafyPortalPolicyDetails` under Tool References
+
+![Create Agent](dw_agent_7a.png)
+
 - Click on the `OrderOperations` scenario in the left section - it should expand. You might see the tool `GetLeafyPortalOrder` suggested. If so, add it. If not, click on `View all tools` and add `GetLeafyPortalOrder` to this scenario. We also want to add the `GetLeafyPortalPolicyDetails` tool this scenario so it has access to the store policies. Repeat the steps of clicking on `View all tools` and locating `GetLeafyPortalPolicyDetails` and clicking on `Use this tool` to add it to this scenario.
+
+![Create Agent](dw_agent_7b.png)
+
 - Let's do one more step to make the result of the chatbot a little better. Click on the `OrderOperations` scenario and click on Instructions (not Planning Instructions). Replace the contents with these - 
 ```
 If the user requests full order details then ONLY in that case you MUST respond in this format - Type: Show type\nStatus: Show the most recent status from status_history\nShipping Address: Show shipping address\nProducts: List a numbered list of products with each on a new line
@@ -380,11 +401,22 @@ Let's create an API Token to access Dataworkz.
 - Click on `API Key` and then click on the `Add new API key` button
 - Fill in a recognizable name and copy the api key and save it some place secure. You will not be shown the key again.
 
+![Dataworkz API Key](dw_api_key_1.png)
+
+
 ### Step 5.2. Filling in the .env.local file
 Now we have completed all steps so let's fill in the blank values in our `.env.local`.
 We will need the following values - 
 1. Agent Id: Click on `AI Agents` in the main menu. Locate your agent in the and hover over the card and select 'Edit'. You can copy the agent id from underneath the name
+
+![Agent Id](dw_ids_1.png)
+![Agent Id](dw_ids_2.png)
+
 2. LLM Id: Click on `RAG Applications` from the main menu. Click on `LLM Configurations` and locate your LLM in the list and copy the id from the button next to the LLM name
+
+![LLM Configuration](dw_llm_config.png)
+![LLM Id](dw_ids_3.png)
+
 3. API Token: The api token created in Step 5.1
 
 - Open `.env.local` in an editor
