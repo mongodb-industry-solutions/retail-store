@@ -94,9 +94,10 @@ Our Chatbot understands Leafy Portal policies and is able to use them in its int
 #### Step 4.1.1. Create LLM Configuration
 For Dataworkz Agents, we currently support OpenAI gpt-4 and llama3-70b models. You can configure either of them through the LLM Configuration screen.
 1. Click on `RAG Applications` in the main menu
-![TODO]()
 2. Click on `LLM Configurations` on the right side
-![TODO]()
+
+![LLM Configuration](dw_llm_config.png)
+
 3. Click on the `Add New LLM` button
 
 - If you are using OpenAI then pick the following values - 
@@ -111,7 +112,8 @@ Temperature: 0.0
 Frequency Penalty: 0
 Presence Penalty: 0
 ```
-![TODO]()
+
+![OpenAI LLM Configuration](dw_llm_config_2.png)
 
 - If you are using Bedrock then pick the following values - 
 ```
@@ -129,14 +131,29 @@ Temperature: 0.0
 #### Step 4.1.2. Create RAG Application
 - Click on `RAG Applications` in the main menu
 - Click the `Create RAG app` button to start the process of creating a RAG app
+
+![Create RAG App](dw_rag_app_1.png)
+
 - In RAG App Name provide the following value - `Leafy_Portal_Polciies`
 - Pick the LLM you configured in the previous step 
 - Click `Next`
-- On the next screen pick `Ingest new dataset` and press `Continue`
+
+![Create RAG App - 2](dw_rag_app_2.png)
+
+- On the next screen pick `Ingest new dataset` and press `Continue` 
+
+![Create RAG App - 3](dw_rag_app_3.png)
+
 - On the next screen ensure File Type is PDF and in Datastorage choose `Upload from your computer`
+
+![Create RAG App - 4](dw_rag_app_4.png)
+
 - Click on `Choose Files` and locate the file `LeafyCorpPolicy.pdf` in the `resources` folder where you cloned this repo
 - Click `Upload` and then once the upload is complete click `Save`
 - You can now click `Next` until the wizard completes with `Review And Submit`.
+
+![Create RAG App - 5](dw_rag_app_5.png)
+
 - Once the wizard is successful, it will add an entry to the RAG Applications table for the Leafy_Portal_Policies RAG Applications. Give it a few minutes to complete ingesting, chunking, vectorizing and creating the App. When all sections say `View Details` you can click on the document search icon under `Actions`
 - In the search page try asking a question like - `Do you ship internationally?`. You should see an answer to the question coming from the policy document we uploaded.
 - Try another question - `What is the returns process?`
@@ -148,7 +165,13 @@ Congratulations! You have created a RAG application for Store policies.
 Now that we have our RAG Application, lets wrap it in a Tool so it is available for Agents to use. To do this follow these steps - 
 - Click on `AI Agents` in the top menu
 - On the right side you will see the list of tools. Click on `Create Tool`
+
+![Create AI App Tool](dw_agent_1.png)
+
 - From the list of options select `AI app`
+
+![Create AI App Tool](dw_agent_2.png)
+
 - From the UI that appears enter the following - 
 ```
 Tool name: GetLeafyPortalPolicyDetails
