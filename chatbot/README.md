@@ -229,8 +229,11 @@ Password: agenticragmadeeasy
 - Test Connection - your connection must be successful to proceed
 - Save
 
-In the list of MongoDB connections, you should now see the entry you just created. Copy the id with the button that is against the Storage name - we will need this in the next section.
+In the list of MongoDB connections, you should now see the entry you just created. 
 
+Copy the id with the button that is against the Storage name - we will need this in the next section.
+
+![Copy Config id](dw_agent_4a.png)
 
 ### Step 4.3.2. Create Tool to connect to MongoDB
 Dataworkz Agents are composed of Tools. In this step, we will create a MongoDB tool for our `orders` collection. This will allow our Agent access to our MongoDB data. Our MongoDB Tool returns an Order object (details of an order) for a specified orderId. Therefore, we will make orderId a parameter to the tool that will be passed to it during execution by the Agent. The Agent will extract the orderId from the user's question or the conversation history.
