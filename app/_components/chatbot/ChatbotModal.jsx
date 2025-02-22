@@ -17,7 +17,6 @@ const ChatbotModal = ({ isOpen, handleClose }) => {
     const [selected, setSelected] = useState(0)
     const allowChatbot = useSelector(state => state.Chatbot.allowChatbot)
 
-
     return (
         <Modal
             show={isOpen}

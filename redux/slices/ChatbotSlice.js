@@ -13,7 +13,7 @@ const ChatbotSlice = createSlice({
         isLoadingAnswer: false,
         initialLoad:false,
         messages: [],
-        allowChatbot: false, 
+        allowChatbot: process.env.NEXT_PUBLIC_CHATBOT_PASSWORD == undefined, 
         // {
         //     content: '' || <></>,
         //     contentType: 'text' || 'html',
