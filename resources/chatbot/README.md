@@ -119,7 +119,7 @@ For Dataworkz Agents, we currently support OpenAI gpt-4 and llama3-70b models. Y
 1. Click on `RAG Applications` in the main menu
 2. Click on `LLM Configurations` on the right side
 
-![LLM Configuration](dw_llm_config.png)
+![LLM Configuration](./media/dw_llm_config.png)
 
 3. Click on the `Add New LLM` button
 
@@ -136,7 +136,7 @@ Frequency Penalty: 0
 Presence Penalty: 0
 ```
 
-![OpenAI LLM Configuration](dw_llm_config_2.png)
+![OpenAI LLM Configuration](./media/dw_llm_config_2.png)
 
 - If you are using Bedrock then pick the following values - 
 ```
@@ -155,40 +155,40 @@ Temperature: 0.0
 - Click on `RAG Applications` in the main menu
 - Click the `Create RAG app` button to start the process of creating a RAG app
 
-![Create RAG App](dw_rag_app.png)
+![Create RAG App](./media/dw_rag_app.png)
 
 - In RAG App Name provide the following value - `Leafy_Portal_Policies`
 - Pick the LLM you configured in the previous step 
 - Click `Next`
 
-![Create RAG App - 2](dw_rag_app_1.png)
+![Create RAG App - 2](./media/dw_rag_app_1.png)
 
 - On the next screen pick `Ingest new dataset` and press `Continue` 
 
-![Create RAG App - 3](dw_rag_app_2.png)
+![Create RAG App - 3](./media/dw_rag_app_2.png)
 
 - On the next screen ensure File Type is PDF and in Datastorage choose `Upload from your computer`
 
-![Create RAG App - 4](dw_rag_app_3.png)
+![Create RAG App - 4](./media/dw_rag_app_3.png)
 
 - Click on `Choose Files` and locate the file `LeafyCorpPolicy.pdf` in the `resources` folder where you cloned this repo
 - Click `Upload` and then once the upload is complete click `Save`
 
-![Create RAG App - 5](dw_rag_app_4.png)
+![Create RAG App - 5](./media/dw_rag_app_4.png)
 
 - You can now click `Next`. The next page is the 'Chunk & Vectorize' page where you can change Embedding models and pick a different data processing flow. For now, you can use the defaults and choose `Next`. The next page configures the Retrieval pipeline which allows for a host of configuration on how retrieval should work. Again, for now, the defaults are good and you can click `Review & Submit` and then `Save`.
 
-![Create RAG App - 6](dw_rag_app_5.png)
+![Create RAG App - 6](./media/dw_rag_app_5.png)
 
 - Once the wizard is successful, it will add an entry to the RAG Applications table for the Leafy_Portal_Policies RAG Applications. Give it a few minutes to complete ingesting, chunking, vectorizing and creating the App. When the RAG App is ready, the search action will enable and all sections say `View Details`.
 
-![Create RAG App - 7](dw_rag_app_6.png)
+![Create RAG App - 7](./media/dw_rag_app_6.png)
 
 - You can click on the document search icon under `Actions`
 - In the search page try asking a question like - `When can an order be cancelled?`. You should see an answer to the question coming from the policy document we uploaded.
 - Try another question - `What is the returns process?`
 
-![Ask questions in RAG App](dw_rag_app_7.png)
+![Ask questions in RAG App](./media/dw_rag_app_7.png)
 
 Congratulations! You have created a RAG application for Store policies. 
 
@@ -198,11 +198,11 @@ Now that we have our RAG Application, lets wrap it in a Tool so it is available 
 - Click on `AI Agents` in the top menu
 - On the right side you will see the list of tools. Click on `Create Tool`
 
-![Create AI App Tool](dw_agent_1.png)
+![Create AI App Tool](./media/dw_agent_1.png)
 
 - From the list of options select `AI app`
 
-![Create AI App Tool - 1](dw_agent_1a.png)
+![Create AI App Tool - 1](./media/dw_agent_1a.png)
 
 - From the UI that appears enter the following - 
 ```
@@ -214,7 +214,7 @@ Examples: Pick the example questions you tried as examples - leave empty otherwi
 ```
 - Press Save
 
-![Create AI App Tool - 2](dw_agent_1b.png)
+![Create AI App Tool - 2](./media/dw_agent_1b.png)
 
 You have created the RAG Application as a tool for Agents to use!
 
@@ -224,11 +224,11 @@ We need to provide Agents access to the Mongo data. For this we are going to con
 ### Step 4.3.1. Setup MongoDB connection within Dataworkz
 - Head over to https://ragapps.dataworkz.com and login to your account. Click on the the gear icon on the top right (the tooltip says Configurations)
 
-![Create AI App Tool](dw_agent_2.png)
+![Create AI App Tool](./media/dw_agent_2.png)
 
 - Click on `Databases` and then on MongoDB. In this screen, we will add details to connect to the correct MongoDB cluster. 
 
-![Create Mongo Connection](dw_agent_3.png)
+![Create Mongo Connection](./media/dw_agent_3.png)
 
 - Select `Add New Configuration`. 
 
@@ -243,7 +243,7 @@ User name: dataworkz
 Password: agenticragmadeeasy
 ```
 
-![Create Mongo Connection](dw_agent_4.png)
+![Create Mongo Connection](./media/dw_agent_4.png)
 
 - Test Connection - your connection must be successful to proceed
 - Save
@@ -252,7 +252,7 @@ In the list of MongoDB connections, you should now see the entry you just create
 
 Copy the id with the button that is against the Storage name - we will need this in the next section.
 
-![Copy Config id](dw_agent_4a.png)
+![Copy Config id](./media/dw_agent_4a.png)
 
 ### Step 4.3.2. Create Tool to connect to MongoDB
 Dataworkz Agents are composed of Tools. In this step, we will create a MongoDB tool for our `orders` collection. This will allow our Agent access to our MongoDB data. Our MongoDB Tool returns an Order object (details of an order) for a specified orderId. Therefore, we will make orderId a parameter to the tool that will be passed to it during execution by the Agent. The Agent will extract the orderId from the user's question or the conversation history.
@@ -357,7 +357,7 @@ Description: the order id of the order the user is interested in
 }
 ``` 
 
-![Create Mongo Tool](dw_agent_5.png)
+![Create Mongo Tool](./media/dw_agent_5.png)
 
 - Save
 
@@ -375,19 +375,19 @@ Users should be able to do the following -
 
 ```
 
-![Create Agent](dw_agent_6.png)
+![Create Agent](./media/dw_agent_6.png)
 
 - Click on `Create`. The Agent Builder will take a few moments to process and analyze this input. Once it is done you will see the Agent specification that describes the behaviour of the agent. You should see 2 scenarios (your specific scenarios may be named differently from the example here because the Agent Builder generates different text in each run) - one that is an `FAQ` (or similar) and one that is `OrderOperations` (or similar). Other scenarios generated are common to all Agents.
 
-![Create Agent](dw_agent_7.png)
+![Create Agent](./media/dw_agent_7.png)
 
 - Click on the `FAQ` scenario in the left section - it should expand. Under Tool References you might see a suggestion to include the `GetLeafyPortalPolicyDetails` AI App tool we created in the previous section. Select `Add`. If you do not see it then you can click on `View all tools` and locate `GetLeafyPortalPolicyDetails` and click on `Use tool` next to it. After this you should see `GetLeafyPortalPolicyDetails` under Tool References
 
-![Create Agent](dw_agent_7a.png)
+![Create Agent](./media/dw_agent_7a.png)
 
 - Click on the `OrderOperations` scenario in the left section - it should expand. You might see the tool `GetLeafyPortalOrder` suggested. If so, add it. If not, click on `View all tools` and add `GetLeafyPortalOrder` to this scenario. We also want to add the `GetLeafyPortalPolicyDetails` tool this scenario so it has access to the store policies. Repeat the steps of clicking on `View all tools` and locating `GetLeafyPortalPolicyDetails` and clicking on `Use this tool` to add it to this scenario.
 
-![Create Agent](dw_agent_7b.png)
+![Create Agent](./media/dw_agent_7b.png)
 
 - Let's do one more step to make the result of the chatbot a little better. Click on the `OrderOperations` scenario and click on Instructions (not Planning Instructions). Replace the contents with these - 
 ```
@@ -395,7 +395,7 @@ If the user requests full order details then ONLY in that case you MUST respond 
 ```
 - Click anywhere outside the field to accept the changes
 
-![Create Agent](dw_agent_8.png)
+![Create Agent](./media/dw_agent_8.png)
 
 - Click on the `Test` tab on the right section of the page. In the chat box type `What can you do?` - you should see help text about the assistant itself. You can also type `Can you provide details for order 675754fce4caed6fae71f003?` and you should see order details for that order. Something like - 
 ```
@@ -408,7 +408,7 @@ Products:
 ```
 Note that the output format matches the instruction we gave the agent earlier.
 
-![Test Agent](dw_agent_9.png)
+![Test Agent](./media/dw_agent_9.png)
 
 
 Congratulations! You have successfully created a Dataworkz Agent and connected it to a RAG Application and the MongoDB data.
@@ -423,7 +423,7 @@ Let's create an API Token to access Dataworkz.
 - Click on `API Key` and then click on the `Add new API key` button
 - Fill in a recognizable name and copy the api key and save it some place secure. You will not be shown the key again.
 
-![Dataworkz API Key](dw_api_key_1.png)
+![Dataworkz API Key](./media/dw_api_key_1.png)
 
 
 ### Step 5.2. Filling in the .env.local file
@@ -431,13 +431,13 @@ Now we have completed all steps so let's fill in the blank values in our `.env.l
 We will need the following values - 
 1. Agent Id: Click on `AI Agents` in the main menu. Locate your agent in the and hover over the card and select 'Edit'. You can copy the agent id from underneath the name
 
-![Agent Id](dw_ids_1.png)
-![Agent Id](dw_ids_2.png)
+![Agent Id](./media/dw_ids_1.png)
+![Agent Id](./media/dw_ids_2.png)
 
 2. LLM Id: Click on `RAG Applications` from the main menu. Click on `LLM Configurations` and locate your LLM in the list and copy the id from the button next to the LLM name
 
-![LLM Configuration](dw_llm_config.png)
-![LLM Id](dw_ids_3.png)
+![LLM Configuration](./media/dw_llm_config.png)
+![LLM Id](./media/dw_ids_3.png)
 
 3. API Token: The api token created in Step 5.1
 
