@@ -83,13 +83,13 @@ Comming soon!
 ## Authors & Contributors
 
 ### Lead Authors   
-Prashant Juttukonda - Principal
+[Prashant Juttukonda](https://www.mongodb.com/blog/authors/prashant-juttukonda) - Principal
 
-Rodrigo Leal - Principal
+[Rodrigo Leal](https://www.mongodb.com/blog/authors/rodrigo-leal) - Principal
 
-Genevieve Broadhead - Global lead, retail solutions
+[Genevieve Broadhead](https://www.mongodb.com/blog/authors/genevieve-broadhead) - Global lead, retail solutions
 
-[Angie Guemes](https://www.linkedin.com/in/angelica-guemes-estrada/) – Developer & Maintainer 
+[Angie Guemes](https://www.mongodb.com/developer/author/angie-guemes-estrada/) – Developer & Maintainer 
 
 Florencia Arin – Developer & Maintainer 
 
