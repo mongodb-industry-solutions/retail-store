@@ -22,6 +22,8 @@ import { addOrderStatusHistory, fetchOrderDetails } from '@/lib/api';
 import { setLoading, setOrder } from '@/redux/slices/OrderSlice';
 import { shippingMethods } from '@/lib/constants';
 import ShippingMethodBadgeComp from '@/app/_components/shippingMethodBadgeComp/ShippingMethodBadgeComp';
+import { checkoutPage, orderDetailsPage } from '@/lib/talkTrack';
+import TalkTrackContainer from '@/app/_components/talkTrackContainer/talkTrackContainer';
 
 export default function OrderDetailsPage({ params }) {
     const dispatch = useDispatch();
@@ -78,7 +80,7 @@ export default function OrderDetailsPage({ params }) {
         if (sseConnection.current) {
             console.log(sseConnection.current)
             sseConnection.current.close();
-            console.log("-- Previous SSE connection closed - dashboard sessionId.", sessionId );
+            console.log("-- Previous SSE connection closed - dashboard sessionId.", sessionId);
         }
 
         sseConnection.current = eventSource;
@@ -102,7 +104,7 @@ export default function OrderDetailsPage({ params }) {
     }, [orderId]);
 
     useEffect(() => {
-        if(orderDetails._id !== orderId)
+        if (orderDetails._id !== orderId)
             return
         console.log('myStepperRef 1', myStepperRef.current, document.getElementById('myStepperRef'))
         sseConnection?.current?.close();
@@ -136,8 +138,11 @@ export default function OrderDetailsPage({ params }) {
         <>
             <Navbar />
             <Container className=''>
-                <div className='d-flex align-items-end'>
-                    <H1 onClick={() => console.log(orderDetails)}>Order details</H1>
+                <div className='d-flex flex-row'>
+                    <div className='d-flex align-items-end w-100'>
+                        <H1 onClick={() => console.log(orderDetails)}>Order details</H1>
+                    </div>
+                    <TalkTrackContainer sections={orderDetailsPage} />
                 </div>
                 <div className='mt-3'>
                     <H3 className="mb-2">Summary</H3>

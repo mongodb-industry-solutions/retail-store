@@ -1,14 +1,9 @@
 "use client";
-
 import styles from "./banner.module.css";
 import "../../fonts.css";
 import Image from "next/image";
-
-import { H1, H2, H3, Subtitle, Body, InlineCode, InlineKeyCode, Disclaimer, Overline } from '@leafygreen-ui/typography';
+import { H1, Body } from '@leafygreen-ui/typography';
 import Button from "@leafygreen-ui/button";
-
-
-
 
 const Banner = () => {
 
@@ -16,12 +11,6 @@ const Banner = () => {
         <div className={styles.bannerContainer}>
 
             <div className={styles.bannerText}>
-
-                <div className={styles.bannerTag}>
-                    <InlineKeyCode className={styles.tag}>SALE</InlineKeyCode >
-
-                    <Body className={styles.tagline}>Up to 15% off, only this week!</Body>
-                </div>
 
                 <H1 className={styles.title}>Welcome to the Pop-Up Store!</H1>
 
@@ -47,8 +36,7 @@ const Banner = () => {
                 />
             </div>
         </div>
-    );
-};
-
+    )
+}
 
 export default Banner;

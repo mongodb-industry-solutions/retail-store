@@ -23,6 +23,8 @@ import Modal from '@leafygreen-ui/modal';
 import { clearOrder } from '@/redux/slices/OrderSlice';
 import { setCartProductsList, setCartLoading, clearCartProductsList } from '@/redux/slices/UserSlice';
 import { handleCreateNewOrder } from '@/lib/helpers';
+import TalkTrackContainer from '../_components/talkTrackContainer/talkTrackContainer';
+import { checkoutPage } from '@/lib/talkTrack';
 
 export default function Page() {
     const router = useRouter();
@@ -38,14 +40,14 @@ export default function Page() {
     const onConfirmOrder = async () => {
         setProcessingNewOrder(true)
         let order = await createNewOrder(
-            selectedUser._id, 
+            selectedUser._id,
             selectedUser.address,
-            cart.products, 
-            shippingMethod, 
+            cart.products,
+            shippingMethod,
             selectedStoreLocation,
         )
         setProcessingNewOrder(false)
-        if(order){
+        if (order) {
             // set selected order to null
             dispatch(clearOrder())
             // set redux cart to 0 products
@@ -97,18 +99,21 @@ export default function Page() {
                 console.log(`Error fetching cart ${err}`)
             }
         }
-        
+
         getStoreLocations();
 
-      return () => {}
+        return () => { }
     }, [])
 
     return (
         <>
             <Navbar></Navbar>
             <Container className=''>
-                <div className='d-flex align-items-end'>
-                    <H1>Checkout</H1>
+                <div className='d-flex flex-row'>
+                    <div className='d-flex align-items-end w-100'>
+                        <H1>Checkout</H1>
+                    </div>
+                    <TalkTrackContainer sections={checkoutPage} />
                 </div>
                 <Modal
                     open={processingNewOrder}
@@ -127,73 +132,73 @@ export default function Page() {
                             <CardSkeleton />
                         </div>
                         : cart.products?.length < 1
-                        ? <div>
-                            Fill cart randomly 
-                            {/* TODO backend part to add random items to cart */}
-                        </div>
-                        : <div className='mt-3'>
-                            <H3 className="mb-2">Payment details</H3>
-                            <Card className={styles.cardInfo}>
-                                <Body><strong>Order: </strong>${cart.totalPrice}</Body>
-                                <Body><strong>Shipping: </strong>$0</Body>
-                                <Body><strong>Total: </strong>${cart.totalPrice}</Body>
-                            </Card>
-
-                            <H3 className="mb-2 mt-3">Products</H3>
-                            <Card className={styles.cardInfo}>
-                                <Body><strong>Amount: </strong>{cart.totalAmount} items in cart <Icon onClick={() => setProductDetailsOpened(true)} className="cursorPointer" glyph="Visibility" /></Body>
-                            </Card>
-
-                            <H3 className="mb-2 mt-3">Shipping address</H3>
-                            <Card className={styles.cardInfo}>
-                                <RadioBoxGroup 
-                                    onChange={(e) => onShippingMethodChange(e)} 
-                                    className="radio-box-group-style mb-3"
-                                >
-                                    {
-                                        Object.keys(shippingMethods).map((methodKey, index) => (
-                                            <RadioBox 
-                                                key={methodKey}
-                                                checked={index == 0} 
-                                                value={methodKey}
-                                            >
-                                                {shippingMethods[methodKey].label}
-                                            </RadioBox>
-
-                                        ))
-                                    }
-                                </RadioBoxGroup>
-                                {
-                                    shippingMethod.id === shippingMethods.home.id // home
-                                    ? <HomeAddressComp 
-                                        address={selectedUser.address} 
-                                        containerStyle={styles.cardInfo}
-                                    />
-                                    :  shippingMethod.id === shippingMethods.bopis.id // bopis
-                                    ? <BopisComp 
-                                        containerStyle={styles.cardInfo} 
-                                        storeLocations={storeLocations} 
-                                        setSelectedStoreLocation={onStoreSelect}
-                                    />
-                                    : 'Unrecognized shipping method, please select another option'
-                                }
-                            </Card>
-
-                            <div className='d-flex flex-row-reverse mt-3'>
-                                <Button
-                                    variant='primary'
-                                    disabled={cart.products?.length === 0 || (shippingMethod.id === shippingMethods.bopis && selectedStoreLocation === null )}
-                                    onClick={() => onConfirmOrder()}
-                                >
-                                    Confirm & order
-                                </Button>
+                            ? <div>
+                                Fill cart randomly
+                                {/* TODO backend part to add random items to cart */}
                             </div>
-                        </div>
+                            : <div className='mt-3'>
+                                <H3 className="mb-2">Payment details</H3>
+                                <Card className={styles.cardInfo}>
+                                    <Body><strong>Order: </strong>${cart.totalPrice}</Body>
+                                    <Body><strong>Shipping: </strong>$0</Body>
+                                    <Body><strong>Total: </strong>${cart.totalPrice}</Body>
+                                </Card>
+
+                                <H3 className="mb-2 mt-3">Products</H3>
+                                <Card className={styles.cardInfo}>
+                                    <Body><strong>Amount: </strong>{cart.totalAmount} items in cart <Icon onClick={() => setProductDetailsOpened(true)} className="cursorPointer" glyph="Visibility" /></Body>
+                                </Card>
+
+                                <H3 className="mb-2 mt-3">Shipping address</H3>
+                                <Card className={styles.cardInfo}>
+                                    <RadioBoxGroup
+                                        onChange={(e) => onShippingMethodChange(e)}
+                                        className="radio-box-group-style mb-3"
+                                    >
+                                        {
+                                            Object.keys(shippingMethods).map((methodKey, index) => (
+                                                <RadioBox
+                                                    key={methodKey}
+                                                    checked={index == 0}
+                                                    value={methodKey}
+                                                >
+                                                    {shippingMethods[methodKey].label}
+                                                </RadioBox>
+
+                                            ))
+                                        }
+                                    </RadioBoxGroup>
+                                    {
+                                        shippingMethod.id === shippingMethods.home.id // home
+                                            ? <HomeAddressComp
+                                                address={selectedUser.address}
+                                                containerStyle={styles.cardInfo}
+                                            />
+                                            : shippingMethod.id === shippingMethods.bopis.id // bopis
+                                                ? <BopisComp
+                                                    containerStyle={styles.cardInfo}
+                                                    storeLocations={storeLocations}
+                                                    setSelectedStoreLocation={onStoreSelect}
+                                                />
+                                                : 'Unrecognized shipping method, please select another option'
+                                    }
+                                </Card>
+
+                                <div className='d-flex flex-row-reverse mt-3'>
+                                    <Button
+                                        variant='primary'
+                                        disabled={cart.products?.length === 0 || (shippingMethod.id === shippingMethods.bopis && selectedStoreLocation === null)}
+                                        onClick={() => onConfirmOrder()}
+                                    >
+                                        Confirm & order
+                                    </Button>
+                                </div>
+                            </div>
                 }
             </Container>
             <Footer></Footer>
-            <ProductsModalComp  
-                open={productDetailsOpened} 
+            <ProductsModalComp
+                open={productDetailsOpened}
                 handleClose={() => setProductDetailsOpened(false)}
                 products={cart.products}
             />

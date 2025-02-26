@@ -19,24 +19,18 @@ const ArchitectureComp = () => {
                     height={60} // Arbitrary height to set the aspect ratio
                 />
             </div>
-            <H3>Why MongoDB Atlas and Dataworkz?
-            </H3>
+            <H3 className={'mt-1'}>What is an Agent?</H3>
             <div>
-            <a href='https://www.mongodb.com/products/platform/atlas-database' target='_blank'>MongoDB Atlas</a> and <a href='https://www.dataworkz.com/' target='_blank'>Dataworkz</a> work together to deliver Agentic RAG-as-a-Service for a smarter, more responsive customer experience. Here’s a quick breakdown of how:
-            <ul>
-                <li>
-                    <strong>Vector Embeddings and Smart Search:</strong> MongoDB Atlas can turn words, phrases, or even customer behaviors into vector embeddings—essentially numbers that capture their meaning in a way that’s easy for AI to understand. This makes it possible to search for content based on meaning rather than exact wording, so search results are more accurate and relevant.
-                </li>
-                <li>
-                    <strong>Scalable, Reliable Performance:</strong> Atlas’ cloud-based, distributed setup is built to handle high-traffic retail environments, meaning no disruptions during peak shopping times.
-                </li>
-                <li>
-                    <strong>Deep Context with Dataworkz’s Agentic RAG-as-a-Service: </strong>Create agentic workflows powered by RAG pipelines that combine lexical & semantic search with Knowledge Graphs to fetch the most relevant data from unstructured, operational and analytical data sources before generating AI responses.
-                </li>
-
-            </ul>
-            This combo gives ecommerce brands the power to personalize experiences at a scale that’s never been possible before.
-            </div>            
+                An agent is an artificial computational entity with an awareness of its environment and associated data within the context. These agents can be used to interact in the case of ecommerce or perform a portion of complex tasks as needed.
+            </div>
+            <H3 className={'mt-1'}>RAG</H3>
+            <div>
+                Retrieval Augmented Generation is an architecture used to augment large language models (LLMs) with proprietary data so that they can generate more accurate and context-aware responses, while also reducing hallucinations.
+            </div>
+            <H3 className={'mt-1'}>Agentic RAG</H3>
+            <div>
+                Agentic RAG takes Conventional RAG a step further by introducing an AI agent-based implementation of RAG. In this model, different tools and functions can be accessed by the agent, enabling it to go beyond information retrieval and generation – it allows it to plan. Agents can determine if they need to retrieve specific information or not, which tool to use for the retrieval, and formulate queries. These capabilities are crucial as it enables the agent to pull information from multiple data sources, handling complex queries that require more than one source to formulate the response.
+            </div>
         </div>
     );
 };

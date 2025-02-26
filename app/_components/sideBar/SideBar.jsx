@@ -9,11 +9,6 @@ import {
   Body
 } from "@leafygreen-ui/typography";
 import Checkbox from "@leafygreen-ui/checkbox";
-import Toggle from "@leafygreen-ui/toggle";
-import { Label } from '@leafygreen-ui/typography';
-import { InfoSprinkle } from '@leafygreen-ui/info-sprinkle';
-import Button from "@leafygreen-ui/button";
-
 
 function Sidebar({ filters, onFilterChange }) {
   const [selectedBrands, setSelectedBrands] = useState([]);
@@ -80,27 +75,7 @@ function Sidebar({ filters, onFilterChange }) {
 
   return (
     <div className={styles.filterContainer}>
-
-      <div className={styles.openStoreSection}>
-
-        <div className={styles.openStore}>
-
-          <Subtitle className={styles.subtitle}>Open Store</Subtitle>
-          <InfoSprinkle className={styles.infoSprinkle}>Simulate sale events and get predicted prices fo each item in the store</InfoSprinkle>
-        </div>
-
-        <Toggle
-
-          checked={isScriptRunning}
-          onChange={toggleScript}
-          aria-label="Script toggle"
-          className={styles.toggle}
-        />
-      </div>
-      <hr className={styles.hr}></hr>
-
       <Subtitle>Filters</Subtitle>
-
       <>
         <div className={styles.brand}>
           <Body className={styles.filterTitle}>Brand</Body>
@@ -139,10 +114,6 @@ function Sidebar({ filters, onFilterChange }) {
           </div>
         </div>
       </>
-
-
-
-
     </div>
   );
 }
