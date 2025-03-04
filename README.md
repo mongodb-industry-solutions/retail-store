@@ -28,9 +28,16 @@ This README will guide you through the steps and prerequisites needed to replica
 
 ## Overview
 
-Customers have higher expectations than ever before, they expect seamless shopping experiences. To meet these evolving needs, retailers must work with modern flexible technologies that are able to scale and update as their requirements do. This demo includes key features that reflect the needs of a contemporary retail environment, such as AI-powered agentic chatbot, omnichannel ordering, and more. The demo integrates various technologies and services that work together to create a seamless shopping experience. MongoDB’s flexible, scalable, and performance-oriented data model supports the backend infrastructure.
+In today's retail landscape, customers expect not just products, but exceptional service experiences. It's more important than ever for brands to connect with customers in meaningful, personalized ways - providing relevant recommendations, instant support, and unique experiences that feel tailored just for them.
 
-In this demo, users will be able to explore how MongoDB optimizes data management and enhances system performance in a retail environment, while also facilitating the integration of AI technologies and systems—such as Dataworkz on the agentic RAG chatbot feature—by storing complex, rich data structures that merge operational and AI data. The solution serves as a practical guide for developers interested in implementing similar architectures in the retail industry, showing how MongoDB canbe leveraged to solve common challenges faced in modern e-commerce applications.
+Modern retail customers expect:
+- **Immediate responses** to support queries 24/7
+- **Contextual understanding** of their purchase history and preferences
+- **Consistent information** across all touchpoints
+- **Intelligent assistance** that understands complex questions
+- **Personalized recommendations** based on their unique needs
+
+This repository contains demos highlighting key features of a contemporary retail environment, with special focus on how MongoDB optimizes data management and enhances system performance as well as its easiness to integrate with AI-powered technologies such as the Agentic RAG chatbot integration.
 
 ## Prerequisites
 
@@ -46,7 +53,14 @@ Depending on the feature or features you wish to run you might need additional i
 
 ### Agentic RAG Chatbot (with Dataworkz)
 
-Today’s shoppers want quick, accurate answers. With this microservice the retailer can support customers at any point in time through an Agentic RAG chatbot. This Agent is context aware of the business policies as well as the user’s order history and preferences, delivering the customer with the answers they need without waiting on hold or navigating complex menus.
+MongoDB's flexible document model provides the ideal foundation, storing rich operational data that seamlessly connects with [Dataworkz's](https://dataworkz.com) Agentic RAG capabilities, demonstrating how modern retail environments can deliver superior customer experiences through intelligent data orchestration.
+
+This showcase features an Agentic RAG chatbot that intelligently navigates between operational data and support documentation to deliver comprehensive customer assistance. The solution leverages Dataworkz's Agentic RAG platform to dynamically:
+
+- Access real-time order, inventory, and customer data from MongoDB's operational database
+- Reference policies and procedures from support documentation
+- Intelligently determine which data sources to query based on the specific customer question
+- Synthesize information from multiple sources when needed for complete answers
 
 See the full step by step [README](.//resources/chatbot/README.md) to run this microservice from your own environment in the demo.
 
