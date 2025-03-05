@@ -11,6 +11,8 @@ import Navbar from "../_components/navbar/Navbar";
 import OrderItemCard from '../_components/orderItemCard/OrderItemCard';
 import { CardSkeleton } from '@leafygreen-ui/skeleton-loader';
 import { handleChangeInOrders, handleCreateNewOrder } from '@/lib/helpers';
+import TalkTrackContainer from '../_components/talkTrackContainer/talkTrackContainer';
+import { ordersPage } from '@/lib/talkTrack';
 
 export default function Page() {
     const sseConnection = useRef(null);
@@ -35,9 +37,9 @@ export default function Page() {
             const data = JSON.parse(event.data);
             console.log('Received SSE Update:', data);
             const orderId = data.documentKey._id
-            if(data.operationType === 'update')
+            if (data.operationType === 'update')
                 handleChangeInOrders(orderId, data.fullDocument)
-            else if(data.operationType === 'insert')
+            else if (data.operationType === 'insert')
                 handleCreateNewOrder(data.fullDocument)
         }
 
@@ -85,9 +87,13 @@ export default function Page() {
         <>
             <Navbar></Navbar>
             <Container className=''>
-                <div className='d-flex align-items-end'>
-                    <H1>My orders</H1>
+                <div className='d-flex flex-row'>
+                    <div className='d-flex align-items-end w-100'>
+                        <H1>My orders</H1>
+                    </div>
+                    <TalkTrackContainer sections={ordersPage}/>
                 </div>
+
                 <div className='mt-3 mb-2' >
                     {
                         orders.loading === true

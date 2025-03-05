@@ -10,6 +10,9 @@ import styles from "./loginComp.module.css";
 import UserComp from '../user/UserComp';
 import { fetchUserData, setLoadingUsersList, setUsersList } from '@/redux/slices/UserSlice';
 import { fetchUsers } from '@/lib/api';
+import Banner from '@leafygreen-ui/banner';
+import WizardIcon from '@leafygreen-ui/icon/dist/Wizard';
+
 
 const LoginComp = () => {
     const dispatch = useDispatch();
@@ -98,6 +101,9 @@ const LoginComp = () => {
                             : 'No users found, please reload'
                         }
                     </div>
+                    <Banner variant='info' className='mb-2'>
+                        Look out for <WizardIcon></WizardIcon> to find out more about what is going on behind the scenes!
+                    </Banner>
                     <Description className={`${styles.descriptionModal} mb-3`}>
                         Note: Each user has pre-loaded data, such as past orders and items in their cart, with content unique to them. This variation is designed to showcase different scenarios, providing a more dynamic and realistic user experience for the demo.
                     </Description>

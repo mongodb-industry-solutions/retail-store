@@ -20,7 +20,6 @@ const Profile = () => {
 
     return (
         <div id="Profile" className={styles.profileContainer}>
-
             <LeafyGreenProvider onClick={toggleProfile}>
                 <IconButton className={styles.profileIcon} onClick={toggleProfile} aria-label="Toggle Profile">
                     <Icon glyph="Person" />
@@ -56,7 +55,7 @@ const Profile = () => {
                 </div>
             )}
         </div>
-    );
-};
+    )
+}
 
 export default Profile;
