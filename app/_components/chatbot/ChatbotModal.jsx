@@ -72,10 +72,15 @@ const ChatbotModal = ({ isOpen, handleClose }) => {
                                         can use this <Image width={35} height={25} alt="Chat Tooltip" src="/rsc/images/chatbotTooltip.png" /> insight to show the complete answer from the agent.
                                     </li>
                                     <li>
-                                        Example of conversation you could do
+                                        Feel free to ask anything you want, however if you are looking for inspiration here are some conversation questions you could do:
+                                        <ul className='text-secondary'>
+                                            <li>What can you do for me?</li>
+                                            <li>Products inside order 1</li>
+                                            <li>Can I still cancel that order?</li>
+                                            <li>Can I order online and pickup in store?</li>
+                                        </ul>
                                     </li>
                                 </ol>
-
                                 <p><strong>Note: </strong> If you wish to see what the PDF contains to tailor any question you can see it inside the <a href='https://github.com/mongodb-industry-solutions/retail-store-v2/blob/main/resources/LeafyCorpPolicy.pdf' target='_blank'>Github repository of the demo</a></p>
                             </div>
                         </div>

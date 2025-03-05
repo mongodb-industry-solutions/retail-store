@@ -23,6 +23,7 @@
 
 .modalH3 {
   margin-top: 20px;
+  margin-bottom: 10px;
   text-align: left;
 }
 
@@ -32,6 +33,15 @@
   max-width: 550px;
   margin: 0 auto;
   border-radius: 8px;
+}
+
+.htmlRender p{
+  font-size: 13px;
+}
+
+.htmlRender mark {
+  background-color: rgb(216, 214, 214);
+  color: black;
 }
 
 @media (max-width: 768px) {
