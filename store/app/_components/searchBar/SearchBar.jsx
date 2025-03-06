@@ -18,7 +18,6 @@ const SearchBar = () => {
     const searchType = useSelector(state => state.Products.searchType)
     const query = useSelector(state => state.Products.query)
     const filters = useSelector(state => state.Products.filters)
-    const searchIsLoading = useSelector(state => state.Products.searchIsLoading)
     
     const onSearchSubmit = async () => {
         let response;
@@ -29,7 +28,12 @@ const SearchBar = () => {
         else if (searchType === SEARCH_TYPES.vectorSearch)
             response = await getProductsWithVectorSearch(query, filters)
         if(response){
-            dispatch(setProducts(response))
+            dispatch(
+                setProducts({
+                    products: response.products, 
+                    totalItems: response.totalItems
+                }
+            ))
         }
     }
     const setSearchQuery = (searchQuery) => {

@@ -3,3 +3,5 @@ export const SEARCH_TYPES={
     atlasSearch : "Atlas Search",
     vectorSearch: "Atlas Vector Search"
 }
+
+export const PAGINATION_PER_PAGE = 20
