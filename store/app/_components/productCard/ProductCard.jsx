@@ -71,7 +71,7 @@ const ProductCard = (props) => {
   return (
     <div className={styles.productContainer}>
       <LeafyGreenProvider>
-        <Card className={styles.card} 
+        <Card className={styles.card}
           onClick={() => setOpen((o) => !o)}>
           <div className={styles.scoreContainer}>
             {
@@ -83,7 +83,14 @@ const ProductCard = (props) => {
             }
           </div>
           <div className={styles.productInfo}>
-            <img src={photo} alt={name} width={200} height={200}></img>
+            <Image
+              src={photo}
+              alt={name}
+              width={200}
+              height={200}
+              quality={50}
+              unoptimized
+            />
             <Label className={styles.productName}>{name}</Label>
             <Description>{brand}</Description>
             {brand === "MongoDB" && (

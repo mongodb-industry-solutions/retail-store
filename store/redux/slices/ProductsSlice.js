@@ -6,6 +6,8 @@ const ProductsSlice = createSlice({
     name: "Products",
     initialState: {
         products: {}, // {id: {...}, id: {...}, ...}
+        totalItems: 0,
+        pagination_page: 0,
         query: '', 
         filters: {}, // {selectedBrands: {String, String...}, selectedCategories: {String, String...} }
         searchType: SEARCH_TYPES.atlasSearch,
@@ -39,7 +41,8 @@ const ProductsSlice = createSlice({
         setProducts: (state, action) => {
             return {
                 ...state,
-                products: {...action.payload},
+                products: {...action.payload.products},
+                totalItems: action.payload.totalItems,
                 searchIsLoading: false,
                 error: null,
 
@@ -68,7 +71,12 @@ const ProductsSlice = createSlice({
 
             }
         },
-        //setOpenedProductDetails
+        setCurrentPage: (state, action) => {
+            return {
+                ...state,
+                pagination_page: action.payload
+            }
+        },
     }
 })
 
@@ -80,7 +88,8 @@ export const {
     setInitialLoad,
     setFilters,
     setQuery,
-    updateProductPrice
+    updateProductPrice,
+    setCurrentPage
 } = ProductsSlice.actions
 
 export default ProductsSlice.reducer
