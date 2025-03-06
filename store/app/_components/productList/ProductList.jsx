@@ -6,25 +6,23 @@ import ProductCard from "../productCard/ProductCard";
 import styles from "./productList.module.css";
 import Pagination from "@leafygreen-ui/pagination";
 import ProductListLoading from "./ProductListLoading";
-import { setInitialLoad, setLoading, setProducts, updateProductPrice } from "../../../redux/slices/ProductsSlice";
+import { setCurrentPage, setInitialLoad, setLoading, setProducts, updateProductPrice } from "../../../redux/slices/ProductsSlice";
 import { getProductsWithSearch, getProductsWithVectorSearch } from "../../_lib/api";
-import { SEARCH_TYPES } from "../../_lib/constants";
+import { PAGINATION_PER_PAGE, SEARCH_TYPES } from "../../_lib/constants";
 
-const itemsPerPage = 20;
+const itemsPerPage = PAGINATION_PER_PAGE;
 
 const ProductList = () => {
   const dispatch = useDispatch();
   const products = useSelector(state => state.Products.products)
+  const totalItems = useSelector(state => state.Products.totalItems)
+  const currentPage = useSelector(state => state.Products.pagination_page)
   const searchIsLoading = useSelector(state => state.Products.searchIsLoading)
   const initialLoad = useSelector(state => state.Products.initialLoad)
   const filters = useSelector(state => state.Products.filters)
   const query = useSelector(state => state.Products.query)
   const searchType = useSelector(state => state.Products.searchType)
   const [sseConnection, setSSEConnection] = useState(null);
-  const [filteredProducts, setFilteredProducts] = useState({});
-  const [currentPage, setCurrentPage] = useState(1);
-  const [firstIndex, setFirstIndex] = useState(0);
-  const [lastIndex, setLastIndex] = useState(itemsPerPage - 1);
 
   const listenToSSEUpdates = useCallback(() => {
     console.log('listenToSSEUpdates func')
@@ -58,6 +56,30 @@ const ProductList = () => {
     return eventSource;
   }, []);
 
+  const getProducts = async () => {
+    console.log('- FILTERS CHANGED', filters)
+    try {
+      dispatch(setLoading(true))
+      let response;
+      dispatch(setLoading(true))
+      if(searchType === SEARCH_TYPES.atlasSearch)
+          response = await getProductsWithSearch(query, filters)
+      else if (searchType === SEARCH_TYPES.vectorSearch)
+          response = await getProductsWithVectorSearch(query, filters)
+      if(response){
+          console.log('getAllProducts result', Object.keys(response).length)
+          dispatch(
+            setProducts({
+                products: response.products, 
+                totalItems: response.totalItems
+            }
+          ))        
+        }
+    } catch (err) {
+        console.log(`Error getting all products, ${err}`)
+    }
+  }
+
   useEffect(() => {
     const getAllProducts = async () => {
       try {
@@ -79,64 +101,12 @@ const ProductList = () => {
   }, [initialLoad]);
 
   useEffect(() => {
-    const getProducts = async () => {
-      console.log('- FILTERS CHANGED', filters)
-      try {
-        dispatch(setLoading(true))
-        let response;
-        dispatch(setLoading(true))
-        if(searchType === SEARCH_TYPES.atlasSearch)
-            response = await getProductsWithSearch(query, filters)
-        else if (searchType === SEARCH_TYPES.vectorSearch)
-            response = await getProductsWithVectorSearch(query, filters)
-        if(response){
-            console.log('getAllProducts result', Object.keys(response).length)
-            dispatch(setProducts(response))
-        }
-      } catch (err) {
-          console.log(`Error getting all products, ${err}`)
-      }
-    }
     if(initialLoad === true )
       getProducts()
   }, [filters]);
   
-
-  // useEffect(() => {
-  //   const fetchProducts = async () => {
-  //     try {
-  //       const response = await axios.post("/api/getProducts", filters);
-  //       let transformedProducts = {};
-  //       console.log("/api/getProducts", response.data.products);
-  //       response.data.products.map(
-  //         (product) =>
-  //           (transformedProducts[product._id] = {
-  //             ...product,
-  //             _id: product._id,
-  //             id: product.id,
-  //             photo: product.image.url,
-  //             name: product.name,
-  //             brand: product.brand,
-  //             price: `${product.price.amount.toFixed(2)}`,
-  //             pred_price: `${product.pred_price.toFixed(2)}`,
-  //             items: product.items,
-  //           })
-  //       );
-  //       setFilteredProducts(transformedProducts);
-  //       setPaginationLength(Object.keys(transformedProducts).length);
-  //     } catch (error) {
-  //       console.error("There was a problem with your fetch operation:", error);
-  //     }
-  //   };
-
-  //   fetchProducts();
-  // }, [filters]);
-
   useEffect(() => {
-    let firstIndex = (currentPage - 1) * itemsPerPage
-    let lastIndex = firstIndex + itemsPerPage
-    setFirstIndex(firstIndex)
-    setLastIndex(lastIndex)
+    getProducts()
   }, [currentPage])
 
   useEffect(() => {
@@ -159,7 +129,6 @@ const ProductList = () => {
           searchIsLoading || !initialLoad
           ? <ProductListLoading/>
           : Object.values(products)
-            .slice(firstIndex, lastIndex)
             .map((product, index) => (
               <div key={index} onClick={() => console.log(product)}>
                 <ProductCard
@@ -179,12 +148,12 @@ const ProductList = () => {
       <br></br>
       <hr className={styles.hr}></hr>
       <Pagination
-        currentPage={currentPage}
+        currentPage={currentPage + 1}
         itemsPerPage={itemsPerPage}
         itemsPerPageOptions={[8, 16, itemsPerPage]}
-        numTotalItems={Object.keys(products).length}//paginationLength}
-        onForwardArrowClick={ () => setCurrentPage(currentPage + 1) }
-        onBackArrowClick={ () => setCurrentPage(currentPage - 1) }
+        numTotalItems={totalItems}
+        onForwardArrowClick={ () => dispatch(setCurrentPage(currentPage + 1)) }
+        onBackArrowClick={ () => dispatch(setCurrentPage(currentPage - 1)) }
       ></Pagination>
     </div>
   );

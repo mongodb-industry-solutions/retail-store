@@ -111,7 +111,7 @@ function Sidebar({ onFilterChange }) {
             {facets?.[0]?.facet?.brand?.buckets?.map((bucket) => (
               <Checkbox
                 key={bucket._id}
-                label={`${bucket._id} (${bucket.count})`}
+                label={`${bucket._id}`}//(${bucket.count})
                 checked={selectedBrands.includes(bucket._id)}
                 onChange={() => handleBrandChange(bucket._id)}
                 className={styles.checkbox}
@@ -129,7 +129,7 @@ function Sidebar({ onFilterChange }) {
             {facets?.[0]?.facet?.masterCategory?.buckets?.map((bucket) => (
               <Checkbox
                 key={bucket._id}
-                label={`${bucket._id} (${bucket.count})`}
+                label={`${bucket._id}`} //(${bucket.count})
                 checked={selectedCategories.includes(bucket._id)}
                 onChange={() => handleCategoryChange(bucket._id)}
                 className={styles.checkbox}

@@ -1,11 +1,13 @@
 import { NextResponse } from "next/server";
-import { connectToDatabase } from "../../_db/connect";
+import { clientPromise } from "@/app/_lib/mongodb";
+import { PAGINATION_PER_PAGE } from "@/app/_lib/constants";
 
 export async function POST(request) {
-    const { query, facets } = await request.json();
+    const { query, facets, pagination_page } = await request.json();
 
     try {
-        const db = await connectToDatabase();
+        const client = await clientPromise;
+        const db = client.db(process.env.DATABASE_NAME);
         const collection = db.collection("products");
 
         // Build the aggregation pipeline
@@ -27,7 +29,6 @@ export async function POST(request) {
         // Add facet filtering stages if facets are provided
         if (facets) {
             const { selectedBrands, selectedCategories } = facets;
-
             if (selectedBrands && selectedBrands.length > 0) {
                 pipeline.push({
                     $match: {
@@ -57,8 +58,17 @@ export async function POST(request) {
             }
         );
 
-        // Perform the aggregation query
-        const products = await collection.aggregate(pipeline).toArray();
+        // Query 1: Get total count of matching documents
+        const totalCount = await collection.aggregate(pipeline.concat([{ $count: "total" }])).toArray();
+        const totalItems = totalCount.length > 0 ? totalCount[0].total : 0;
+
+        console.log(pipeline)
+        // Query 2: Get paginated results
+        const products = await collection
+            .aggregate(pipeline)
+            .skip(PAGINATION_PER_PAGE * pagination_page)
+            .limit(PAGINATION_PER_PAGE)
+            .toArray();
 
         // Transform the array of products into an object with _id as the key
         const transformedProducts = products.reduce((acc, product) => {
@@ -78,7 +88,7 @@ export async function POST(request) {
         }, {});
 
         console.log('RESULTS LENGTH: ', products.length);
-        return NextResponse.json({ products: transformedProducts }, { status: 200 });
+        return NextResponse.json({ products: transformedProducts, totalItems: totalItems }, { status: 200 });
 
     } catch (error) {
         console.error(error);
