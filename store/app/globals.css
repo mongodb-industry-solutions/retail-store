@@ -2,3 +2,6 @@ html{
     font-family: "Euclid Circular A", "Akzidenz", Helvetica, Arial, sans-serif;
     padding-bottom: 100px;
 }
+body{
+    overflow: hidden;
+}
