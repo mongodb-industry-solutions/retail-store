@@ -69,7 +69,6 @@ const ProductCard = (props) => {
   const isAddToCartDisabled = !selectedOption; // Disable "Add to Cart" button if no radio button is selected
 
   return (
-    <div className={styles.productContainer}>
       <LeafyGreenProvider>
         <Card className={styles.card}
           onClick={() => setOpen((o) => !o)}>
@@ -93,14 +92,17 @@ const ProductCard = (props) => {
             />
             <Label className={styles.productName}>{name}</Label>
             <Description>{brand}</Description>
-            {brand === "MongoDB" && (
-              <PredPrice productId={id} initialPredPrice={pred_price} />
-            )}
           </div>
 
           <div className={styles.cardFooter}>
+            {brand === "MongoDB" && (
+              <PredPrice productId={id} initialPredPrice={pred_price} />
+            )}
             <div className={styles.subtitle}>
               <Subtitle>${price}</Subtitle>
+              <IconButton className={styles.cartAdd} aria-label="Add to Cart">
+              <Image src="/cart.png" alt="Cart" width={16} height={16}></Image>
+            </IconButton>
             </div>
 
             <div>
@@ -118,10 +120,8 @@ const ProductCard = (props) => {
 
                   <div className={styles.detailInfo}>
                     <Label className={styles.productName}>{name}</Label>
-                    <Description>{brand}</Description>
-
+                    <Description className="mb-1">{brand}</Description>
                     <Subtitle className={styles.price}>${price}</Subtitle>
-
                     {/*
                 
                 <Description>Select a Size:</Description>
@@ -180,14 +180,9 @@ const ProductCard = (props) => {
                 </div>
               </Modal>
             </div>
-
-            <IconButton className={styles.cartAdd} aria-label="Add to Cart">
-              <Image src="/cart.png" alt="Cart" width={16} height={16}></Image>
-            </IconButton>
           </div>
         </Card>
       </LeafyGreenProvider>
-    </div>
   );
 };
 
