@@ -1,3 +1,61 @@
+const dynamicPricingSection = {
+
+    heading: "Dynamic Pricing",
+    content: [
+        {
+            heading: 'Dynamic Pricing',
+            body: `
+                With real-time pricing strategies, businesses can change product prices on the 
+                fly — both online and in-store through digital price tags — by leveraging data 
+                points across a wide variety of systems, such as inventory, marketing performance, 
+                and even regional and digital trends. Imagine dynamically lowering prices in 
+                response to excess inventory or new promotions, or increasing the price on 
+                something trending, without manual intervention.
+            `
+        },
+        {
+            heading: "Why it matters?",
+            body: `
+                <p>Research has shown that time-based dynamic pricing can increase demand by up to 
+                20% during off-peak hours and boost companies revenue by an impressive 42%.</p>
+                <p>Dynamic pricing can be approached in various ways. In this demo we highlight how 
+                utilizing customer behavior data can be a game-changer for your pricing strategy.
+                <strong>Customer behavior</strong> refers to how customers interact with products or services online. 
+                This includes their <strong>browsing and search patterns, cart activity, page views, and 
+                purchase decisions</strong>.</p>
+                `,
+            isHTML: true
+        }
+    ],
+}
+const vectorSearchSection = {
+
+    heading: "Vector Search",
+    content: [
+        {
+            heading: 'Product Description',
+            body: 'While product onboarding as a whole encompasses many steps in this demo we will focus solely on the description-writing process. When onboarding a new product, retailers must craft a description that accurately aligns with the product image before deploying it to their e-commerce portal. '
+        },
+        {
+            heading: "The power of a good description",
+            body: `<p>Having a great description can enhance user engagement and satisfaction as  
+            <a href="https://www.businessdasher.com/importance-of-product-description/?utm_source=chatgpt.com" target="_blank"> 87% of online shoppers consider product descriptions to be crucial when making a 
+            buying decision</a>. On the other hand, having inaccurate descriptions can result in 
+            revenue loss and trust decline with your customer base as <a href="https://www.ax-semantics.com/en/blog/product-descriptions?utm_source=chatgpt.com" target="_blank">40% of consumers have 
+            returned online purchases due to poor product content</a>.</p>`,
+            isHTML: true
+        },
+        {
+            heading: "Challenges & considerations",
+            body: [
+                'Structuring product descriptions that addresses their target’s needs and desires while maintaining a consistent tone across the platform.',
+                'Creating SEO-optimized product descriptions to drive organic traffic and improve search engine rankings.',
+                'For multilingual portals and with multiple operating geographies, this challenge of accuracy increases.',
+                'Even after a description is written, too often there is still a content approval process that needs to happen, delaying the process.'
+            ],
+        },
+    ],
+}
 const behindTheScenesSection = {
     heading: "Behind the Scenes",
     content: [
@@ -50,33 +108,6 @@ const behindTheScenesSection = {
         },
     ],
 }
-const prodDescriptionSection = {
-    heading: "Product Description Generator",
-    content: [
-        {
-            heading: 'Product Description',
-            body: 'While product onboarding as a whole encompasses many steps in this demo we will focus solely on the description-writing process. When onboarding a new product, retailers must craft a description that accurately aligns with the product image before deploying it to their e-commerce portal. '
-        },
-        {
-            heading: "The power of a good description",
-            body:`<p>Having a great description can enhance user engagement and satisfaction as  
-            <a href="https://www.businessdasher.com/importance-of-product-description/?utm_source=chatgpt.com" target="_blank"> 87% of online shoppers consider product descriptions to be crucial when making a 
-            buying decision</a>. On the other hand, having inaccurate descriptions can result in 
-            revenue loss and trust decline with your customer base as <a href="https://www.ax-semantics.com/en/blog/product-descriptions?utm_source=chatgpt.com" target="_blank">40% of consumers have 
-            returned online purchases due to poor product content</a>.</p>`,
-            isHTML: true
-        },            
-        {
-            heading: "Challenges & considerations",
-            body: [
-                'Structuring product descriptions that addresses their target’s needs and desires while maintaining a consistent tone across the platform.',
-                'Creating SEO-optimized product descriptions to drive organic traffic and improve search engine rankings.',
-                'For multilingual portals and with multiple operating geographies, this challenge of accuracy increases.',
-                'Even after a description is written, too often there is still a content approval process that needs to happen, delaying the process.'
-            ],
-        },
-    ],
-}
 const whyMDBSection = {
     heading: "Why MongoDB?",
     content: [
@@ -104,30 +135,193 @@ const whyMDBSection = {
         },
     ],
 }
-export const shopPage = [
-    prodDescriptionSection,
+export const shopPageDynamicPricing = [
+    dynamicPricingSection,
+    {
+        heading: "Behind the Scenes",
+        content: [
+            {
+                heading: "Architecture overview",
+                body: "",
+            },
+            {
+                image: {
+                    src: "/images/architecture.png",
+                    alt: "Architecture",
+                },
+            },
+            {
+                heading: "",
+                body: `<p>MongoDB serves as the operational data layer, storing and managing crucial 
+                information throughout the system. User behavioral data from different applications 
+                is captured and funneled into a <strong>Pub/Sub topic</strong> for real-time messaging.</p> 
+               
+               <p>We subscribe a <strong>Cloud Function</strong> to such a topic to process these events, transforming 
+               raw data into tensors suitable for the <strong>TensorFlow machine learning model hosted on 
+               Vertex AI's endpoint.</strong> </p>
+               
+                <p>The model will return the optimal price point based on the customer behavior and 
+                will be inserted back into the product catalog MongoDB Atlas collection so our ecommerce 
+                application can update prices in real time.</p>  
+
+
+                <p>Additionally, the same Cloud Function is pushing the tensorized customer behavior events into 
+                a new collection in MongoDB Atlas that will serve as our Feature Store for model fine tuning and 
+                retraining purposes in the future. </p>
+
+                <p>This architecture demonstrates MongoDB Atlas's ability to provide the scalable and efficient 
+                data management essential for retail operations. By seamlessly integrating with Vertex AI and 
+                Google Cloud Pub/Sub, it enables real-time dynamic pricing based on customer behavior, leading to 
+                improved customer satisfaction and increased revenue.</p>
+                `,
+                isHTML: true
+            },
+            {
+                heading: "",
+                body: "The main tech stack components can be found below.",
+            },
+            {
+                heading: "",
+                body: `
+                    <ul>
+                        <li>
+                            <p><strong>Data ingestion:</strong> Pub/Sub acts as a high-speed pipeline, efficiently bringing in large amounts of customer behavior data formatted as JSON.</p>
+                        </li>
+                        <li>
+                            <p><strong>Data processing:</strong> Vertex AI Workbench provides a clean environment for data cleaning and training TensorFlow models. These models analyze customer events, product names, and existing prices to predict the optimal price for each item.</p>
+                        </li>
+                        <li>
+                            <p><strong>Feature storage:</strong> MongoDB Atlas serves as a central hub for all the features used by the model. This ensures consistency between the data used for training and the data used for real-time predictions, as well as the operational data for your applications, thereby reducing the overhead of “in-app analytics.” It also simplifies the overall process by keeping everything in one place.</p>
+                        </li>
+                        <li>
+                            <p><strong>Model orchestration:</strong> Cloud Functions act like a conductor, directing the flow of customer event data. They take the data from Pub/Sub, transform it into a format usable by the model (tensors), and store it in MongoDB Atlas. This allows the model to easily access the information it needs.</p>
+                        </li>
+                    </ul>
+                `,
+                isHTML: true
+            },
+        ],
+    },
+    {
+        heading: "How to demo",
+        content: [
+            {
+                heading: "Understanding this page",
+                body: `<p>This page contains the product catalog of an e-comerce store.
+                    There are two <img src="/icons/talkTrackIcon.png" alt="TalkTrackWand"/> 
+                    talk track buttons in this page. This one contains the information about 
+                    the Dynamic Price feature and the one next to the search bat contains 
+                    the information on the Vector Search feature.</p>    
+                `,
+                isHTML: true
+            },
+            {
+                heading: "How to demo this page",
+                body: `
+                    <ol>
+                        <li>
+                            <p>Allow some time for the products to load on the screen. While this loads,
+                            please don't click any of the Toggle buttons.</p>
+                        </li>
+                        <li>
+                            <p><strong>The MongoDB products</strong> have a purple label that reads <strong style="color:purple">Predicted Price $</strong>
+                            That is the recommended price calculated by the dynamic pricing solution.</p>
+                        </li>
+                        <li>
+                            <p>Turn on the Toggle on the top left corner that says <strong>Open Store</strong>
+                            <img src="/icons/toggle.png" alt="toggle"/></p>
+                        </li>
+                        <li>
+                            <p>When the store is open there are random customer events being fired in the
+                            backend to simulate users behaviour, such as:</p>
+                            <ul>
+                                <li>
+                                    <p>looking at products,</p>
+                                </li>
+                                <li>
+                                    <p>adding them to their cart or </p>
+                                </li>
+                                <li>
+                                    <p>buying them.</p>
+                                </li>
+                            </ul>
+                            <p>Based on these events the predictive price for the
+                            products will update to recommend a lower or higher price. It also shows an
+                            arrow up in case the new predictive price is higher than the last one or
+                            arrow down if it's lower than the previous one.</p>
+                        </li>
+                    </ol>
+                    <p>
+                        <strong>Important note: </strong>This toggle will fire events on the back for 2 minutes. After
+                        those 2 minutes the backend will stop generating the random customer
+                        events to avoid excess calls to GC, however the toggle will remain ON. So
+                        make sure to turn o and on the toggle to continue the demo in case you
+                        need more than those 2 mins.
+                    </p>
+
+                `,
+                isHTML: true
+            }
+        ],
+    },
+    {
+        heading: "Why MongoDB?",
+        content: [
+            {
+                heading: "Centralized Feature Store",
+                body: `
+                    MongoDB acts as a centralized repository for storing, managing, and serving features for machine learning models. Its polymorphic capabilities allow for a single interface to represent various data types, facilitating the seamless incorporation of new pricing factors or variables without disrupting existing data structures.
+                `,
+            },
+            {
+                heading: "Scalability and Efficiency",
+                body: "MongoDB's architecture supports horizontal scaling through sharding, enabling it to handle massive volumes of data efficiently. This scalability ensures that as data grows, the application’s performance remains unaffected, making it ideal for real-world applications with large-scale data demands."
+            },
+            {
+                heading: "Real-Time Price Updates",
+                body: "MongoDB enables real-time adjustments in applications by allowing dynamic prices generated from customer behavior to be inserted or updated directly into the product catalog. This ensures that the application's front end retrieves the most current pricing data, enhancing user experience."
+            },
+            {
+                heading: "Flexible Document Schemas",
+                body: "MongoDB's document model allows for flexible schemas, enabling the representation of complex, nested data structures. This flexibility is particularly beneficial in dynamic pricing models where data structures may evolve over time."
+            },
+            {
+                heading: "Powerful Querying and Analytics",
+                body: "MongoDB's robust querying capabilities facilitate complex data analysis, which is essential for developing effective dynamic pricing strategies. Its aggregation framework allows for real-time analytics directly within the database, eliminating the need for external data processing tools."
+            },
+        ],
+    }
+]
+export const shopPageVectorSearch = [
+    vectorSearchSection,
     behindTheScenesSection,
     {
         heading: "How to demo",
         content: [
             {
                 heading: "Understanding this page",
-                body: `This page contains a formulary to generate descriptions of a product automatically. Onboarding a new product to a catalog means shorter times to market.`,
+                body: `<p>This page contains the product catalog of an e-comerce store.
+                    There are two <img src="/icons/talkTrackIcon.png" alt="TalkTrackWand"/> 
+                    talk track buttons in this page. This one contains the information about 
+                    the Vector Search feature and the one next to "Open Store" contains 
+                    the information on the Dynamic Price feature.</p>    
+                `,
+                isHTML: true
             },
             {
                 heading: "How to demo this page",
-                body:''
+                body: ''
 
             },
             {
                 heading: "",
-                body:'Understanding the "Description Generator” page'
+                body: 'Understanding the "Description Generator” page'
 
             },
             {
                 heading: "",
                 body: [
-                
+
                     {
                         heading: "You have 4 options in which you can select a product to generate the description",
                         body: [
@@ -160,66 +354,6 @@ export const shopPage = [
                 ]
 
             }
-        ],
-    },
-    whyMDBSection
-]
-export const catalogPage = [
-    prodDescriptionSection,
-    behindTheScenesSection,
-    {
-        heading: "How to demo",
-        content: [
-            {
-                heading: "Understanding this page",
-                body: `This page represent the Retailer's catalog. All this products are inside MongoDB Atlas`,
-            },
-            {
-                heading: "How to demo this page",
-                body: ''
-
-            },
-            {
-                heading: "",
-                body: "Understand the 'Product catalog' page"
-
-            },
-            {
-                heading: "",
-                body: [
-                    {
-                        heading: "Here you can see the entire product catalog, this is stored in MongoDB Atlas",
-                        body: []
-                    },
-                    {
-                        heading: "You can filter the catalog with the filters on the green banner. Model refers to the model used to generate the descriptions, and Length refers to the length of the description.",
-                        body: []
-                    }
-                ]
-            },
-            {
-                image: {
-                    src: "/talkTrack/filters.png",
-                    alt: "Filters",
-                }
-            },
-            {
-                heading: "",
-                body: [
-                    {
-                        heading: "Click on the Sprinkle Icon to generate the description of that product.",
-                        body: []
-                    },
-                    {
-                        heading: "Click on '{}' to see the full document model of that product.",
-                        body: []
-                    },
-                    {
-                        heading: "Click on  in case you want to delete all descriptions of that specific product. (this is to help you continue using one product for the demo, not something differentiative or to highlight from the demo).",
-                        body: []
-                    },
-                ]
-            },
         ],
     },
     whyMDBSection

@@ -11,7 +11,7 @@ import React from 'react';
 import styles from "./shop.module.css";
 import { setFilters } from '../../redux/slices/ProductsSlice';
 import TalkTrackContainer from '../_components/talkTrackContainer/talkTrackContainer';
-import { shopPage } from '../_lib/talkTrack';
+import { shopPageDynamicPricing } from '../_lib/talkTrack';
 
 
 export default function Page() {
@@ -26,7 +26,6 @@ export default function Page() {
       <Navbar></Navbar>
       <div className={styles.pageContainer}>
         <div className={styles.sideBar}>
-          <TalkTrackContainer sections={shopPage} />
           <Sidebar onFilterChange={handleFilterChange}></Sidebar>
         </div>
         <div className={styles.productList}>

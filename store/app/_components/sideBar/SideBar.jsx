@@ -9,6 +9,8 @@ import { Subtitle, Body } from "@leafygreen-ui/typography";
 import Checkbox from "@leafygreen-ui/checkbox";
 import Toggle from "@leafygreen-ui/toggle";
 import { InfoSprinkle } from "@leafygreen-ui/info-sprinkle";
+import TalkTrackContainer from "../talkTrackContainer/talkTrackContainer";
+import { shopPageDynamicPricing } from "@/app/_lib/talkTrack";
 
 function Sidebar({ onFilterChange }) {
   const filters = useSelector((state) => state.Products.filters);
@@ -83,10 +85,11 @@ function Sidebar({ onFilterChange }) {
       <div className={styles.openStoreSection}>
         <div className={styles.openStore}>
           <Subtitle className={styles.subtitle}>Open Store</Subtitle>
-          <InfoSprinkle className={styles.infoSprinkle}>
+          <TalkTrackContainer sections={shopPageDynamicPricing} openModalIsButton={false}/>
+          {/* <InfoSprinkle className={styles.infoSprinkle}>
             Simulate sale events and get predicted prices fo each item in the
             store. Store will automatically close after 2min.
-          </InfoSprinkle>
+          </InfoSprinkle> */}
         </div>
 
         <Toggle

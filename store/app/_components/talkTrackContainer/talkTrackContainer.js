@@ -2,7 +2,7 @@ import { useState } from "react";
 import InfoWizard from '../InfoWizard/InfoWizard'
 
 const TalkTrackContainer = (props) => {
-    const {sections} = props
+    const {sections, openModalIsButton =true} = props
     const [openHelpModal, setOpenHelpModal] = useState(false);
 
     return (
@@ -13,7 +13,7 @@ const TalkTrackContainer = (props) => {
                 tooltipText="Talk track!"
                 iconGlyph="Wizard"
                 sections={sections}
-                openModalIsButton={true}
+                openModalIsButton={openModalIsButton}
             />
         </div>
     )
