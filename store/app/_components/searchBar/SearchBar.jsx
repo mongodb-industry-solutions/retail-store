@@ -7,10 +7,11 @@ import Toggle from "@leafygreen-ui/toggle";
 import styles from './searchBar.module.css';
 import { SearchInput } from "@leafygreen-ui/search-input";
 import { Label } from '@leafygreen-ui/typography';
-import { InfoSprinkle } from '@leafygreen-ui/info-sprinkle';
 import { getProductsWithSearch, getProductsWithVectorSearch } from '../../_lib/api';
 import { SEARCH_TYPES } from '../../_lib/constants';
 import { setLoading, setProducts, setQuery, setSearchTypeValue } from '../../../redux/slices/ProductsSlice';
+import { shopPageVectorSearch } from '@/app/_lib/talkTrack';
+import TalkTrackContainer from '../talkTrackContainer/talkTrackContainer';
 
 
 const SearchBar = () => {
@@ -59,10 +60,8 @@ const SearchBar = () => {
                         defaultValue=''
                     />
                     <div className={styles.searchToggleContainer}>
-                        <InfoSprinkle className={styles.infoSprinkle}>
-                            Enable vector search for smart results
-                        </InfoSprinkle>
                         <Label  className={styles.toggleLabel}>Vector Search</Label>
+                        {/* <TalkTrackContainer sections={shopPageVectorSearch} openModalIsButton={false}/> */}
                         <Toggle
                             //disabled={true}
                             aria-label="Dark mode toggle"
