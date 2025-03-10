@@ -61,7 +61,7 @@ const SearchBar = () => {
                     />
                     <div className={styles.searchToggleContainer}>
                         <Label  className={styles.toggleLabel}>Vector Search</Label>
-                        {/* <TalkTrackContainer sections={shopPageVectorSearch} openModalIsButton={false}/> */}
+                        <TalkTrackContainer sections={shopPageVectorSearch} openModalIsButton={false}/>
                         <Toggle
                             //disabled={true}
                             aria-label="Dark mode toggle"
