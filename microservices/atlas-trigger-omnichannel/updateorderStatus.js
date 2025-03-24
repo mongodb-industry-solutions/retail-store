@@ -16,7 +16,7 @@ exports = async function (changeEvent) {
           if (type === bopis) {
               states = ['Ready for pickup'];
           } else if (type === home) {
-              states = ['Ready for delivered', 'Picked up from warehouse', 'In Transit', 'Delivered'];
+              states = ['Ready for delivery', 'Picked up from warehouse', 'In Transit', 'Delivered'];
           }
 
           let index = 0;
