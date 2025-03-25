@@ -8,8 +8,6 @@ import fs from "fs/promises";
 
 dotenv.config();
 const port = process.env.PORT;
-const jsonFilePath = "/config/serviceAccountKey.json";
-
 const app = new Koa();
 const router = new Router();
 
@@ -28,10 +26,7 @@ async function loadJson(filePath) {
 router.get("/signURLs", async (ctx) => {
   let db;
   try {
-    const serviceAccountKey = await loadJson(jsonFilePath);
-    const storage = new Storage({
-      credentials: serviceAccountKey,
-    });
+    const storage = new Storage();
 
     const bucketName = process.env.GCP_STORAGE_BUCKET;
     const folderName = process.env.GCP_BUCKET_FOLDER;
