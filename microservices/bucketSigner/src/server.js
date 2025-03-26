@@ -5,8 +5,6 @@ import dotenv from "dotenv";
 import { Storage } from "@google-cloud/storage";
 import { connectToDatabase, closeDatabase } from "./connect.js";
 
-credentials, project = google.auth.default()
-
 dotenv.config();
 const port = process.env.PORT;
 const app = new Koa();
