@@ -6,6 +6,8 @@ import { Storage } from "@google-cloud/storage";
 import { connectToDatabase, closeDatabase } from "./connect.js";
 import fs from "fs/promises";
 
+credentials, project = google.auth.default()
+
 dotenv.config();
 const port = process.env.PORT;
 const app = new Koa();
@@ -26,6 +28,8 @@ async function loadJson(filePath) {
 router.get("/signURLs", async (ctx) => {
   let db;
   try {
+
+    credentials, project = google.auth.default()
     const storage = new Storage();
 
     const bucketName = process.env.GCP_STORAGE_BUCKET;
