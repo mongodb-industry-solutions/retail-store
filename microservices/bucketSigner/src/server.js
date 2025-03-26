@@ -4,9 +4,6 @@ import logger from "koa-logger";
 import dotenv from "dotenv";
 import { Storage } from "@google-cloud/storage";
 import { connectToDatabase, closeDatabase } from "./connect.js";
-import fs from "fs/promises";
-
-credentials, project = google.auth.default()
 
 dotenv.config();
 const port = process.env.PORT;
@@ -15,21 +12,10 @@ const router = new Router();
 
 app.use(logger());
 
-async function loadJson(filePath) {
-  try {
-    const data = await fs.readFile(process.cwd() + filePath, "utf8");
-    return JSON.parse(data);
-  } catch (error) {
-    console.error("Failed to load and parse JSON file:", error);
-    throw error;
-  }
-}
-
 router.get("/signURLs", async (ctx) => {
   let db;
   try {
 
-    credentials, project = google.auth.default()
     const storage = new Storage();
 
     const bucketName = process.env.GCP_STORAGE_BUCKET;
