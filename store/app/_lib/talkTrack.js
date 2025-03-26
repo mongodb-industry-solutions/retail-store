@@ -65,7 +65,7 @@ const behindTheScenesSectionVectorSearch = {
             heading: "How Does Vector Search Work?",
             body: `
                 
-                <p>In the illustration, each animal is stored with a vector that represents its characteristics—like <strong>type of animal (x-axis) and color (y-axis)</strong>.</p>
+                <p>In the illustration, each animal is stored with a vector that represents its characteristics—like <strong>type of animal (y-axis) and color (x-axis)</strong>.</p>
                 <p>When searching for <strong>"A very white cat"</strong>, the system <strong>converts the query into a vector using an AI model</strong> and then uses <strong>Vector Search</strong> to find the closest stored vectors in <strong>MongoDB</strong>.</p>
                 <p>The results follow a simple rule: the closer an animal's vector is to the query vector, the more similar it is in meaning. That’s why an <em>orange cat</em> appears closer to the white cat than a black dog.</p>
                 <p>In <strong>Vector Search</strong>, this same logic applies—each product in the catalog is stored with its embedding, and searches return the most relevant results based on vector similarity, not just text matches.</p>
