@@ -17,6 +17,13 @@ router.get("/signURLs", async (ctx) => {
   try {
 
     const storage = new Storage();
+    // Log the credentials being used (if available)
+    const authClient = await storage.auth.getClient();
+    if (authClient && authClient.email) {
+      console.log("Using credentials for user:", authClient.email);
+    } else {
+      console.log("Unable to determine user email from credentials.");
+    }
 
     const bucketName = process.env.GCP_STORAGE_BUCKET;
     const folderName = process.env.GCP_BUCKET_FOLDER;
