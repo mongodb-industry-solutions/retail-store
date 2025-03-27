@@ -1,15 +1,5 @@
-name: retail-store 
 
 services:
-  bucket-signer-retail:
-    build:
-      context: ./microservices/bucketSigner
-      dockerfile: Dockerfile
-    image: bucket-signer-microservice:latest
-    ports:
-      - "3456:3456"
-    restart: always
-    container_name: bucket-signer-microservice
   event-generator:
     build:
       context: ./microservices/dynamicPricing
