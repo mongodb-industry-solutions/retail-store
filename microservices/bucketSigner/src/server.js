@@ -3,6 +3,7 @@ import Router from "koa-router";
 import logger from "koa-logger";
 import dotenv from "dotenv";
 import { Storage } from "@google-cloud/storage";
+import { GoogleAuth } from "google-auth-library";
 import { connectToDatabase, closeDatabase } from "./connect.js";
 
 dotenv.config();
@@ -14,16 +15,18 @@ app.use(logger());
 
 router.get("/signURLs", async (ctx) => {
   let db;
-  try {
+    try {
 
-    const storage = new Storage();
+    const auth = new GoogleAuth({
+      scopes: ["https://www.googleapis.com/auth/cloud-platform"],
+      projectId: "ist-retail-demo",
+    });
+
+    const client = await auth.getClient();
+
+    const storage = new Storage({ authClient: client, projectId: "ist-retail-demo" });
     // Log the credentials being used (if available)
-    const authClient = await storage.auth.getClient();
-    if (authClient && authClient.email) {
-      console.log("Using credentials for user:", authClient.email);
-    } else {
-      console.log("Unable to determine user email from credentials.");
-    }
+    const authClient = storage.authClient;
 
     const bucketName = process.env.GCP_STORAGE_BUCKET;
     const folderName = process.env.GCP_BUCKET_FOLDER;
