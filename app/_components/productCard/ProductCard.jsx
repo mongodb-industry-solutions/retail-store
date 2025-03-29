@@ -19,7 +19,7 @@ import Image from "next/image";
 import Badge from "@leafygreen-ui/badge";
 import Icon from "@leafygreen-ui/icon";
 
-const ProductCard = ({ id, photo, name, brand, price, pred_price, items }) => {
+const ProductCard = ({ id, photo, name, brand, price, items }) => {
   const dispatch = useDispatch();
 
 
@@ -30,7 +30,6 @@ const ProductCard = ({ id, photo, name, brand, price, pred_price, items }) => {
       name,
       brand,
       price,
-      pred_price,
       items,
     }))
   }
@@ -78,7 +77,6 @@ ProductCard.propTypes = {
   name: PropTypes.string.isRequired,
   brand: PropTypes.string.isRequired,
   price: PropTypes.string.isRequired,
-  pred_price: PropTypes.string.isRequired,
   items: PropTypes.string.isRequired,
 };
 
