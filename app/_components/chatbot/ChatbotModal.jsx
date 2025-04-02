@@ -33,7 +33,7 @@ const ChatbotModal = ({ isOpen, handleClose }) => {
                 <H3><Image width={25} height={25} alt="Chat Icon" src="/rsc/icons/headphones-solid.svg" /> RAG Chatbot </H3>
                 <Icon className='cursorPointer' onClick={() => handleClose()} glyph="X" />
             </ModalHeader>
-            <Tabs setSelected={setSelected} selected={selected}>
+            <Tabs id='tabs-chatbot' setSelected={setSelected} selected={selected}>
                 <Tab className={styles.backgroundGray} name="Chatbot">
                     <Container className={`${styles.chatbotContainer} p-3 h-100`}>
                         {
