@@ -150,6 +150,7 @@ AWS Secret: <your aws secret>
 Max Response Length: 600
 Temperature: 0.0
 ```
+- You can copy the id of the LLM Configuration which will be used later to populate the .env.local file
 
 #### Step 4.1.2. Create RAG Application
 - Click on `RAG Applications` in the main menu
@@ -157,30 +158,20 @@ Temperature: 0.0
 
 ![Create RAG App](./media/dw_rag_app.png)
 
-- In RAG App Name provide the following value - `Leafy_Portal_Policies`
+- Select the option 'Create with Default settings' in the dialog that launches
+
+![Create RAG App - Default](./media/dw_rag_app_default_settings.png)
+
+- In RAG Application Name provide the following value - `Leafy_Portal_Policies`
 - Pick the LLM you configured in the previous step 
-- Click `Next`
+- Click `Upload from computer`
+Note: You will likely see a different value for 'Source limit' specific to your account.
 
 ![Create RAG App - 2](./media/dw_rag_app_1.png)
 
-- On the next screen pick `Ingest new dataset` and press `Continue` 
-
-![Create RAG App - 3](./media/dw_rag_app_2.png)
-
-- On the next screen ensure File Type is PDF and in Datastorage choose `Upload from your computer`
-
-![Create RAG App - 4](./media/dw_rag_app_3.png)
-
-- Click on `Choose Files` and locate the file `LeafyCorpPolicy.pdf` in the `resources` folder where you cloned this repo
-- Click `Upload` and then once the upload is complete click `Save`
-
-![Create RAG App - 5](./media/dw_rag_app_4.png)
-
-- You can now click `Next`. The next page is the 'Chunk & Vectorize' page where you can change Embedding models and pick a different data processing flow. For now, you can use the defaults and choose `Next`. The next page configures the Retrieval pipeline which allows for a host of configuration on how retrieval should work. Again, for now, the defaults are good and you can click `Review & Submit` and then `Save`.
-
-![Create RAG App - 6](./media/dw_rag_app_5.png)
-
-- Once the wizard is successful, it will add an entry to the RAG Applications table for the Leafy_Portal_Policies RAG Applications. Give it a few minutes to complete ingesting, chunking, vectorizing and creating the App. When the RAG App is ready, the search action will enable and all sections say `View Details`.
+- Locate the file `LeafyCorpPolicy.pdf` in the `resources` folder where you cloned this repo
+- Wait for the upload to complete and then choose `Create App`
+- It will add an entry to the RAG Applications table for the Leafy_Portal_Policies RAG Applications. Give it a few minutes to complete ingesting, chunking, vectorizing and creating the App. When the RAG App is ready, the search action will enable and all sections say `View Details`.
 
 ![Create RAG App - 7](./media/dw_rag_app_6.png)
 
@@ -201,6 +192,7 @@ Now that we have our RAG Application, lets wrap it in a Tool so it is available 
 ![Create AI App Tool](./media/dw_agent_1.png)
 
 - From the list of options select `AI app`
+Note: You might see a different list depending on changes to the list of tools
 
 ![Create AI App Tool - 1](./media/dw_agent_1a.png)
 
@@ -222,7 +214,7 @@ You have created the RAG Application as a tool for Agents to use!
 We need to provide Agents access to the Mongo data. For this we are going to connect to the MongoDB and create a Tool for the Agent to use.
 
 ### Step 4.3.1. Setup MongoDB connection within Dataworkz
-- Head over to https://ragapps.dataworkz.com and login to your account. Click on the the gear icon on the top right (the tooltip says Configurations)
+- Click on the the gear icon on the top right (the tooltip says Configurations)
 
 ![Create AI App Tool](./media/dw_agent_2.png)
 
@@ -250,10 +242,6 @@ Password: agenticragmadeeasy
 
 In the list of MongoDB connections, you should now see the entry you just created. 
 
-Copy the id with the button that is against the Storage name - we will need this in the next section.
-
-![Copy Config id](./media/dw_agent_4a.png)
-
 ### Step 4.3.2. Create Tool to connect to MongoDB
 Dataworkz Agents are composed of Tools. In this step, we will create a MongoDB tool for our `orders` collection. This will allow our Agent access to our MongoDB data. Our MongoDB Tool returns an Order object (details of an order) for a specified orderId. Therefore, we will make orderId a parameter to the tool that will be passed to it during execution by the Agent. The Agent will extract the orderId from the user's question or the conversation history.
 
@@ -265,13 +253,19 @@ Dataworkz Agents are composed of Tools. In this step, we will create a MongoDB t
 Tool name: GetLeafyPortalOrder
 Description: Get order details for an order in the Leafy Portal Online Ecommerce Store.
 ```
-- In the `Input Parameters` section add the following. Our tool takes in an orderId and returns an Order object. The orderId is a parameter to the tool that the agent will fill in based on the user's conversation with the Agent. 
+- In the `Configuration` section we are going to select our `orders` collection. Pick the MongoDB configuration that you had created in the previous section. Then pick the database - `leafy_popup_store` and finally pick the `orders` collection.
+- In the Filter section we are going to specify the bson filter that will let us query for a given order using its orderId. We will parameterize the orderId and refer to it using the format `${orderId}`
+```
+{ "_id": { "$oid": ${orderId} } }
+```
+- You should see the Input parameters section get automatically populated with a single entry for `orderId`. Specify a description for orderId to help the Agent understand what it is.
 ```
 Name: orderId
-Type: Choose String
+Type: String
 Description: the order id of the order the user is interested in
 ```
-- In the `Output` section pase the following json. It describes the output of a single order object
+- Leave the Projections section blank
+- In the `Output` section replace the contents with the following json. It describes the output of a single order object
 ```json
 {
   "name": "Order",
@@ -346,18 +340,12 @@ Description: the order id of the order the user is interested in
   }
 }
 ```
-- In the `Configuration` section paste the following json. We are providing details such as what MongoDB connection to use, what database and collection and finally what is the bson query that should be executed. In this case, we are fetching the order object corresponding to the orderId the tool received. 
-```json
-{
-  "storageId": "<paste the MongoDB connection id from the previous section here - it looks something like this - 7264fd3e-615b-4dc9-9e22-ccab8bfce69d>",
-  "DATABASE": "leafy_popup_store",
-  "COLLECTION": "orders",
-  "query": "{ \"_id\": { \"$oid\": ${orderId} } }",
-  "failureMessage": "Failed to retrieve Order object for this order ${orderId}"
-}
-``` 
 
 ![Create Mongo Tool](./media/dw_agent_5.png)
+
+- We are now ready to test our MongoDB Tool. On the right side section, provide the value `675754fce4caed6fae71f003` for orderId. This is a known orderId in the MongoDB orders collection and we are expecting to see a result when we `Test`. On Test you should see the result that fetches the order details of that orderId.
+
+![Create Mongo Tool](./media/dw_agent_5a.png)
 
 - Save
 
@@ -378,6 +366,7 @@ Users should be able to do the following -
 ![Create Agent](./media/dw_agent_6.png)
 
 - Click on `Create`. The Agent Builder will take a few moments to process and analyze this input. Once it is done you will see the Agent specification that describes the behaviour of the agent. You should see 2 scenarios (your specific scenarios may be named differently from the example here because the Agent Builder generates different text in each run) - one that is an `FAQ` (or similar) and one that is `OrderOperations` (or similar). Other scenarios generated are common to all Agents.
+Note: Your agent name may be different - it is generated by the AgentBuilder. You can edit to provide a name of your liking.
 
 ![Create Agent](./media/dw_agent_7.png)
 
@@ -389,6 +378,10 @@ Users should be able to do the following -
 
 ![Create Agent](./media/dw_agent_7b.png)
 
+- We also want to add the `GetLeafyPortalPolicyDetails` tool this scenario so it has access to the store policies. Repeat the steps of clicking on `View all tools` and locating `GetLeafyPortalPolicyDetails` and clicking on `Use this tool` to add it to this scenario.
+
+![Create Agent](./media/dw_agent_7c.png)
+
 - Let's do one more step to make the result of the chatbot a little better. Click on the `OrderOperations` scenario and click on Instructions (not Planning Instructions). Replace the contents with these - 
 ```
 If the user requests full order details then ONLY in that case you MUST respond in this format - Type: Show type\nStatus: Show the most recent status from status_history\nShipping Address: Show shipping address\nProducts: List a numbered list of products with each on a new line
@@ -397,7 +390,7 @@ If the user requests full order details then ONLY in that case you MUST respond 
 
 ![Create Agent](./media/dw_agent_8.png)
 
-- Click on the `Test` tab on the right section of the page. In the chat box type `What can you do?` - you should see help text about the assistant itself. You can also type `Can you provide details for order 675754fce4caed6fae71f003?` and you should see order details for that order. Something like - 
+- Click on the `Run` tab on the right section of the page. In the chat box type `What can you do?` - you should see help text about the assistant itself. You can also type `Can you provide details for order 675754fce4caed6fae71f003?` and you should see order details for that order. Something like - 
 ```
 Type: Buy Online, Get Delivery at Home
 Status: Delivered
