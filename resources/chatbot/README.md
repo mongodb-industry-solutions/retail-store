@@ -281,7 +281,7 @@ Description: the order id of the order the user is interested in
     },
     "status_history": {
       "name": "StatusHistory[]",
-      "description": "the list of changes to the status of the order with the date. The current status is the most recent value",
+      "description": "the list of changes to the status of the order with the date. Each status change has the status name and the timestamp at which it changed. The current status of he order is the most recent change.",
       "fields": {
         "status": {
           "name": "string",
@@ -289,7 +289,7 @@ Description: the order id of the order the user is interested in
         },
         "timestamp": {
           "name": "integer",
-          "description": "the epoch value (milliseconds) of the time at which the status change was made"
+          "description": "the epoch value (milliseconds) of the time at which the status change was made. The most recent value is the current status"
         }
       }
     },
