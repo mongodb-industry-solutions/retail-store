@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
+import ReactMarkdown from 'react-markdown';
 import Typewriter from "../typewriter/Typewriter";
 import { OverlayTrigger, Popover } from "react-bootstrap";
 import Button from "@leafygreen-ui/button";
@@ -20,7 +21,7 @@ const AssistantMessageComp = ({ index, content, resJson, isAnimationDone, styles
     return <div>
         {
             isAnimationDone
-            ? content
+            ? <ReactMarkdown>{content}</ReactMarkdown>
             : <Typewriter text={content} completedCallback={disableAnimationOnThisMessage} />
         }
         <div className={stylesResponseDetailsContainer}>

@@ -1,9 +1,10 @@
 "use client"
 
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Body, Description } from '@leafygreen-ui/typography';
 import Button from "@leafygreen-ui/button";
+import { Label } from '@leafygreen-ui/typography';
 
 import styles from "./chatbotComp.module.css";
 import { addMessage, setIsLoadingAnswer } from '@/redux/slices/ChatbotSlice';
@@ -20,6 +21,7 @@ const suggestions = [
 const ChatbotComp = () => {
     const dispatch = useDispatch();
     const selectedUserId = useSelector(state => state.User.selectedUser?._id);
+    const selectedUserName = useSelector(state => state.User.selectedUser?.name);
     const initialMessage = useSelector(state => state.Chatbot.initialMessage);
     const minimizedOrderSchema = useSelector(state => state.Chatbot.minimizedOrderSchema);
     const isLoadingAnswer = useSelector(state => state.Chatbot.isLoadingAnswer);
@@ -80,6 +82,13 @@ const ChatbotComp = () => {
                         .filter(msg => msg.contentType !== 'init')
                         .map((message, index) => (
                             <div key={`msg-${index}`} className={styles.chatMessage}>
+                                <div>
+                                    {
+                                        message.role === ROLE.user
+                                        ? <Label  className='text-secondry mb-1 w-100 text-end'>{selectedUserName}</Label>
+                                        : <Label className='text-seondary mb-1'>Assistant</Label>
+                                    }
+                                </div>
                                 <div
                                     className={`${styles.speechBubble} ${message.role === ROLE.user ? styles.userBubble : styles.answerBubble}`}
                                 >

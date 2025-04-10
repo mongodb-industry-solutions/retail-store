@@ -1,7 +1,7 @@
 exports = async function (changeEvent) {
   // Access the _id of the changed document:
   const docId = changeEvent.documentKey._id;
-  const serviceName = "IST-Shared";
+  const serviceName = <Your-Cluster-Name>;
   const database = "leafy_popup_store";
   const collection = context.services.get(serviceName).db(database).collection(changeEvent.ns.coll);
   const MILLSECONDS_BETWEEN_STATUS_CHANGE = 10000 // 10 seconds between each status update
@@ -16,7 +16,7 @@ exports = async function (changeEvent) {
           if (type === bopis) {
               states = ['Ready for pickup'];
           } else if (type === home) {
-              states = ['Ready for delivered', 'Picked up from warehouse', 'In Transit', 'Delivered'];
+              states = ['Ready for delivery', 'Picked up from warehouse', 'In Transit', 'Delivered'];
           }
 
           let index = 0;

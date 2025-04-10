@@ -6,7 +6,7 @@ export async function GET() {
     const db = await connectToDatabase();
     const collection = db.collection("products");
 
-    const products = await collection.find({}, { projection: { _id: 1, id:1, pred_price:1 , name: 1 } }).toArray();
+    const products = await collection.find({}, { projection: { _id: 1, name: 1 } }).toArray();
 
     if (!products || products.length === 0) {
       return NextResponse.json(

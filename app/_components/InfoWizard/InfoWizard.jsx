@@ -49,9 +49,11 @@ const InfoWizard = ({
                 {tab.content.map((section, sectionIndex) => (
                   <div key={sectionIndex} className={styles.section}>
                     {section.heading && <H3 className={styles.modalH3}>{section.heading}</H3>}
-                    {section.body &&
-                      (Array.isArray(section.body) ? (
-                        <ul className={styles.list}>
+                    {
+                      section.body && section.isHTML === true
+                      ? <div className={styles.htmlRender} contentEditable='true' dangerouslySetInnerHTML={{ __html: section.body }}></div>
+                      : section.body && Array.isArray(section.body)
+                      ? <ul className={styles.list}>
                           {
                             section.body.map((item, idx) => (
                               typeof (item) == 'object'
@@ -70,9 +72,8 @@ const InfoWizard = ({
                             )
                           }
                         </ul>
-                      ) : (
-                        <Body>{section.body}</Body>
-                      ))}
+                      : <Body>{section.body}</Body>
+                    }
 
                     {section.image && (
                       <img
