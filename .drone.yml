@@ -18,7 +18,7 @@ steps:
       create_repository: true
       registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
       repo: industrysolutions/retail-store
-      dockerfile: Dockerfile
+      dockerfile: store/Dockerfile
       context: store
       tags:
         - git-${DRONE_COMMIT_SHA:0:7}
@@ -83,7 +83,7 @@ steps:
       create_repository: true
       registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
       repo: industrysolutions/retail-store-prod
-      dockerfile: Dockerfile
+      dockerfile: store/Dockerfile
       context: store
       tags:
         - git-${DRONE_COMMIT_SHA:0:7}
