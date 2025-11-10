@@ -9,8 +9,8 @@ if (!isBuild) {
   if (!process.env.MONGODB_URI) {
     throw new Error('Invalid/Missing environment variable: "MONGODB_URI"');
   }
-  if (!process.env.MONGODB_URI) {
-    throw new Error('Invalid/Missing environment variable: "MONGODB_URI"');
+  if (!process.env.DB_NAME) {
+    throw new Error('Invalid/Missing environment variable: "DB_NAME"');
   }
 }
 

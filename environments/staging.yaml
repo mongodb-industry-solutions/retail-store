@@ -27,7 +27,7 @@ extraVolumeMounts:
 # Secret references for sensitive data
 envSecrets:
   MONGODB_URI: retail-store-staging
-  DATABASE_NAME: retail-store-staging
+  DB_NAME: retail-store-staging
   OPENAI_API_KEY: retail-store-staging  # If using OpenAI
   STRIPE_SECRET_KEY: retail-store-staging  # If using payment processing
 
@@ -38,7 +38,7 @@ env:
   GCP_LOCATION: us-central1
   # Add retail-specific environment variables
   MONGODB_URI: retail-store-staging  # Reference to Kanopy secret
-  DATABASE_NAME: retail-store-staging
+  DB_NAME: retail-store-staging
   COLLECTION_NAME: retail-store-staging
   # Google Cloud services for retail
   GCP_STORAGE_BUCKET: retail-store-assets
