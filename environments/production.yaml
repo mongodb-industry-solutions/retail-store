@@ -28,8 +28,6 @@ extraVolumeMounts:
 envSecrets:
   MONGODB_URI: retail-store-prod
   DB_NAME: retail-store-prod
-  OPENAI_API_KEY: retail-store-prod  # If using OpenAI
-  STRIPE_SECRET_KEY: retail-store-prod  # If using payment processing
 
 # Environment variables for GCP (production)
 env:
