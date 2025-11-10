@@ -1,61 +1,69 @@
 import { MongoClient } from "mongodb";
+import { EJSON } from "bson";
 
-// MongoDB client setup - validate environment at runtime, not import time
-let client;
-let mongoClientPromise;
-let predPriceDataChangeStream;
+// Skip env validation during Next.js build process
+// Environment variables will be available at runtime in Kanopy
+const isBuild = process.env.NEXT_PHASE === 'phase-production-build';
 
-function validateEnvironment() {
+if (!isBuild) {
   if (!process.env.MONGODB_URI) {
     throw new Error('Invalid/Missing environment variable: "MONGODB_URI"');
   }
-  if (!process.env.DATABASE_NAME) {
-    throw new Error('Invalid/Missing environment variable: "DATABASE_NAME"');
+  if (!process.env.MONGODB_URI) {
+    throw new Error('Invalid/Missing environment variable: "MONGODB_URI"');
   }
 }
 
-function getMongoClient() {
-  validateEnvironment(); // Only validate when actually used
-  
-  const uri = process.env.MONGODB_URI;
+const uri = process.env.MONGODB_URI || "mongodb://localhost:27017";
+const dbName = process.env.DB_NAME || "default";
+const options = { };
 
+let client;
+let clientPromise;
+const changeStreams = new Map();
+
+if (!isBuild) {
   if (!global._mongoClientPromise) {
-    client = new MongoClient(uri);
-    mongoClientPromise = client.connect();
-    global._mongoClientPromise = mongoClientPromise;
+    client = new MongoClient(uri, options);
+    clientPromise = client.connect();
+    global._mongoClientPromise = clientPromise;
   } else {
-    mongoClientPromise = global._mongoClientPromise;
+    clientPromise = global._mongoClientPromise;
   }
-  
-  return mongoClientPromise;
+} else {
+  // Dummy promise during build
+  clientPromise = Promise.resolve({
+    db: () => ({
+      collection: () => ({
+        find: () => ({ toArray: () => [] }),
+        aggregate: () => ({ toArray: () => [] })
+      })
+    })
+  });
 }
 
-async function getPredPriceChangeStream() {
-  if (!predPriceDataChangeStream) {
-    validateEnvironment(); // Validate environment when actually used
-    
-    const dbName = process.env.DATABASE_NAME;
-    const collectionName = process.env.COLLECTION_NAME;
-
-    const clientPromise = getMongoClient(); // Use the function instead of global variable
+async function getPredPriceChangeStream(filter, key) {
+  if (!changeStreams.has(key)) {
     const client = await clientPromise;
-    const database = client?.db(dbName);
-    const productsCollection = database.collection(collectionName);
+    const db = client.db(dbName);
 
-    const pipeline = [];
-    predPriceDataChangeStream = productsCollection.watch(pipeline);
+    const filterEJSON = EJSON.parse(JSON.stringify(filter));
 
-    predPriceDataChangeStream.on('change', (change) => {
-      //console.log('Change: ', change);
+    const options = { fullDocument: 'updateLookup' };
+    const pipeline = [{ $match: filterEJSON }];
+    const changeStream = db.watch(pipeline, options);
+
+    changeStream.on("change", (change) => {
+      console.log("Change: ", change);
     });
 
-    predPriceDataChangeStream.on('error', (error) => {
-      console.log('Error: ', error);
+    changeStream.on("error", (error) => {
+      console.log("Error: ", error);
     });
+
+    changeStreams.set(key, changeStream);
   }
-  return predPriceDataChangeStream;
+  return changeStreams.get(key);
 }
 
-// Export a function that returns clientPromise instead of the variable itself
-export const clientPromise = getMongoClient;
-export { getPredPriceChangeStream };
+export { clientPromise, dbName, getPredPriceChangeStream };
