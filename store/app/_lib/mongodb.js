@@ -1,38 +1,48 @@
-import { MongoClient, ObjectId } from "mongodb";
+import { MongoClient } from "mongodb";
 
-if (!process.env.MONGODB_URI) {
-  throw new Error('Invalid/Missing environment variable: "MONGODB_URI"');
-}
-if (!process.env.DATABASE_NAME) {
-  throw new Error('Invalid/Missing environment variable: "DATABASE_NAME"');
-}
-
-// MongoDB client setup
-const uri = process.env.MONGODB_URI;
-///const options = { appName: "automotive-acoustic-diagnostics" };
-
+// MongoDB client setup - validate environment at runtime, not import time
 let client;
-let clientPromise;
+let mongoClientPromise;
 let predPriceDataChangeStream;
 
-if (!global._mongoClientPromise) {
-  client = new MongoClient(uri)//, options);
-  clientPromise = client.connect();
-  global._mongoClientPromise = clientPromise;
-} else {
-  clientPromise = global._mongoClientPromise;
+function validateEnvironment() {
+  if (!process.env.MONGODB_URI) {
+    throw new Error('Invalid/Missing environment variable: "MONGODB_URI"');
+  }
+  if (!process.env.DATABASE_NAME) {
+    throw new Error('Invalid/Missing environment variable: "DATABASE_NAME"');
+  }
+}
+
+function getMongoClient() {
+  validateEnvironment(); // Only validate when actually used
+  
+  const uri = process.env.MONGODB_URI;
+
+  if (!global._mongoClientPromise) {
+    client = new MongoClient(uri);
+    mongoClientPromise = client.connect();
+    global._mongoClientPromise = mongoClientPromise;
+  } else {
+    mongoClientPromise = global._mongoClientPromise;
+  }
+  
+  return mongoClientPromise;
 }
 
 async function getPredPriceChangeStream() {
   if (!predPriceDataChangeStream) {
+    validateEnvironment(); // Validate environment when actually used
+    
     const dbName = process.env.DATABASE_NAME;
-    const collectionName = process.env.COLLECTION_NAME
+    const collectionName = process.env.COLLECTION_NAME;
 
+    const clientPromise = getMongoClient(); // Use the function instead of global variable
     const client = await clientPromise;
-    const database = client.db(dbName);
+    const database = client?.db(dbName);
     const productsCollection = database.collection(collectionName);
 
-    const pipeline = [ ]
+    const pipeline = [];
     predPriceDataChangeStream = productsCollection.watch(pipeline);
 
     predPriceDataChangeStream.on('change', (change) => {
@@ -46,4 +56,6 @@ async function getPredPriceChangeStream() {
   return predPriceDataChangeStream;
 }
 
-export { clientPromise, getPredPriceChangeStream};
+// Export a function that returns clientPromise instead of the variable itself
+export const clientPromise = getMongoClient;
+export { getPredPriceChangeStream };
