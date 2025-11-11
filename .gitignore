@@ -45,3 +45,11 @@ ist-retail-demo-19b6b37ea3b2.json
 # Extra
 node_modules
 __pycache__
+
+# Added entries for security check file
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
