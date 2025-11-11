@@ -12,7 +12,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config();
 
-const EMBEDDING_FIELD_NAME = "text_embedding";
+const EMBEDDING_FIELD_NAME = "embedding_desc_name_brand";
 const DATABASE = "dotLocalStore";
 const COLLECTION = "products";
 
@@ -20,11 +20,6 @@ const client = new MongoClient(process.env.ATLAS_URI);
 console.log(" - Connecting to MongoDB Atlas...", process.env.ATLAS_URI);
 const connection = await client.connect();
 console.log(" - Connected to mdb");
-
-//await vectorizeProducts();
-//await clearEmbeddings();
-
-// await client.close();
 
 export async function vectorizeData(cursor, collection, fieldsToEmbed, embeddingFieldName) {
   console.log('vectorizeData')
