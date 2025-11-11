@@ -1,8 +1,9 @@
 FROM node:20-alpine
 WORKDIR /app
-COPY ./package*.json ./
+COPY store/package*.json ./
 RUN npm install --legacy-peer-deps
-COPY ./ ./
+COPY store/ ./
 RUN npm run build
 EXPOSE 8080
+ENV PORT=8080
 CMD ["npm", "run", "start"]
