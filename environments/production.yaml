@@ -27,7 +27,6 @@ extraVolumeMounts:
 # Secret references for sensitive data (production secrets)
 envSecrets:
   MONGODB_URI: retail-store-prod
-  DB_NAME: retail-store-prod
 
 # Environment variables for GCP (production)
 env:
@@ -35,7 +34,6 @@ env:
   GCP_PROJECT_ID: ist-retail-demo
   GCP_LOCATION: us-central1
   # Add retail-specific environment variables
-  MONGODB_URI: retail-store-staging  # Reference to Kanopy secret
   DB_NAME: retail-store-staging
   COLLECTION_NAME: retail-store-staging
   # Google Cloud services for retail
