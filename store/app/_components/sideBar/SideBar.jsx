@@ -1,14 +1,13 @@
 "use client";
 
-import React, { useState, useContext, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import axios from "axios";
 import styles from "./sideBar.module.css";
 
 import { Subtitle, Body } from "@leafygreen-ui/typography";
 import Checkbox from "@leafygreen-ui/checkbox";
 import Toggle from "@leafygreen-ui/toggle";
-import { InfoSprinkle } from "@leafygreen-ui/info-sprinkle";
 import TalkTrackContainer from "../talkTrackContainer/talkTrackContainer";
 import { shopPageDynamicPricing } from "@/app/_lib/talkTrack";
 
@@ -63,20 +62,26 @@ function Sidebar({ onFilterChange }) {
   };
 
   const toggleScript = async () => {
-    setIsScriptRunning(!isScriptRunning);
+    const newState = !isScriptRunning;
+    setIsScriptRunning(newState);
+    
     try {
-      if (!isScriptRunning) {
-        const startResponse = await axios.get(
-          process.env.NEXT_PUBLIC_URL_START
-        );
-        console.log(process.env.URL_START);
-        console.log(startResponse.data.message);
+      const action = newState ? 'start' : 'stop';
+      console.log(`Calling ${action} action...`);
+      
+      const response = await axios.post('/api/toggleScript', { action });
+      
+      if (response.data.success) {
+        console.log(`${action} response:`, response.data.message);
       } else {
-        const stopResponse = await axios.get(process.env.NEXT_PUBLIC_URL_STOP);
-        console.log(stopResponse.data.message);
+        console.error(`${action} failed:`, response.data.error);
+        // Revert the state if the API call failed
+        setIsScriptRunning(!newState);
       }
     } catch (error) {
       console.error("Error toggling the script:", error);
+      // Revert the state if the API call failed
+      setIsScriptRunning(!newState);
     }
   };
 
