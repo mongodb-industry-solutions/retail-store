@@ -7,7 +7,7 @@ serviceAccount:
 extraVolumes:
   - name: gcp-creds
     configMap:
-      name: gcp-wif-config
+      name: gcp-wif-config-retail
   - name: gcp-token
     projected:
       sources:
@@ -34,11 +34,11 @@ env:
   GCP_PROJECT_ID: ist-retail-demo
   GCP_LOCATION: us-central1
   # Add retail-specific environment variables
-  DB_NAME: retail-store-staging
-  COLLECTION_NAME: retail-store-staging
+  DB_NAME: retail-store-prod
+  COLLECTION_NAME: retail-store-prod
   # Google Cloud services for retail
-  GCP_STORAGE_BUCKET: retail-store-assets
-  VERTEX_AI_ENDPOINT: retail-store-assets
-  EMBEDDING_ENDPOINT: retail-store-assets
-  NEXT_PUBLIC_URL_START: retail-store-assets
-  NEXT_PUBLIC_URL_STOP: retail-store-assets
+  GCP_STORAGE_BUCKET: retail-store-prod
+  VERTEX_AI_ENDPOINT: retail-store-prod
+  EMBEDDING_ENDPOINT: retail-store-prod
+  NEXT_PUBLIC_URL_START: retail-store-prod
+  NEXT_PUBLIC_URL_STOP: retail-store-prod

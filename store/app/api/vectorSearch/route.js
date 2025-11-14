@@ -17,6 +17,7 @@ export async function POST(request) {
   let embeddedSearchTerms = []
   try {
     embeddedSearchTerms = await createEmbedding([query]);
+    console.log('embeddedSearchTerms length: ', embeddedSearchTerms)
   } catch (error) {
     console.log('error: ', error)
   }
@@ -72,7 +73,6 @@ export async function POST(request) {
     .skip(PAGINATION_PER_PAGE * pagination_page)
     .limit(PAGINATION_PER_PAGE)
     .toArray();
-  console.log('DOS', new Date())
 
   // Transform the array of products into an object with _id as the key
   const transformedProducts = products.reduce((acc, product) => {
@@ -90,9 +90,7 @@ export async function POST(request) {
     };
     return acc;
   }, {});
-  console.log('RESULTS LENGTH: ', products.length);
-  console.log('TRES', new Date())
-
+  console.log('RESULTS LENGTH: ', products?.length);
   return NextResponse.json({ products: transformedProducts, totalItems: totalItems }, { status: 200 });
 
 }
