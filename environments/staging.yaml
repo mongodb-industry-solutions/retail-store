@@ -1,7 +1,7 @@
 # Service Account Configuration
 serviceAccount:
   enabled: true
-  name: retail-store-gcp-sa  # Must match KSA_NAME
+  name:  retail-kanopy-sa  # Must match KSA_NAME
 
 # Mount GCP credential config AND projected service account token
 extraVolumes:

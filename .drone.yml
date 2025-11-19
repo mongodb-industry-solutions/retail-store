@@ -66,9 +66,6 @@ kind: pipeline
 type: kubernetes
 name: production
 
-platform:
-  arch: arm64
-
 trigger:
   branch:
     - main
