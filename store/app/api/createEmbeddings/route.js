@@ -19,12 +19,9 @@ export default async function createEmbedding(query) {
         console.error(error);
         throw new Error("Parsing embeddings failed.");
     }
-
     if (response.error) {
         console.error(response.error);
         throw new Error("Generating embeddings failed.");
     }
-    //console.log("RESPONSE VECTOR SIZE, ", response.vectors[0].length)
-
     return response?.vectors[0] || [];
 };

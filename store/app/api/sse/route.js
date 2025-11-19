@@ -18,6 +18,18 @@ export async function GET(req) {
       'Connection': 'keep-alive',
     });
 
+    // Parse URL query parameters
+    const url = new URL(req.url);
+    const sessionId = url.searchParams.get("sessionId");
+    const colName = url.searchParams.get("colName");
+
+    // Validate required sessionId parameter
+    if (!sessionId) {
+      return new NextResponse("Missing required parameter: sessionId", { status: 400 });
+    }
+
+    const key = sessionId;
+
     const intervalId = setInterval(() => {
       // Send a heartbeat message to keep the connection alive
       if (writable.locked) {
@@ -41,7 +53,10 @@ export async function GET(req) {
       }
     }
 
-    const changeStream = await getPredPriceChangeStream();
+    const filter = {};
+    if (colName) filter["ns.coll"] = colName;
+
+    const changeStream = await getPredPriceChangeStream(filter, key);
 
     const changeListener = (change) => {
       // Notify the client about the change

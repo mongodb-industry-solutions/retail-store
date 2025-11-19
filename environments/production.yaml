@@ -1,0 +1,42 @@
+# Service Account Configuration
+serviceAccount:
+  enabled: true
+  name:  retail-kanopy-sa-prod  # Must match KSA_NAME
+
+# Mount GCP credential config AND projected service account token
+extraVolumes:
+  - name: gcp-creds
+    configMap:
+      name: gcp-wif-config-retail-prod
+  - name: gcp-token
+    projected:
+      sources:
+      - serviceAccountToken:
+          path: token
+          expirationSeconds: 3600  # Token expires after 1 hour and auto-renews
+          audience: "//iam.googleapis.com/projects/531154772515/locations/global/workloadIdentityPools/kanopy-retail-wif-pool/providers/kanopy-retail-provider"
+
+extraVolumeMounts:
+  - name: gcp-creds
+    mountPath: /etc/gcp
+    readOnly: true
+  - name: gcp-token
+    mountPath: /var/run/service-account
+    readOnly: true
+
+# Secret references for sensitive data (production secrets)
+envSecrets:
+  MONGODB_URI: retail-store-prod
+  DB_NAME: retail-store-prod
+  COLLECTION_NAME: retail-store-prod
+  GCP_STORAGE_BUCKET: retail-store-prod
+  VERTEX_AI_ENDPOINT: retail-store-prod
+  EMBEDDING_ENDPOINT: retail-store-prod
+  NEXT_PUBLIC_URL_START: retail-store-prod
+  NEXT_PUBLIC_URL_STOP: retail-store-prod
+
+# Environment variables for GCP (production)
+env:
+  GOOGLE_APPLICATION_CREDENTIALS: /etc/gcp/credential-configuration.json
+  GCP_PROJECT_ID: ist-retail-demo
+  GCP_LOCATION: us-central1

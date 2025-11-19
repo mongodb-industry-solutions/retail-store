@@ -7,7 +7,7 @@ export async function POST(request) {
 
     try {
         const client = await clientPromise;
-        const db = client.db(process.env.DATABASE_NAME);
+        const db = client.db(process.env.DB_NAME);
         const collection = db.collection("products");
 
         // Build the aggregation pipeline

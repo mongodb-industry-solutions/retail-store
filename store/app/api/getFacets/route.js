@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
-import { connectToDatabase } from "../../_db/connect";
+import { clientPromise, dbName } from "@/app/_lib/mongodb";
 
 export async function GET() {
-    const db = await connectToDatabase();
-    const collection = db.collection("products");
+    const client = await clientPromise;
+    const db = client.db(dbName);
+    const collection = db.collection('products');
     const pipeline = [
             {
                 $searchMeta: {

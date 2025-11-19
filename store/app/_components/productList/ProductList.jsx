@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import ProductCard from "../productCard/ProductCard";
+import { v4 as uuidv4 } from "uuid";
 import styles from "./productList.module.css";
 import Pagination from "@leafygreen-ui/pagination";
 import ProductListLoading from "./ProductListLoading";
@@ -14,6 +15,7 @@ const itemsPerPage = PAGINATION_PER_PAGE;
 
 const ProductList = () => {
   const dispatch = useDispatch();
+  const sessionId = useRef(uuidv4());
   const products = useSelector(state => state.Products.products)
   const totalItems = useSelector(state => state.Products.totalItems)
   const currentPage = useSelector(state => state.Products.pagination_page)
@@ -26,7 +28,8 @@ const ProductList = () => {
 
   const listenToSSEUpdates = useCallback(() => {
     console.log('listenToSSEUpdates func')
-    const eventSource = new EventSource('/api/sse')
+    const collection = "products";
+    const eventSource = new EventSource(`/api/sse?sessionId=${sessionId.current}&colName=${collection}`)
 
     eventSource.onopen = () => {
       console.log('SSE connection opened.')

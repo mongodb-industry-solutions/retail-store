@@ -53,3 +53,8 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+
+# Local security check script (not needed in deployment)
+cicd-kanopy/
+security_check.sh
+SECURITY_CHECK_README.md

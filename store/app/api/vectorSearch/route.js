@@ -4,7 +4,6 @@ import { clientPromise } from "@/app/_lib/mongodb";
 import { PAGINATION_PER_PAGE } from "@/app/_lib/constants";
 
 export async function POST(request) {
-  console.log('UNO', new Date())
   let { query, facets, pagination_page } = await request.json();
 
   let limit = request?.query?.limit || 12;
@@ -18,14 +17,14 @@ export async function POST(request) {
   let embeddedSearchTerms = []
   try {
     embeddedSearchTerms = await createEmbedding([query]);
+    console.log('embeddedSearchTerms length: ', embeddedSearchTerms)
   } catch (error) {
     console.log('error: ', error)
   }
-  console.log('UNO Y MEDIO', new Date())
 
   const EMBEDDING_FIELD_NAME = "embedding_desc_name_brand";
   const client = await clientPromise;
-  const db = client.db(process.env.DATABASE_NAME);
+  const db = client.db(process.env.DB_NAME);
   const collection = db.collection("products");
 
   const pipeline = [
@@ -74,7 +73,6 @@ export async function POST(request) {
     .skip(PAGINATION_PER_PAGE * pagination_page)
     .limit(PAGINATION_PER_PAGE)
     .toArray();
-  console.log('DOS', new Date())
 
   // Transform the array of products into an object with _id as the key
   const transformedProducts = products.reduce((acc, product) => {
@@ -92,9 +90,7 @@ export async function POST(request) {
     };
     return acc;
   }, {});
-  console.log('RESULTS LENGTH: ', products.length);
-  console.log('TRES', new Date())
-
+  console.log('RESULTS LENGTH: ', products?.length);
   return NextResponse.json({ products: transformedProducts, totalItems: totalItems }, { status: 200 });
 
 }
