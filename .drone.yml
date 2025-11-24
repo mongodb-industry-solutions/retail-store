@@ -91,9 +91,10 @@ steps:
       values_files: ["environments/staging.yaml"]
       values:
         - "image.tag=git-${DRONE_COMMIT_SHA:0:7}"
-        - "image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/industrysolutions/bucket-signer"
         - "ingress.enabled=true"
+        - "image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/industrysolutions/bucket-signer"
         - "ingress.hosts[0]=retail-store.industrysolutions.staging.corp.mongodb.com"
+        - "ingress.paths[0]=/bucket-signer"
         - "mesh.enabled=true"
         - "resources.limits.memory=1Gi"
         - "resources.limits.cpu=1000m"
@@ -158,7 +159,6 @@ steps:
         - "image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/industrysolutions/retail-store-prod"
         - "ingress.enabled=true"
         - "ingress.hosts[0]=retail-store.industrysolutions.prod.corp.mongodb.com"
-        - "ingress.paths[0]=/bucket-signer"
         - "mesh.enabled=true"
         - "resources.limits.memory=1Gi"
         - "resources.limits.cpu=1000m"
