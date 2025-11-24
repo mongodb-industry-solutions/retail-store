@@ -66,7 +66,7 @@ function Sidebar({ onFilterChange }) {
     try {
       console.log("Calling sign images action...");
       
-      const response = await axios.get("/bucket-signer/signURLs");
+      const response = await axios.get("/api/bucketSigner");
       console.log("Microservice response:", response);
 
       if (response.data.success) {
