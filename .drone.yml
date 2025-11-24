@@ -103,6 +103,8 @@ steps:
         - "envSecrets.MONGODB_URI=retail-store-staging"
         - "envSecrets.DB_NAME=retail-store-staging"
         - "env.GOOGLE_APPLICATION_CREDENTIALS=/etc/gcp/credential-configuration.json"
+        - "service.port=80"
+        - "service.targetPort=8080"
       api_server: https://api.staging.corp.mongodb.com
       kubernetes_token:
         from_secret: staging_kubernetes_token
