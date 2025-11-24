@@ -31,7 +31,6 @@ envSecrets:
   COLLECTION_NAME: retail-store-staging
   GCP_STORAGE_BUCKET: retail-store-staging
   VERTEX_AI_ENDPOINT: retail-store-staging
-  EMBEDDING_ENDPOINT: retail-store-staging
   NEXT_PUBLIC_URL_START: retail-store-staging
   NEXT_PUBLIC_URL_STOP: retail-store-staging
 

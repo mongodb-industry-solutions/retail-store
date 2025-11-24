@@ -4,8 +4,6 @@ import { usePathname } from 'next/navigation';
 import Link from "next/link";
 import styles from "./navbar.module.css";
 import Image from "next/image";
-import Cart from "../cart/Cart";
-import Profile from "../profile/Profile"
 import SearchBar from "../searchBar/SearchBar";
 
 const Navbar = () => {
@@ -28,16 +26,9 @@ const Navbar = () => {
         <Link href="/">Home</Link>
         <Link href="/shop">Shop</Link>
         <Link href="/about">About</Link>
-        <Link href="/contact">Contact</Link>
       </div>
 
-      { pathname === '/shop' && <SearchBar/> }
-
-      <div className={styles.iconButtons}>
-        <Profile></Profile>
-        <Cart></Cart>
-
-      </div>
+      { pathname === '/shop' ? <SearchBar/> : <div/>}
     </nav>
   );
 };

@@ -67,8 +67,6 @@ const ProductList = () => {
       dispatch(setLoading(true))
       if(searchType === SEARCH_TYPES.atlasSearch)
           response = await getProductsWithSearch(query, filters)
-      else if (searchType === SEARCH_TYPES.vectorSearch)
-          response = await getProductsWithVectorSearch(query, filters)
       if(response){
           console.log('getAllProducts result', Object.keys(response).length)
           dispatch(

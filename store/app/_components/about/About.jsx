@@ -46,55 +46,6 @@ const About = () => {
           <img className={styles.aboutImg} src="/aboutillo.png"></img>
         </div>
       </div>
-      <H3>Team</H3>
-
-      <div className={styles.teamcards}>
-
-        <TeamCard
-          photo="/gen.png"
-          name="Genevieve Broadhead"
-          title="Global Lead, Retail Solutions"
-          subtitle="Product Owner"
-        />
-
-        <TeamCard
-          photo="/francesco.png"
-          name="Francesco Baldissera"
-          title="Retail Consultant, Industry Solutions"
-          subtitle="Project Manager"
-        />
-
-        <TeamCard
-          photo="/pedro.png"
-          name="Pedro Bereilh"
-          title="Specialist, Industry Solutions"
-          subtitle="Full Stack Developer"
-        />
-
-
-        <TeamCard
-          photo="/rami.png"
-          name="Rami Pinto"
-          title="Sr Specialist, Industry Solutions"
-          subtitle="Cloud Engineer"
-        />
-
-        <TeamCard
-          photo="/ainhoa.png"
-          name="Ainhoa Mugica"
-          title="Sr. Specialist, Industry Solutions"
-          subtitle="Designer and Frontend Developer"
-        />
-
-        <TeamCard
-          photo="/prashant.png"
-          name="Prashant Juttukonda"
-          title="Retail Principal, Industry Solutions"
-          subtitle="Product Owner"
-        />
-
-        {/* Add more TeamMemberCard components as needed */}
-      </div>
 
       <H3>Related Resources</H3>
 
