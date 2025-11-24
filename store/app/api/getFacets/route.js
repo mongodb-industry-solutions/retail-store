@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
-import { clientPromise, dbName } from "@/app/_lib/mongodb";
+import { clientPromise } from "@/app/_lib/mongodb";
 
 export async function POST() {
     const client = await clientPromise;
-    const db = client.db(dbName);
-    const collection = db.collection('products');
+    const db = client.db(process.env.DB_NAME);
+    const collection = db.collection("products");
     const pipeline = [
             {
                 $searchMeta: {
