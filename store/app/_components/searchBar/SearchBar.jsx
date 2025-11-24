@@ -2,16 +2,12 @@
 
 import { useSelector, useDispatch } from 'react-redux';
 import LeafyGreenProvider from "@leafygreen-ui/leafygreen-provider";
-import Toggle from "@leafygreen-ui/toggle";
 
 import styles from './searchBar.module.css';
 import { SearchInput } from "@leafygreen-ui/search-input";
-import { Label } from '@leafygreen-ui/typography';
-import { getProductsWithSearch, getProductsWithVectorSearch } from '../../_lib/api';
+import { getProductsWithSearch } from '../../_lib/api';
 import { SEARCH_TYPES } from '../../_lib/constants';
-import { setLoading, setProducts, setQuery, setSearchTypeValue } from '../../../redux/slices/ProductsSlice';
-import { shopPageVectorSearch } from '@/app/_lib/talkTrack';
-import TalkTrackContainer from '../talkTrackContainer/talkTrackContainer';
+import { setLoading, setProducts, setQuery } from '../../../redux/slices/ProductsSlice';
 
 const SearchBar = () => {
     const dispatch = useDispatch();
@@ -25,8 +21,6 @@ const SearchBar = () => {
 
         if (searchType === SEARCH_TYPES.atlasSearch)
             response = await getProductsWithSearch(query, filters);
-        else if (searchType === SEARCH_TYPES.vectorSearch)
-            response = await getProductsWithVectorSearch(query, filters);
 
         if (response) {
             dispatch(
@@ -42,14 +36,6 @@ const SearchBar = () => {
         dispatch(setQuery(searchQuery));
     };
 
-    const onSearchTypeChange = (checked) => {
-        console.log('onSearchTypeChange', checked);
-        const type = checked
-            ? SEARCH_TYPES.vectorSearch
-            : SEARCH_TYPES.atlasSearch;
-        dispatch(setSearchTypeValue(type));
-    };
-
     return (
         <div className={styles.searchContainer}>
             <LeafyGreenProvider>
@@ -61,22 +47,6 @@ const SearchBar = () => {
                         value={query}
                         defaultValue=""
                     />
-
-                    {/* 🔒 UI DE VECTOR SEARCH OCULTA (lógica sigue existiendo) 
-                    <div className={styles.searchToggleContainer}>
-                        <Label className={styles.toggleLabel}>Vector Search</Label>
-                        <TalkTrackContainer
-                            sections={shopPageVectorSearch}
-                            openModalIsButton={false}
-                        />
-                        <Toggle
-                            aria-label="Dark mode toggle"
-                            className={styles.toggle}
-                            size="small"
-                            onChange={(checked) => onSearchTypeChange(checked)}
-                        />
-                    </div>
-                    */}
                 </div>
             </LeafyGreenProvider>
         </div>

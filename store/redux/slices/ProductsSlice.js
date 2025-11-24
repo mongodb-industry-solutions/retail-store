@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { SEARCH_TYPES } from "../../app/_lib/constants";
-import { act } from "react";
 
 const ProductsSlice = createSlice({
     name: "Products",
@@ -31,12 +30,6 @@ const ProductsSlice = createSlice({
         },
         setInitialLoad: (state, action) => {
             return { ...state, initialLoad: action.payload }
-        },
-        setSearchTypeValue: (state, action) => {
-            return {
-                ...state,
-                searchType: action.payload
-            }
         },
         setProducts: (state, action) => {
             return {
@@ -83,7 +76,6 @@ const ProductsSlice = createSlice({
 export const {
     setLoading,
     setError,
-    setSearchTypeValue,
     setProducts,
     setInitialLoad,
     setFilters,
