@@ -10,6 +10,7 @@ import Checkbox from "@leafygreen-ui/checkbox";
 import Toggle from "@leafygreen-ui/toggle";
 import TalkTrackContainer from "../talkTrackContainer/talkTrackContainer";
 import { shopPageDynamicPricing } from "@/app/_lib/talkTrack";
+import Button from "@leafygreen-ui/button";
 
 function Sidebar({ onFilterChange }) {
   const filters = useSelector((state) => state.Products.filters);
@@ -61,6 +62,23 @@ function Sidebar({ onFilterChange }) {
     });
   };
 
+  const signImages = async () => {
+    try {
+      console.log("Calling sign images action...");
+      
+      const response = await axios.get("/bucket-signer/signURLs");
+      console.log("Microservice response:", response);
+
+      if (response.data.success) {
+        console.log(`sign images response:`, response.data.message);
+      } else {
+        console.error(`sign images failed:`, response.data.error);
+      }
+    } catch (error) {
+      console.error("Error signing images:", error);
+    }
+  }
+  
   const toggleScript = async () => {
     const newState = !isScriptRunning;
     setIsScriptRunning(newState);
@@ -91,18 +109,22 @@ function Sidebar({ onFilterChange }) {
         <div className={styles.openStore}>
           <Subtitle className={styles.subtitle}>Open Store</Subtitle>
           <TalkTrackContainer sections={shopPageDynamicPricing} openModalIsButton={false}/>
-          {/* <InfoSprinkle className={styles.infoSprinkle}>
-            Simulate sale events and get predicted prices fo each item in the
-            store. Store will automatically close after 2min.
-          </InfoSprinkle> */}
         </div>
-
         <Toggle
           checked={isScriptRunning}
           onChange={toggleScript}
           aria-label="Script toggle"
           className={styles.toggle}
         />
+      </div>
+            <div className={styles.openStoreSection}>
+        <div className={styles.openStore}>
+          <Subtitle className={styles.subtitle}>Sign Images</Subtitle>
+          <TalkTrackContainer sections={shopPageDynamicPricing} openModalIsButton={false}/>
+        </div>
+        <Button
+          onClick={signImages}
+        >Sign Images</Button>
       </div>
       <hr className={styles.hr}></hr>
 
