@@ -66,7 +66,7 @@ function Sidebar({ onFilterChange }) {
     try {
       console.log("Calling sign images action...");
       
-      const response = await axios.get("http://retail-store.industrysolutions.staging.corp.mongodb.com/bucket-signer/signURLs");
+      const response = await axios.get("/bucket-signer/signURLs");
       console.log("Microservice response:", response);
 
       if (response.data.success) {
@@ -78,7 +78,7 @@ function Sidebar({ onFilterChange }) {
       console.error("Error signing images:", error);
     }
   }
-
+  
   const toggleScript = async () => {
     const newState = !isScriptRunning;
     setIsScriptRunning(newState);
