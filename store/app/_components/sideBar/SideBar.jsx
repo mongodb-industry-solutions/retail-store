@@ -10,6 +10,7 @@ import Checkbox from "@leafygreen-ui/checkbox";
 import Toggle from "@leafygreen-ui/toggle";
 import TalkTrackContainer from "../talkTrackContainer/talkTrackContainer";
 import { shopPageDynamicPricing } from "@/app/_lib/talkTrack";
+import Button from "@leafygreen-ui/button";
 
 function Sidebar({ onFilterChange }) {
   const filters = useSelector((state) => state.Products.filters);
@@ -18,6 +19,7 @@ function Sidebar({ onFilterChange }) {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [facets, setFacets] = useState([]);
   const [isScriptRunning, setIsScriptRunning] = useState(false);
+  const [showSignImagesSection, setShowSignImagesSection] = useState(false);
 
   useEffect(() => {
     const fetchFacets = async () => {
@@ -31,6 +33,34 @@ function Sidebar({ onFilterChange }) {
 
     fetchFacets();
   }, []);
+
+  // Keyboard shortcut to toggle sign images section (Shift + Ctrl/Cmd + D)
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      console.log('Key pressed:', event.key, 'altKey:', event.altKey, 'ctrlKey:', event.ctrlKey, 'metaKey:', event.metaKey, 'shiftKey:', event.shiftKey);
+      
+      // Check for Shift + Ctrl/Cmd + D key combination (works on both Mac and Windows)
+      // On Mac: Shift + Cmd + D (metaKey), On Windows/Linux: Shift + Ctrl + D (ctrlKey)
+      if (event.shiftKey && (event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'd') {
+        event.preventDefault(); // Prevent any default browser behavior
+        setShowSignImagesSection(prev => {
+          const newValue = !prev;
+          return newValue;
+        });
+      }
+      
+    };
+
+    // Add event listener
+    document.addEventListener('keydown', handleKeyDown);
+    console.log('Keyboard event listener added');
+
+    // Cleanup function to remove event listener
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      console.log('Keyboard event listener removed');
+    };
+  }, []); // Remove dependency to avoid re-registering the event listener
 
   const handleBrandChange = (event) => {
     const item = event;
@@ -61,16 +91,33 @@ function Sidebar({ onFilterChange }) {
     });
   };
 
+  const signImages = async () => {
+    try {
+      console.log("Calling sign images action...");
+
+      const response = await axios.post("/api/bucketSigner");
+      console.log("Microservice response:", response);
+
+      if (response.data.success) {
+        console.log(`sign images response:`, response.data.message);
+      } else {
+        console.error(`sign images failed:`, response.data.error);
+      }
+    } catch (error) {
+      console.error("Error signing images:", error);
+    }
+  };
+
   const toggleScript = async () => {
     const newState = !isScriptRunning;
     setIsScriptRunning(newState);
-    
+
     try {
-      const action = newState ? 'start' : 'stop';
+      const action = newState ? "start" : "stop";
       console.log(`Calling ${action} action...`);
-      
-      const response = await axios.post('/api/toggleScript', { action });
-      
+
+      const response = await axios.post("/api/toggleScript", { action });
+
       if (response.data.success) {
         console.log(`${action} response:`, response.data.message);
       } else {
@@ -90,13 +137,11 @@ function Sidebar({ onFilterChange }) {
       <div className={styles.openStoreSection}>
         <div className={styles.openStore}>
           <Subtitle className={styles.subtitle}>Open Store</Subtitle>
-          <TalkTrackContainer sections={shopPageDynamicPricing} openModalIsButton={false}/>
-          {/* <InfoSprinkle className={styles.infoSprinkle}>
-            Simulate sale events and get predicted prices fo each item in the
-            store. Store will automatically close after 2min.
-          </InfoSprinkle> */}
+          <TalkTrackContainer
+            sections={shopPageDynamicPricing}
+            openModalIsButton={false}
+          />
         </div>
-
         <Toggle
           checked={isScriptRunning}
           onChange={toggleScript}
@@ -104,6 +149,18 @@ function Sidebar({ onFilterChange }) {
           className={styles.toggle}
         />
       </div>
+      {showSignImagesSection && (
+        <div id="signImagesSection" className={styles.openStoreSection}>
+          <div className={styles.openStore}>
+            <Subtitle className={styles.subtitle}>Sign Images</Subtitle>
+            <TalkTrackContainer
+              sections={shopPageDynamicPricing}
+              openModalIsButton={false}
+            />
+          </div>
+          <Button onClick={signImages}>Sign Images</Button>
+        </div>
+      )}
       <hr className={styles.hr}></hr>
 
       <Subtitle>Filters</Subtitle>
@@ -112,14 +169,11 @@ function Sidebar({ onFilterChange }) {
         <div className={styles.brand}>
           <Body className={styles.filterTitle}>Brand</Body>
 
-          {/* Log the list of brands */}
-          {/*console.log(facets?.[0]?.facet?.brand?.buckets)*/}
-
           <div className={styles.checkboxList}>
             {facets?.[0]?.facet?.brand?.buckets?.map((bucket) => (
               <Checkbox
                 key={bucket._id}
-                label={`${bucket._id}`}//(${bucket.count})
+                label={`${bucket._id}`} //(${bucket.count})
                 checked={selectedBrands.includes(bucket._id)}
                 onChange={() => handleBrandChange(bucket._id)}
                 className={styles.checkbox}

@@ -33,6 +33,9 @@ envSecrets:
   VERTEX_AI_ENDPOINT: retail-store-staging
   NEXT_PUBLIC_URL_START: retail-store-staging
   NEXT_PUBLIC_URL_STOP: retail-store-staging
+  PORT: retail-store-staging
+  GCP_STORAGE_BUCKET: retail-store-staging
+  GCP_BUCKET_FOLDER: retail-store-staging
 
 # Environment variables for GCP
 env:

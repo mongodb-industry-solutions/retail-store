@@ -1,4 +1,4 @@
-# Leafy Pop-up store
+# Leafy Pop-up store.
 
 In this Next.js project lies the demo of an e-commerce called 'Leafy Pop-Up Store', encompassing all the essentials for a seamless run. We'll dive into the technical side of the demo; pre-requisites, how to run, the arhcitecture and so on.
 
