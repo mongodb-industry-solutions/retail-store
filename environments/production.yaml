@@ -14,7 +14,7 @@ extraVolumes:
       - serviceAccountToken:
           path: token
           expirationSeconds: 3600  # Token expires after 1 hour and auto-renews
-          audience: "//iam.googleapis.com/projects/531154772515/locations/global/workloadIdentityPools/kanopy-retail-wif-pool/providers/kanopy-retail-provider"
+          audience: "//iam.googleapis.com/projects/531154772515/locations/global/workloadIdentityPools/kanopy-retail-wif-pool-prod/providers/kanopy-retail-provider-prod"
 
 extraVolumeMounts:
   - name: gcp-creds
