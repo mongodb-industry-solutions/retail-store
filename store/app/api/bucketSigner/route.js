@@ -25,9 +25,6 @@ export async function POST(req) {
 
         const id = parseInt(file.name.split("/").pop().split(".")[0], 10);
 
-        // stop here for testing
-        return {  acknowledged: updateResult.acknowledged };
-
         const updateResult = await collection.updateOne(
           { id },
           { $set: { "image.url": signedUrl } }
