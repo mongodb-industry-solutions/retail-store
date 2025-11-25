@@ -1,7 +1,7 @@
 import { Storage } from "@google-cloud/storage";
 import { clientPromise } from "@/app/_lib/mongodb";
 
-export async function GET(req) {
+export async function POST(req) {
   try {
     const storage = new Storage({ projectId: "ist-retail-demo" });
     const bucketName = process.env.GCP_STORAGE_BUCKET;
