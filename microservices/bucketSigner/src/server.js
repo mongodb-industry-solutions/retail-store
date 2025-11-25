@@ -17,16 +17,16 @@ router.get("/signURLs", async (ctx) => {
   let db;
     try {
 
-    // this is not needed if GOOGLE_APPLICATION_CREDENTIALS is set. you can set it by doing the following: 'gcloud auth application-default login'
-    // const auth = new GoogleAuth({
-    //   scopes: ["https://www.googleapis.com/auth/cloud-platform"],
-    //   projectId: "ist-retail-demo",
-    // });
+    const auth = new GoogleAuth({
+      scopes: ["https://www.googleapis.com/auth/cloud-platform"],
+      projectId: "ist-retail-demo",
+    });
 
-    //const client = await auth.getClient();
-    const storage = new Storage({ projectId: "ist-retail-demo" });
+    const client = await auth.getClient();
+
+    const storage = new Storage({ authClient: client, projectId: "ist-retail-demo" });
     // Log the credentials being used (if available)
-    //const authClient = storage.authClient;
+    const authClient = storage.authClient;
 
     const bucketName = process.env.GCP_STORAGE_BUCKET;
     const folderName = process.env.GCP_BUCKET_FOLDER;
