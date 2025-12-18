@@ -37,12 +37,19 @@ export async function POST(request) {
       { status: 200 }
     );
   } catch (error) {
+    const status = error?.response?.status || 500;
+    const data = error?.response?.data;
+    const message =
+      typeof data === "string"
+        ? data
+        : error.message || "An error occurred";
+
     return NextResponse.json(
       {
         success: false,
-        error: error.message || "An error occurred",
+        error: message,
       },
-      { status: 500 }
+      { status }
     );
   }
 }
