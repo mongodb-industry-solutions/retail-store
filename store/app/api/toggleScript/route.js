@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { GoogleAuth } from "google-auth-library";
+import fs from "node:fs";
 
 export async function POST(request) {
   try {
@@ -7,7 +7,7 @@ export async function POST(request) {
 
     if (action !== "start" && action !== "stop") {
       return NextResponse.json(
-        { error: 'Invalid action. Use "start" or "stop".' },
+        { success: false, error: 'Invalid action. Use "start" or "stop".' },
         { status: 400 }
       );
     }
@@ -19,37 +19,57 @@ export async function POST(request) {
 
     if (!url) {
       return NextResponse.json(
-        { error: `${action.toUpperCase()} URL not configured` },
+        { success: false, error: `${action.toUpperCase()} URL not configured` },
         { status: 500 }
       );
     }
 
-    const auth = new GoogleAuth();
-    const client = await auth.getIdTokenClient(url);
-    const response = await client.request({ url, method: "GET" });
+    let token = process.env.GCP_ID_TOKEN;
+
+    if (!token) {
+      const saTokenPath = "/var/run/service-account/token";
+      if (fs.existsSync(saTokenPath)) {
+        token = fs.readFileSync(saTokenPath, "utf8").trim();
+      }
+    }
+
+    if (!token) {
+      return NextResponse.json(
+        { success: false, error: "Missing GCP identity token" },
+        { status: 500 }
+      );
+    }
+
+    const resp = await fetch(url, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const text = await resp.text();
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch {
+      data = text;
+    }
+
+    if (!resp.ok) {
+      return NextResponse.json(
+        { success: false, error: data },
+        { status: resp.status }
+      );
+    }
 
     return NextResponse.json(
-      {
-        success: true,
-        action,
-        data: response.data,
-      },
+      { success: true, action, data },
       { status: 200 }
     );
   } catch (error) {
-    const status = error?.response?.status || 500;
-    const data = error?.response?.data;
-    const message =
-      typeof data === "string"
-        ? data
-        : error.message || "An error occurred";
-
     return NextResponse.json(
-      {
-        success: false,
-        error: message,
-      },
-      { status }
+      { success: false, error: error?.message || "An error occurred" },
+      { status: 500 }
     );
   }
 }
