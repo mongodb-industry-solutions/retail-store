@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { GoogleAuth } from "google-auth-library";
 
 export async function POST(request) {
   try {
@@ -23,33 +24,19 @@ export async function POST(request) {
       );
     }
 
-    console.log(`Calling ${action} URL: ${url}`);
-
-    const response = await fetch(url, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const data = await response.json();
-    console.log(`${action} response:`, data);
+    const auth = new GoogleAuth();
+    const client = await auth.getIdTokenClient(url);
+    const response = await client.request({ url, method: "GET" });
 
     return NextResponse.json(
       {
         success: true,
         action,
-        message: data.message || `Successfully ${action}ed`,
-        data,
+        data: response.data,
       },
       { status: 200 }
     );
   } catch (error) {
-    console.error(`Error toggleScript:`, error);
     return NextResponse.json(
       {
         success: false,
