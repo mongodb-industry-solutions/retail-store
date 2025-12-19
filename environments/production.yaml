@@ -1,7 +1,8 @@
 # Service Account Configuration
 serviceAccount:
   enabled: true
-  name:  retail-kanopy-sa-prod  # Must match KSA_NAME
+  name: retail-kanopy-sa-prod # Must match KSA_NAME
+  annotations: {} # Placeholder for injecting GCP service account annotation via Helm/pipeline.
 
 # Mount GCP credential config AND projected service account token
 extraVolumes:
@@ -11,10 +12,10 @@ extraVolumes:
   - name: gcp-token
     projected:
       sources:
-      - serviceAccountToken:
-          path: token
-          expirationSeconds: 3600  # Token expires after 1 hour and auto-renews
-          audience: "//iam.googleapis.com/projects/531154772515/locations/global/workloadIdentityPools/kanopy-retail-wif-pool-prod/providers/kanopy-retail-provider-prod"
+        - serviceAccountToken:
+            path: token
+            expirationSeconds: 3600
+            audience: "//iam.googleapis.com/projects/531154772515/locations/global/workloadIdentityPools/kanopy-retail-wif-pool-prod/providers/kanopy-retail-provider-prod"
 
 extraVolumeMounts:
   - name: gcp-creds
@@ -30,12 +31,12 @@ envSecrets:
   DB_NAME: retail-store-prod
   COLLECTION_NAME: retail-store-prod
   GCP_STORAGE_BUCKET: retail-store-prod
-  VERTEX_AI_ENDPOINT: retail-store-prod
-  NEXT_PUBLIC_URL_START: retail-store-prod
-  NEXT_PUBLIC_URL_STOP: retail-store-prod
-  PORT: retail-store-prod
-  GCP_STORAGE_BUCKET: retail-store-prod
   GCP_BUCKET_FOLDER: retail-store-prod
+  VERTEX_AI_ENDPOINT: retail-store-prod
+  DYNAMIC_PRICING_AUDIENCE: retail-store-prod
+  DYNAMIC_PRICING_START_URL: retail-store-prod
+  DYNAMIC_PRICING_STOP_URL: retail-store-prod
+  PORT: retail-store-prod
 
 # Environment variables for GCP (production)
 env:
