@@ -1,7 +1,8 @@
 # Service Account Configuration
 serviceAccount:
   enabled: true
-  name: retail-kanopy-sa # Must match KSA_NAME
+  name: retail-kanopy-sa
+  annotations: {}   # Placeholder for injecting GCP Service Account annotation via Helm/pipeline. Reserved for ServiceAccount annotations injected at deploy time
 
 # Mount GCP credential config AND projected service account token
 extraVolumes:
@@ -31,6 +32,7 @@ envSecrets:
   COLLECTION_NAME: retail-store-staging
   GCP_STORAGE_BUCKET: retail-store-staging
   VERTEX_AI_ENDPOINT: retail-store-staging
+  DYNAMIC_PRICING_AUDIENCE: retail-store-staging
   DYNAMIC_PRICING_START_URL: retail-store-staging
   DYNAMIC_PRICING_STOP_URL: retail-store-staging
   PORT: retail-store-staging
@@ -41,18 +43,3 @@ env:
   GOOGLE_APPLICATION_CREDENTIALS: /etc/gcp/credential-configuration.json
   GCP_PROJECT_ID: ist-retail-demo
   GCP_LOCATION: us-central1
-
-# Allow unauthenticated access to the toggle endpoint (avoid 401 from gateway)
-mesh:
-  enabled: true
-  permissive: false
-  serviceCatalogEntry:
-    enabled: true
-    authorization:
-      allowVanity: true
-      groups:
-        - "*"
-      scopes:
-        - "*"
-      allowUnauthenticatedPaths:
-        - /api/toggleScript
