@@ -38,10 +38,12 @@ steps:
         - mongodb=https://10gen.github.io/helm-charts
       namespace: industrysolutions
       release: retail-store-staging
-      values_files: ["environments/staging.yaml"]
+      values_files:
+        - environments/staging.yaml
       values:
         - "image.tag=git-${DRONE_COMMIT_SHA:0:7}"
         - "image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/industrysolutions/retail-store"
+        - "serviceAccount.annotations.iam\\.gke\\.io/gcp-service-account=retail-kanopy-sa@ist-retail-demo.iam.gserviceaccount.com"
         - "ingress.enabled=true"
         - "ingress.hosts[0]=retail-store.industrysolutions.staging.corp.mongodb.com"
         - "mesh.enabled=true"
@@ -56,7 +58,8 @@ steps:
       event:
         - push
       branch:
-        - staging  
+        - staging
+
 ---
 kind: pipeline
 type: kubernetes
@@ -104,6 +107,7 @@ steps:
       values:
         - "image.tag=git-${DRONE_COMMIT_SHA:0:7}"
         - "image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/industrysolutions/retail-store-prod"
+        - "serviceAccount.annotations.iam\\.gke\\.io/gcp-service-account=retail-kanopy-sa-prod@ist-retail-demo.iam.gserviceaccount.com"
         - "ingress.enabled=true"
         - "ingress.hosts[0]=retail-store.industrysolutions.prod.corp.mongodb.com"
         - "mesh.enabled=true"
