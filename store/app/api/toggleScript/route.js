@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
-import fs from "node:fs";
+import { GoogleAuth } from "google-auth-library";
+
+export const runtime = "nodejs";
 
 export async function POST(request) {
   try {
@@ -24,52 +26,46 @@ export async function POST(request) {
       );
     }
 
-    let token = process.env.GCP_ID_TOKEN;
-
-    if (!token) {
-      const saTokenPath = "/var/run/service-account/token";
-      if (fs.existsSync(saTokenPath)) {
-        token = fs.readFileSync(saTokenPath, "utf8").trim();
-      }
-    }
-
-    if (!token) {
+    const audience = process.env.DYNAMIC_PRICING_AUDIENCE;
+    if (!audience) {
       return NextResponse.json(
-        { success: false, error: "Missing GCP identity token" },
+        { success: false, error: "DYNAMIC_PRICING_AUDIENCE not configured" },
         { status: 500 }
       );
     }
 
-    const resp = await fetch(url, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+    const auth = new GoogleAuth({
+      scopes: ["https://www.googleapis.com/auth/cloud-platform"],
     });
 
-    const text = await resp.text();
-    let data;
-    try {
-      data = JSON.parse(text);
-    } catch {
-      data = text;
-    }
-
-    if (!resp.ok) {
-      return NextResponse.json(
-        { success: false, error: data },
-        { status: resp.status }
-      );
-    }
+    const client = await auth.getIdTokenClient(audience);
+    const resp = await client.request({ url, method: "GET" });
 
     return NextResponse.json(
-      { success: true, action, data },
+      { success: true, action, data: resp.data },
       { status: 200 }
     );
   } catch (error) {
+    const status = error?.response?.status || 500;
+    const data = error?.response?.data;
+
+    if (data) {
+      console.error("toggleScript upstream error:", data);
+    } else {
+      console.error("toggleScript error:", error);
+    }
+
+    const errorText =
+      typeof data === "string"
+        ? data
+        : data?.error?.message ||
+          data?.message ||
+          error?.message ||
+          "Unknown error";
+
     return NextResponse.json(
-      { success: false, error: error?.message || "An error occurred" },
-      { status: 500 }
+      { success: false, error: errorText },
+      { status }
     );
   }
 }
