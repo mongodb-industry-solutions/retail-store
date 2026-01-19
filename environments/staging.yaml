@@ -1,7 +1,8 @@
 # Service Account Configuration
 serviceAccount:
   enabled: true
-  name:  retail-kanopy-sa  # Must match KSA_NAME
+  name: retail-kanopy-sa
+  annotations: {}   # Placeholder for injecting GCP Service Account annotation via Helm/pipeline. Reserved for ServiceAccount annotations injected at deploy time
 
 # Mount GCP credential config AND projected service account token
 extraVolumes:
@@ -11,10 +12,10 @@ extraVolumes:
   - name: gcp-token
     projected:
       sources:
-      - serviceAccountToken:
-          path: token
-          expirationSeconds: 3600  # Token expires after 1 hour and auto-renews
-          audience: "//iam.googleapis.com/projects/531154772515/locations/global/workloadIdentityPools/kanopy-retail-wif-pool/providers/kanopy-retail-provider"
+        - serviceAccountToken:
+            path: token
+            expirationSeconds: 3600
+            audience: "//iam.googleapis.com/projects/531154772515/locations/global/workloadIdentityPools/kanopy-retail-wif-pool/providers/kanopy-retail-provider"
 
 extraVolumeMounts:
   - name: gcp-creds
@@ -31,10 +32,10 @@ envSecrets:
   COLLECTION_NAME: retail-store-staging
   GCP_STORAGE_BUCKET: retail-store-staging
   VERTEX_AI_ENDPOINT: retail-store-staging
-  NEXT_PUBLIC_URL_START: retail-store-staging
-  NEXT_PUBLIC_URL_STOP: retail-store-staging
+  DYNAMIC_PRICING_AUDIENCE: retail-store-staging
+  DYNAMIC_PRICING_START_URL: retail-store-staging
+  DYNAMIC_PRICING_STOP_URL: retail-store-staging
   PORT: retail-store-staging
-  GCP_STORAGE_BUCKET: retail-store-staging
   GCP_BUCKET_FOLDER: retail-store-staging
 
 # Environment variables for GCP
