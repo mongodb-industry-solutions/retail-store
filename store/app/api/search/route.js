@@ -47,16 +47,24 @@ export async function POST(request) {
         }
 
         // Add the $addFields and $limit stages
-        pipeline.push(
-            {
+        // Only add searchScore when we have a search query
+        if (query) {
+            pipeline.push({
                 $addFields: {
                     searchScore: { $meta: "searchScore" }
                 }
-            },
-            {
-                $limit: 3000, // Limit the number of results
-            }
-        );
+            });
+        } else {
+            pipeline.push({
+                $addFields: {
+                    searchScore: 0 // Default score when no search is performed
+                }
+            });
+        }
+        
+        pipeline.push({
+            $limit: 3000, // Limit the number of results
+        });
 
         // Query 1: Get total count of matching documents
         const totalCount = await collection.aggregate(pipeline.concat([{ $count: "total" }])).toArray();
