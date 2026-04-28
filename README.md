@@ -45,3 +45,11 @@ bun dev
 ```
 
 Finally, navigate to [http://localhost:3000](http://localhost:3000) with your browser.
+
+## License
+
+© 2025 MongoDB. All rights reserved.
+
+This repository is intended solely for demonstration and educational purposes.  
+No support or warranty is provided. Use at your own risk.
+.
