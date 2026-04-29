@@ -37,7 +37,7 @@
     "geist": "^1.2.1",
     "google-auth-library": "^9.15.1",
     "mongodb": "^6.3.0",
-    "next": "^15.5.9",
+    "next": "^15.5.15",
     "node-cron": "^4.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
