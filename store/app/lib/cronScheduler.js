@@ -9,7 +9,8 @@ async function callBucketSigner() {
   try {
     console.log(`[${new Date().toISOString()}] Starting scheduled bucket signing...`);
     
-    const response = await fetch('/api/bucketSigner', {
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:8080';
+    const response = await fetch(`${baseUrl}/api/bucketSigner`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
