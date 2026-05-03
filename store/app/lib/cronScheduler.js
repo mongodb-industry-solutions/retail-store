@@ -1,28 +1,17 @@
 import cron from "node-cron";
+import { signBucketImages } from "@/app/api/bucketSigner/route";
 
 // Store the cron job instance
 let cronJob = null;
 let isRunning = false;
 
-// Function to call the bucketSigner API
+// Function to call the bucketSigner logic directly
 async function callBucketSigner() {
   try {
     console.log(`[${new Date().toISOString()}] Starting scheduled bucket signing...`);
     
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-    const response = await fetch(`${baseUrl}/api/bucketSigner`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    
-    if (response.ok) {
-      const result = await response.json();
-      console.log(`[${new Date().toISOString()}] Bucket signing completed successfully:`, result);
-    } else {
-      console.error(`[${new Date().toISOString()}] Bucket signing failed with status:`, response.status);
-    }
+    const result = await signBucketImages();
+    console.log(`[${new Date().toISOString()}] Bucket signing completed successfully:`, result);
   } catch (error) {
     console.error(`[${new Date().toISOString()}] Error calling bucket signer:`, error);
   }
