@@ -37,8 +37,7 @@ export function startBucketSignerScheduler() {
   
   // Schedule to run every day at midnight (0 0 * * *)
   cronJob = cron.schedule('0 0 * * *', callBucketSigner, {
-    scheduled: true,
-    timezone: "America/New_York" // Adjust timezone as needed
+    scheduled: true
   });
   
   isRunning = true;
