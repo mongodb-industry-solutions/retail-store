@@ -9,7 +9,7 @@ async function callBucketSigner() {
   try {
     console.log(`[${new Date().toISOString()}] Starting scheduled bucket signing...`);
     
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:8080';
     const response = await fetch(`${baseUrl}/api/bucketSigner`, {
       method: 'POST',
       headers: {
@@ -37,8 +37,7 @@ export function startBucketSignerScheduler() {
   
   // Schedule to run every day at midnight (0 0 * * *)
   cronJob = cron.schedule('0 0 * * *', callBucketSigner, {
-    scheduled: true,
-    timezone: "America/New_York" // Adjust timezone as needed
+    scheduled: true
   });
   
   isRunning = true;
