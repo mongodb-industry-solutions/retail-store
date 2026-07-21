@@ -43,6 +43,12 @@ env:
   GOOGLE_APPLICATION_CREDENTIALS: /etc/gcp/credential-configuration.json
   GCP_PROJECT_ID: ist-retail-demo
   GCP_LOCATION: us-central1
+  # Stop GCP client libs (google-auth-library/gcp-metadata) from probing the
+  # link-local metadata endpoint 169.254.169.254 — same IP as AWS IMDS, which
+  # Kanopy's IMDS audit flags. All GCP auth uses the mounted WIF file creds, so
+  # the metadata server is never legitimately needed.
+  GOOGLE_CLOUD_PROJECT: ist-retail-demo
+  METADATA_SERVER_DETECTION: none
 
 # Kanopy security and ownership (requires web-app chart v4.30.0+)
 security:
