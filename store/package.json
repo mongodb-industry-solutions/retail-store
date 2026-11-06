@@ -36,7 +36,7 @@
     "geist": "^1.2.1",
     "google-auth-library": "^9.15.1",
     "mongodb": "^6.3.0",
-    "next": "^15.5.25",
+    "next": "^15.5.29",
     "node-cron": "^4.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -46,6 +46,7 @@
     "uuid": "^14.0.1"
   },
   "overrides": {
-    "protobufjs": "^7.5.5"
+    "protobufjs": "^7.5.5",
+    "sharp": "^0.35.5"
   }
 }
